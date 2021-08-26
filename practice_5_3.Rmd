@@ -1,0 +1,514 @@
+---
+title: "Section 5.3 Problems"
+author: "Ryan Heslin"
+date: "`r  Sys.Date()`"
+output: pdf_document
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.aligned = "center")
+knitr::knit_hooks$set(inline = function(x) x)
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+## 1.
+
+## 2.
+
+## 3.
+
+## 4.
+
+No.
+
+If $A$ and $B$ are orthogonal square matrices, which others also are?
+
+## 5.
+
+$3A$: No
+
+## 6.
+
+$-B$: Yes
+
+## 7.
+
+$AB$: Yes; orthogonal transformations preserve orthogonality.
+
+## 8.
+
+$A + B$: No.
+
+## 9.
+
+$B^{-1}$: Yes.
+
+## 10.
+
+$A^10$: Yes
+
+$B^{-1}AB$: yes ,all are orthogonal, and orthogonal transformations 
+preserve orthogonality.
+
+## 11.
+
+$A^T$: Yes, since $A^TA=I$, and orthogonal transformations preserve
+orthogonality.
+
+We consider the symmetries of the same matrices, granted they are symmetric and $B$ is invertible.
+
+## 12.
+
+$3A$: Yes
+
+## 13.
+
+$-b$: Yes
+
+## 14.
+
+Yes.
+
+## 15.
+
+$AB$: No. $AB_{ij}=[A_i \cdot B_j]$, not necessarily equal to $AB_{ji} = [A_j \cdot B_i]$.
+
+
+
+## 16.
+
+ Yes.If $A_{ij}=A_{ji}$ and $B_{ij}=B_{ji}$ where $i \neq j$,
+then $A_{ij} +B_{ij}=A_{ji} +B_{ji} \implies (A +B)_{ji}=(A+B)_{ji}$
+
+Yes. 
+
+\[
+\begin{aligned}
+  A+B = A^T + B^T\\
+  = (A+B)^T
+\end{aligned}
+\]
+
+## 17.
+
+$B^{-1}$: yes, since $[B^{-1}_{i}] \m{B_j} = [B^{-1}_j] \m{B_i}=0$
+
+## 18.
+
+$A^10$: apparently so. The triangular element is consistent in the dot products
+
+```{r}
+A <- square(2, 4,4, -1)
+A %^% 2
+```
+
+
+## 19.
+
+$2I +3A - 4A^2$: yes, we showed all these are symmetric.
+
+## 20.
+
+$AB^2A$: no, as $AB$ is not necessarily symmetric.
+
+For arbitrary square matrices,which are symmetric?
+
+## 21.
+
+$A^TA$: yes, since element $ij$ and $ji$ are equal.
+
+## 22.
+
+$BB^T$: yes, for the same reason
+
+## 23.
+
+$A - A^T$: no, if $A$ is non-symmetric.
+
+## 24.
+
+$A^TBA$: No. Can be rearranged to $BAA^T$, not necessarily symmetric.
+
+## 25
+
+.... I think?
+\[
+\begin{aligned}
+  & A^TB^TBA\\
+  & (BA)^TBA\\
+  & ((BA)^T)BA)^T =(BA)^TBA
+\end{aligned}
+\]
+
+## 26.
+
+\[
+  \begin{aligned}
+    & (B(A + A^T)B^T))^T = B(B(A +A^T))^T\\
+    & = B(A^T +A)B^T\\
+    & = B(A + A^T)B^T\\
+    &
+  \end{aligned}
+\]
+
+## 27.
+
+\[
+  \begin{aligned}
+    & (AV) \cdot w = v \cdot (A^Tw)\\
+    & (Av)^Tw = v^t(A^Tw)\\
+    & (v^TA^T)w= v^T(A^Tw) \\
+    & v^TA^Tw=v^TA^Tw
+  \end{aligned}
+\]
+
+## 28.
+
+\[
+  \begin{aligned}
+    & (Ax) \cdot (Ay) =x \cdot y\\
+    & (Ax)^TAy=x^Ty\\
+    & x^TA^TAy=x^Ty\\
+    &A^TAy=y\\
+    & A^TA = I\\
+    & A^T=A^{-1}\\
+  \end{aligned}
+\]
+
+Of course, the transpose is the inverse only for orthogonal transformations
+
+## 29.
+
+\[
+  \begin{aligned}
+    & \frac{v \cdot w}{||v||||w||} = \frac{(Av) \cdot (Aw)}{||Av||||Aw||}\\
+    & \frac{v \cdot w}{||v||||w||} = \frac{v \cdot w}{||Av||||Aw||}
+  \end{aligned}
+\]
+
+Given that orthogonal transformations preserve lengths as well as dot products, we're done.
+
+## 30.
+If $A$ is a transformation $R^m \rightarrow R^n$ that preserves length, then
+
+\[
+  \begin{aligned}
+    & \sqrt{(Av) \cdot (Av)} = \sqrt{v \cdot v}\\
+    & (Av) \cdot (Av) = v \cdot v\\
+    & v^TA^TA=v^Tv\\
+    & A^TA = I_m
+  \end{aligned}
+\]
+which means $A^T$ is the left inverse of $A$. THis implies $A$ has full column rank, which means it must have partial row rank if $n \neq m$. That means $A^TA$ is invertible but not $AA^T$ (a $n \times n$ of a matrix with partial row rank, since the transpose preserves rank, and products cannot increase rank).
+
+## 31.
+
+The rows of an orthogonal $A$ must also be orthonormal because $A^T$ is also orthogonal.
+
+## 32.
+
+a. As shown above, $A^TA=I_m$ implies full column rank, which means $AA^T$ cannot equal $I_n$.
+
+b. BuT if $A^TA=I_n$ for an $n \times n$, then it is orthogonal, so $A^T=A^{-1} \implies AA^T=I_n$
+
+## 33.
+
+By multiplying out, we see that orthogonal matrices (for which the 
+inverse is the transpose) satisfy the equations $a^2+b^2=c^2+d^2=1$ and $ac=-bd$. That suggests the basis $\begin{bmatrix}a & 1-a^2&\\1-a^2&-a\end{bmatrix}$. Opposite-signed diagonals also work.
+
+## 34.
+
+\[
+  \begin{bmatrix}
+    & a & 1 - a^2 &0\\
+    & 0 & 0 &1\\
+    & e & 1-e^2 &0
+  \end{bmatrix}
+\]
+
+## 35.
+
+## 36.
+
+\[ \begin{bmatrix}
+  a\\
+  b\\
+  c
+\end{bmatrix} = \sqrt 2\begin{bmatrix}
+  -3/8\\
+  -3/8\\
+  3/2
+\end{bmatrix}\]
+
+## 38.
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      0 & 0 & -1\\
+      0 & 0 & 0\\
+      1 & 0 & 0
+    \end{bmatrix}
+    & A^2 = \begin{bmatrix}
+      -1 & 0 & 0\\
+      0 & 0 & 0\\
+      0 & 0 & -1
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+$A^2$ must be symmetric, since $A^2_{ij} =A^2_{ji}$, both negative.
+
+
+## 39.
+
+If we have a line spanned by a unit vector, entry $ij$ of the projection matrix is $u_iu_j / ||u||$, with the squares on the diagonal.
+
+## 40.
+
+## 41.
+
+The projection onto the unit line in $R^n$ is given by a matrix consisting entirely of $1/n$, since each element of the unit vector is $1/ \sqrt{n}$.
+
+\[
+  \begin{aligned}
+    & P = A(A^TA)^{-1}A^TA(A^TA)^{-1}A^T=
+    & A(A^TA)^{-1}\\
+    & =A(A^TA)^{-1}
+  \end{aligned}
+\]
+
+## 42.
+
+We know by now projection matrices are idempotent: they rebalance the elements of a vector so it becomes part of the subspace, but a vector already in the subspace has exactly the correct ratios of elements already.
+
+## 43.
+
+Given a unit vector in $R^3$, the matrix $A = 2uu^T-I_3$ describes the reflection ($2P - I$),w while the opposite sign $B = I_3 -2uu^T$ is 
+
+## 44.
+
+Given an $n \times m$ matrix, the dimension of the image and of the kernel of the transpose sum to $n$, because all vectors in $R^n$ belong to one of those two spaces.
+
+## 45.
+
+$\dim(\ker(A)) = \dim(\ker(A^T))$ for matrices for which rank is exactly $n/2$ - only then is $R^n$ partitioned equally.
+
+## 46.
+
+Trivial. 
+
+\[
+  \begin{aligned}
+    & M = QR\\
+    & R = Q^{-1}M\\
+    & R = Q^TM
+  \end{aligned}
+\]
+
+## 47.
+
+For $A=QR$, then:
+
+\[
+  \begin{aligned}
+    & A^TA=(QR)^TQR\\
+    &= R^TQ^TQR\\
+    &R^TR
+  \end{aligned}
+\]
+
+so $A^TA = R^TR$. This makes sense - each column of $R$ decomposes vectors of $A$ into projections along unit vectors and the residual $v^{\perp}$, so $R^TR$ collects the intersection of column vectors in the same way as $A^TA$.
+
+## 48.
+
+We can also write:
+\[
+  \begin{aligned}
+    & A = QR\\
+    & A^T = R^TQ^T
+  \end{aligned}
+\]
+
+since $Q^T$ is also orthogonal.
+
+## 49.
+
+## 50.
+
+a. Element $1,1$ of the matrix can only be 1. The nonzero
+entries $a, b$ of the second column must satisfy:
+
+\[
+  \begin{aligned}
+    & a + 0b = 0\\
+    & a^2 + b^2 =1
+  \end{aligned}
+\]
+
+which only $a=0, b = \pm 1$ satisfy. Proceeding column by column and restricting $b$ to be positive, that leaves only the identity.
+
+b.
+
+\[
+  \begin{aligned}
+    & A = Q_1R_1 = Q_2R_2\\
+    & Q_2^{-1}Q_1R_1 = R_2\\
+    & Q_2^{-1}Q_1 = R2 R_1^{-1}
+  \end{aligned}
+\]
+$Q_2^{-1}Q_1 = I$ because the product of the triangular matrices must be orthogonal, but the only orthogonal
+triangular matrix possible here is the identity, so $Q_2^{-1} = Q_1^{-1}$, so $Q_2 = Q_1$,
+
+and the same for the $R$s.
+
+## 51.
+
+a.
+
+\[
+  \begin{aligned}
+    &  Q_1 = Q_2S\\
+    & Q^T Q1 = (Q_2S)^TQ_2S\\
+    & I = S^T Q_2^T Q_2 S\\
+    & I = S^T S
+  \end{aligned}
+\]
+
+so $S$ must be orthogonal.
+
+b.
+
+\[
+  \begin{aligned}
+    & M = Q_1R_1 = Q_2 R_2\\
+    & Q_1 = Q_2 R_2 R_1^{-1}
+  \end{aligned}
+\]
+$R_2R_1^{-1}$ must be orthogonal for the reasons given above,
+and again the only possible orthogonal triangular matrix is the identity. so $Q_1 = Q_2$ and $R_1 = R_2$.
+## 52.
+
+## 53.
+
+## 54.
+
+## 55.
+
+\[ \frac{n^2 -n}{2}\]
+
+## 56.
+
+## 57.
+
+Yes. $L^{-1}(A^T) =A$ is the transpose from $R^{m \times n}$ to $R^{n \times m}$
+
+## 58.
+
+The kernel is ${0}$. For the image, the diagonal remains the 
+same and the off-diagonal element $ij$ is $\frac{A_{ij} + A_{ji}}{2}$, so the resulting matrix is symmetric
+
+## 59.
+
+The kernel is all symmetric matrices. The image is a skew-symmetric matrix with a zero diagonal and element $ij$ is
+$\frac{A_{ij} - A_{ji}}{2}$.
+
+## 60.
+
+\[ \begin{bmatrix}
+  1 & 0 & 0 & 0\\
+  0 & 1 & 0  & 0\\
+  0 & 0 & 1 & 0\\
+  0 & 0 & 0 & -1
+\end{bmatrix}\]
+
+## 61.
+
+Applying the transformation zeroes out all but the third
+element of the basis, which gets doubled:
+
+\[
+  \begin{aligned}
+    & T \Bigg( \begin{bmatrix}
+      0 & 1\\
+      -1 & 0
+    \end{bmatrix} \Bigg ) = \begin{bmatrix}
+      0 & 2\\
+      -2 & 0
+    \end{bmatrix} 
+  \end{aligned}
+\]
+
+So the coordinates vector is $\m{0\\0\\0\\2}$ and the matrix
+$`r mat2latex(square(c(rep(0, 15), 2)), sink = TRUE)`$
+
+## 62.
+
+## 63.
+
+## 64.
+
+## 65.
+
+## 66.
+
+## 67.
+
+## 68.
+
+## 69.
+
+## 70.
+
+## 71.
+
+## 72.
+
+
+The projection onto 
+
+\[
+  \begin{bmatrix}
+  1\\
+  a\\
+  a^2\\
+  \vdots\\
+  a^{n-1}
+  \end{bmatrix}
+\]
+
+is a Hankel matrix (positive sloping diagonals) of the same element) because the first column multiplies each element of the vector by 1, the second by $a$, and so on. This ensures that the diagonal elements are the same as the echelon diagonals.
+
+## 73.

@@ -1,0 +1,533 @@
+---
+title: "Notes"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+\newcommand{\rot}[1]{
+\begin{bmatrix}
+\cos{(#1)} & -\sin{(#1)}\\
+
+\sin{(#1)} & \cos{(#1)}\\
+\end{bmatrix}
+}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+## 1.
+1 and 2.
+
+## 2.
+
+The singular values of an orthogonal matrix are $I_n$ because
+$Q^TQ=I$, which has those singular values.
+
+## 3.
+
+See above.
+
+## 4.
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      1 & 1\\
+      0 & 1
+    \end{bmatrix}\\
+    & A^TA = \begin{bmatrix}
+      1 & 1\\
+      1 & 2
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+They come out ugly: $\sqrt{\frac{3 \pm \sqrt 5}{2}}$
+
+## 5.
+
+\[A = \begin{bmatrix}
+  p & -q\\
+  q & p
+\end{bmatrix}\]
+
+The singular values are $\sqrt{ p^2 + q^2}$. In the special case of a rotation, those are both $\sqrt {\sin^2 \theta + \cos^2 \theta} =1$, since rotations are orthogonal;
+otherwise the scaling factor applied in the rotation-scaling.
+
+## 6.
+
+\[
+  \begin{aligned}
+& A = \begin{bmatrix}
+  1 & 2\\
+  2 & 4
+\end{bmatrix}
+  \end{aligned}
+\]
+
+$\sigma_1 =  5$ since we know one eigenvalue is 0.
+The lone singular vector is $ \m{1\\-2}$.
+
+\[
+  \begin{aligned}
+    & \begin{bmatrix}
+  1 & 2\\
+  2 & 4
+\end{bmatrix} \begin{bmatrix}
+  1 / \sqrt 5\\
+  2 / \sqrt 5
+\end{bmatrix} = \begin{bmatrix}
+  5 / \sqrt 5\\
+  10 / \sqrt 5
+\end{bmatrix}
+||Av_1|| = \sqrt { 25 /5 + 100/5} = \sqrt {25} = 5
+  \end{aligned}
+\]
+
+## 7.
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      1 & 0\\
+      0 & -2
+    \end{bmatrix}\\
+    & A = \begin{bmatrix}
+      0 & 1\\
+      -1 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      2 & 0\\
+      0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      0 & 1\\
+      1 & 0
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+Neat trick with the sign reversing
+
+\[\begin{bmatrix}
+      1 & 0\\
+      0 & -2
+    \end{bmatrix} \begin{bmatrix}
+      0\\
+      1
+    \end{bmatrix} /2 = \begin{bmatrix}
+      0\\
+      -1
+    \end{bmatrix}\]
+
+## 8.
+
+How rotations work - scale basis if need be, then transform columns.
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      p & -q\\
+      q & p
+    \end{bmatrix}\\
+    & A = \frac{1}{\sqrt {p^2 + q^2}} \begin{bmatrix}
+      p & -q\\
+      q & p
+    \end{bmatrix}
+    \begin{bmatrix}
+      \sqrt {p^2 + q^2} & 0\\
+      0 & \sqrt {p^2 + q^2}
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 0\\
+        0 & 1
+      \end{bmatrix}
+  \end{aligned}
+\]
+
+## 9.
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      1 & 2\\
+      2 & 4
+    \end{bmatrix}\\
+    & A = \begin{bmatrix}
+      1/ \sqrt 5 & 0\\
+      2 / \sqrt 5 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      5 & 0\\
+      0 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 / \sqrt 2 & 2 / \sqrt 5\\
+      0 & 0
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+## 11.
+
+\[
+  \begin{aligned}
+    & A =  \begin{bmatrix}
+      0 & 1\\
+      1 & 1\\
+      1 & 0
+    \end{bmatrix}\\
+    & A^TA = \begin{bmatrix}
+      2 & 1\\
+      1 & 2
+    \end{bmatrix}\\
+    & \Sigma = \begin{bmatrix}
+      \sqrt 3 & 0\\
+      0 & 1
+    \end{bmatrix}\\
+    & V = \frac{1}{\sqrt 2} \begin{bmatrix}
+      1 & 1\\
+      1 & -1
+    \end{bmatrix}\\
+    & AV = \frac{1}{\sqrt 2} \begin{bmatrix}
+      1 & -1\\
+      2 & 0\\
+      1 & 1
+    \end{bmatrix}\\
+    & U = \begin{bmatrix}
+      1/ \sqrt 6 & -1/ \sqrt 2\\
+      2 / \sqrt 6 & 0\\
+      1 / \sqrt 6 & 1 / \sqrt 2
+    \end{bmatrix}\\
+    & A = \frac{1}{\sqrt 2} \begin{bmatrix}
+      1/ \sqrt 6 & -1/ \sqrt 2\\
+      2 / \sqrt 6 & 0\\
+      1 / \sqrt 6 & 1 / \sqrt 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      \sqrt 3 & 0\\
+      0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 1\\
+      1 & -1
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+```{r, results ="asis"}
+A <- square(6, 2, -7, 6)
+list2env(setNames(eigen(t(A) %*% A), c("Sigma", "V")), envir = globalenv())
+Sigma <- sqrt(Sigma[Sigma > 0])
+U <- A %*% V %*% diag(x = 1/Sigma)
+
+eqn <- paste("A =", paste(sapply(list(U, diag(x=Sigma), t(V)), mat2latex, sink = TRUE), collapse = " "))
+print_eqn(eqn)
+```
+
+## 11.
+
+## 12.
+
+## 13.
+
+## 14.
+
+## 15.
+
+The singular values of $A$ are the inverses of those of $A^{-1}$
+
+## 16.
+
+See above.
+
+## 17.
+
+Watch as I blunder into proving the generalized inverse is the least-squares solution:
+
+\[
+  \begin{aligned}
+    & A^TAx = A^Tb\\
+    & x = (A^TA)^{-1}A^Tb\\
+    & (V\Sigma^TU^TU\Sigma V^T)^{-1}V \Sigma^TU^Tb\\
+    & = (\Sigma V^T)^{-1}(V\Sigma^T)^{-1}V \Sigma^TU^Tb\\
+    & = V \Sigma^+(\Sigma^T)^+V^TV \Sigma\\
+    & = V \Sigma^+ (\Sigma^T)^+ \Sigma^T U^T b\\
+    & =  V \Sigma^+ U^Tb
+  \end{aligned}
+\]
+
+Of course, the diagonal of $\Sigma^+$ is $1/\sigma_i$.
+
+## 18.
+
+```{r}
+A_plus <-  t(square(3, 4, -4, 3)) %*% matrix(c(1/2, 0, 0 ,1, 0, 0, 0 ,0), nrow = 2) %*% (1/10 * t(square(rep(1, 6), -1, -1, 1, -1, 1, -1, 1, -1, -1, 1)))
+
+b <- 1:4
+x <- c(A_plus %*% b, 0,0)
+```
+
+## 19.
+
+As shown above, the solution $x$ is a linear combination of $V$, where each coefficient is the dot product of $b$ with $u_i$ divided by $\sigma_i$ (the length of $Au_i$). This is roughly a sumo f normalized projections.
+
+## 20.
+The polar decomposition is just:
+
+\[A = (UV^T)(V\Sigma V^T)\]
+where the first term is clearly orthogonal and the second symmetric.
+
+In the reverse form 
+
+\[
+  \begin{aligned}
+    & A = (V \Sigma V^T)^T (UV^T)^T\\
+  \end{aligned}
+\]
+## 21.
+
+Polar decomp:
+```{r}
+A <- square(6, -7, 2, 6)
+list2env(setNames(eigen(t(A) %*% A), c("Sigma", "V")), envir = global_env())
+Sigma <- diag(x =sqrt(Sigma[Sigma >0]))
+U <- sweep(A %*%V, diag(Sigma), `/`, MARGIN = 2)
+Q <- U %*% t(V)
+S <- V %*% Sigma %*% t(V)
+Q %*% S
+```
+
+
+## 22.
+a. The cross-products matrix
+
+\[ \begin{bmatrix}
+  0 & -v_3 & v_2\\
+  v_3 & 0 & -v_1\\
+  -v_2 & v_1 & 0
+\end{bmatrix}\]
+can be decomposed by SVD into three linear transformations $A_3A_2A_1$. Then the polar decomposition is:
+
+\[A = (A_1A_3)(A_3^TA_2A_3\]
+
+This matrix first projects onto the plane shared by the two vectors. If $v = \m {0\\2\\0}$, then the SVD is:
+
+\[A = \begin{bmatrix}
+  0 & 1 & 0\\
+  0 & 0 & 1\\
+  -1 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+  2 & 0 & 0\\
+  0 & 2 & 0\\
+  0 & 0 & 0
+\end{bmatrix} 
+\begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 0 & 1\\
+  0 & 1 & 0
+\end{bmatrix} \]
+
+In polar form:
+
+\[A = \Bigg( \begin{bmatrix}
+  0 & 1 & 0\\
+  0 & 0 & 1\\
+  -1 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 0 & 1\\
+  0 & 1 & 0
+\end{bmatrix} \Bigg)
+\Bigg( \begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 0 & 1\\
+  0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+  2 & 0 & 0\\
+  0 & 2 & 0\\
+  0 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 0 & 1\\
+  0 & 1 & 0
+\end{bmatrix}\Bigg)\]
+
+Cribbing from an earlier exercise involving the cross product, the transformation projects onto the plane of the second two coordinates of the vector $x$ being crossed with $v$, scales by the singular values of $v$, then rotates $\pi/2$ counterclockwise about $c_1$
+
+## 23.
+
+\[
+  \begin{aligned}
+    & AA^T = U \Sigma V^TV \Sigma^T U^T\\
+    & = U \Sigma  \Sigma^T U^T
+  \end{aligned}
+\]
+
+This is an eigenbasis because $\Lambda = \Sigma \Sigma^T$. This shows that the eigenvalues (up to $r$) of $A^TA$ and $AA^T$ are the same.
+
+## 24.
+
+They are the absolute values of the eigenvalues, the square roots
+of the eigenvalues of $A^TA$, which are square of those of $A$.
+
+## 25.
+
+Let $u$ be a vector of $V$. Then $Au = \sigma u_i \implies || Au || = \sigma_i$. The $\sigma$s account for the scaling factor applied to every vector in $A$'s basis, so if $u$ is not a member of $V$ $||Au||$ must fall in that range.
+
+## 26.
+
+The logic fo a general $n \times m$ is the same - the singular values are the upper and lower bound on the lengths of the transformed unit vector. 
+
+## 27.
+
+The singular values are the square roots of the eigenvalues of $A^TA$. The eigenvalues of $A^TA$ are the squares of those of $A$. Since the singular values  are just the absolute values of the eigenvalues in this case, the absolute values of the eigenvalues must fall in their range.
+## 28.
+
+\[
+  \begin{aligned}
+    & \det(A^TA) = \det(A^T) \det(A\\
+    & = \det A^2\\
+    & \prod_{i=1}^n \sigma_i = \sqrt {\det A^2} = \det A
+  \end{aligned}
+\]
+
+## 29.
+
+This is obvious from the definitions: $\sigma_i$ scales the
+product of $u_i$ an $v_i^T$ that forms a column of $A$.
+
+## 30.
+The eigenvalues of $A$ are $6 \pm \sqrt{14} i$, with
+absolute values $5 \sqrt 10$
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      6 & 2\\
+      -7 & 6
+    \end{bmatrix}\\
+    & \Sigma = \begin{bmatrix}
+      10  & 0\\
+      0 & 5
+    \end{bmatrix}\\
+    & V = \frac{1}{\sqrt 5} \begin{bmatrix}
+      2 & 1\\
+      -1 & 2
+    \end{bmatrix}\\
+    & U = \frac{1}{\sqrt 5} 
+    \begin{bmatrix}
+      -1 & -2\\
+      -2 & 1
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+Which implies
+
+\[ A = 2 \begin{bmatrix}
+  -1\\
+  -2
+\end{bmatrix} \begin{bmatrix}
+  2 & -1
+\end{bmatrix} +
+ \begin{bmatrix}
+   -2\\
+   1
+ \end{bmatrix} \begin{bmatrix}
+   1 & 2
+ \end{bmatrix}\]
+which is actually the formula for $-A$ because I screwed up the signs of the eigenvalues.
+## 31.
+
+Any matrix may be decomposed:
+\[A = U \Sigma V^T\]
+
+which may be written as a linear combination:
+
+\[A = \sigma_1 u_1v^T + \dots + \sigma_ru_rv^T\]
+
+where each term is a rank-one matrix, as an outer produce of two
+vectors scaled by a nonzero $\sigma_i$. Any $\sigma$ beyond $\sigma_r$ yield rank-0 matrices that can be ignored.
+
+## 32.
+
+## 33.
+
+Yes, that implies the eigenvalues are all $\pm 1$, which is true only of
+orthogonal matrices.
+## 34.
+
+$U = V$ in the singular combination if $A^TA$ and $AA^T$ have exactly the same
+eigenvectors. Since they have the same eigenvalues anyway, this happens only if $A^T = A$ - that is, $A$ is symmetric.
+
+## 35.
+
+Assuming full column rank, this just returns $e_i$:
+
+\[
+  \begin{aligned}
+    & (A^TA)^{-1}A^T u_i\\
+    & V \Sigma^+ U^Tu_i\\
+    & V \Sigma^+e_i
+    & \frac{1}{\sigma_i}v_i
+  \end{aligned}
+\]
+
+## 36.
+
+This projects $u_i$ into $A$'s image. Since $U$ up to $u_m$ is a basis for the image already, this resolves to $u_i$ again if $i \leq m$, 0 otherwise (since $u_{ i >m}$ are in $\ker A^T$).
+\[
+  \begin{aligned}
+    & A (A^TA)^{-1}A^Tu_i\\
+    & = U \Sigma V^TV\Sigma^+e_i\\
+    & = Ue_i\\
+    & = u_i
+  \end{aligned}
+\]

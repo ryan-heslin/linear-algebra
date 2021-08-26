@@ -1,0 +1,542 @@
+---
+title: "Section 5.6 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+\newcommand{\rot}[1]{
+\begin{bmatrix}
+\cos{(#1)} & -\sin{(#1)}\\
+
+\sin{(#1)} & \cos{(#1)}\\
+\end{bmatrix}
+}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+
+## 1.
+
+\[
+  \begin{aligned}
+    & B = M^{-1}AM\\\quad &C = N^{-1}BN\\
+    & C = M^{-1}(N^{-1}AN)M
+  \end{aligned}
+\]
+
+$M$ and $N$ are both invertible, so their product is as well. Only $I$ itself is similar
+to $I$:
+
+\[
+  \begin{aligned}
+    & I = I^{-1}II
+  \end{aligned}
+\]
+
+## 2.
+
+Any matrices with the same pair of eigenvalues, such as $\m{-1 & 0\\0 &1}$ or
+$\m{1 & 1\\0 & -1}$
+
+## 3.
+
+$A$ cannot be similar to $A +I$ because $A$ has eigenvalues $\Lambda$, while $A+I$ has eigenvalues $\Lambda + I$. 
+
+## 4.
+
+```{r, results='asis'}
+mat2latex(diag(x = rep(c(-1, 1), times = 2)))
+```
+
+## 5.
+
+If $S = B$:
+\[
+  \begin{aligned}
+    & BA = S^{-1}AB S\\
+    & BA = BABB^{-1}\\
+    & BA = BA
+  \end{aligned}
+\]
+
+## 6.
+
+a.
+\[
+  \begin{aligned}
+    & CD = -DC\\
+    & C = -D CD^{-1}\\
+    & C = D(-C)D^{-1}
+  \end{aligned}
+\]
+
+b. If $C$ is similar to $-C$, then $\Lambda = -\Lambda$. So
+$C$ must be of even dimension and have $-\lambda_i$ for each $\lambda_i$.
+
+c. D has the same property: $D = C^{-1}(-D)C$. So since $Cx = \lambda x = - \lambda x$, $C(Dx) = - \lambda Dx$
+
+## 8.
+
+```{r, results="asis"}
+A <- square(1, 1, 1, 4)
+B <- square(2, 5, 1, 4)
+
+M <- square(1, -1, 0, 1)
+mat2latex(M)
+```
+
+## 9.
+
+```{r, results='asis'}
+x <- c(3, 9)
+c <- solve(A, x)
+d <- solve(B, x)
+
+mat2latex(M %*% solve(A, x))
+```
+
+## 10.
+
+```{r}
+A %*% c
+B %*% d
+```
+
+## 11.
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      0 & 1\\
+      1 & 0
+    \end{bmatrix}\\
+    & B = \frac{1}{2}
+    \begin{bmatrix}
+      -1 & -1\\
+      -1 & 1
+    \end{bmatrix} \begin{bmatrix}
+      0 & 1\\
+      1 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 1\\
+      1 & -1
+    \end{bmatrix}\\
+    & = \begin{bmatrix}
+      0 & -1\\
+      0 & 0
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+## 13.
+
+a. \[ D = \begin{bmatrix}
+  0 & 1 & 0\\
+  0 & 0 & 2\\
+  0 & 0 & 0
+\end{bmatrix}\]
+
+b. The zero matrix; the third derivative of degree-2 polynomial is 0.
+
+c. Values all 0, vectors $\pm e_1$.
+
+## 14.
+
+Every number is an eigenvalue because $T(\lambda e^{\lambda x}) = \lambda e^{\lambda x} )$
+for arbitrary $\lambda$. 
+
+## 15.
+
+The "eigenmatrices" are the members of the basis that are diagonal - $\m{1& 0\\0 &1}$ and
+$\m{0&0\\0&1}$, or any symmetric matrix. Their eigenvalues are 1, since
+the transpose leaves the diagonal unchanged.
+
+## 16.
+
+Easy - just find the eigenbasis.
+A remarkable fact about zero eigenvalues -
+we can just pick any linear combination of the
+kernel and make up our own eigenvectors.
+```{r, results = "asis"}
+Q <- square(c(-1, 1, 0)/ sqrt(2), c(-1, 0, 1) / sqrt(2), rep(1, 3) / sqrt(3))
+
+Lambda <-  diag(x = c(0,0, 3))
+
+mat2latex(Q %*% Lambda %*% t(Q))
+
+Q2 <- square(c(normalize(c(-2, 1, 1)), normalize(c(0, -1, 1)), normalize(rep(1, 3))))
+
+mat2latex(Q2 %*% Lambda %*% t(Q2))
+```
+## 18.
+
+All permutation matrices are normal because 
+they have orthogonal eigenvectors, since
+by definition they contain the standard vectors, which are orthogonal, in any order.
+Therefore their transpose is their
+inverse, satisfying $A \overline A = \overline A A$.
+
+A possibility is a multiple of a permutation matrix:
+
+\[A = \begin{bmatrix}
+  0 & 2 & 0\\
+  0 & 0 & 2\\
+  2 & 0 & 0
+\end{bmatrix}\]
+
+## 19.
+
+Proof $T$ is  normal:
+
+\[
+  \begin{aligned}
+    & TT^H = \begin{bmatrix}
+      t_{11}^2 + |t_{12}|^2 +|t_{13}|^2 & t_{12} t_{22} + t_{13}\overline {t_{23}}  & t_{13}t_{33}\\
+      t_{22} \overline {t_{12}} + t_{23} \overline{t_{13}}  & t_{22}^2 + |t_{23}|^2 & t_{23}t_{33} \\
+      t_{33} \overline {t_{13}} & t_{33}\overline {t_{23}} & |t_{33}|^2
+    \end{bmatrix}\\
+    & T^HT = \begin{bmatrix}
+      t_{11}^2 & t_{11}t_{12} & t_{11}t_{33}\\
+      t_{12}t_{11}   & |t_{12}|^2 + |t_{22}^2| & \overline{t_{12}} t_13 + t_{22}t_{33}\\
+      \overline {t_{13}}t_{11} & \overline{t_{13}}t_{12} + \overline {t_{23}} t_{22} &  |t_{13}|^2 + |t_{23}|^2 + t_{33}^2
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+For these two to be equal, the cross-terms on the diagonal have to be 0. So 
+$T$ must be diagonal, so
+
+\[T = T^H = \begin{bmatrix}
+  \lambda_1 & 0 & 0\\
+  0 & \lambda_2  & 0\\
+  0 & 0 & \lambda_3
+\end{bmatrix}\]
+
+and all diagonal matrices are Hermitian and therefore normal.
+
+## 20.
+
+\[
+  \begin{aligned}
+    & ||Nx||^2 = (NX)^HNx\\
+    & = x^HN^Hnx\\
+    &||N^Hx||^2 = (N^Hx)^HN^Hx\\
+    & = x^HNN^Hx\\
+    &N^HN = NN^H
+  \end{aligned}
+\]
+
+Column $i$ must have the same length as row $i$; conjugation does not change length (length of a complex vector is the dot product _with_ the conjugate transpose), but
+$||N_1x|| = ||N^H_1x||$,a nd the rows of $N^H$ are the columns of $N$.
+
+## 21.
+
+\[
+  \begin{aligned}
+    & N = U \Lambda U^H\\
+    & NN^H = U \Lambda U^H U \Lambda^H U^H\\
+    & = U \Lambda^2 U^H\\
+    & N^HN = U \Lambda^H  U^H U \Lambda U^H\\
+    & = U \Lambda^2 U^H
+  \end{aligned}
+\]
+
+##23. 
+
+If we put the eigenvalues in a matrix like this:
+
+\[ \begin{bmatrix}
+  0 & -1 & -2\\
+  1 & 0 & -1\\
+  2 & 1 & 0
+\end{bmatrix}\]
+
+we can see the products all come to 0.
+ 
+## 24.
+
+Demonstrating Cayley-Hamilton
+
+\[
+  \begin{aligned}
+    & (T - \lambda_1I)(T-\lambda_2I)(T-\lambda_3I) = 0\\
+    & (T^2 - \lambda_1T - \lambda_2T + \lambda_1 \lambda_2 I)(T - \lambda_3) =0\\
+    & T^3 - \lambda_1 T^2 - \lambda_2 T^2 + \lambda_1 \lambda_2 T - \lambda_3 T^2 + \lambda_1 \lambda_3 T + \lambda_2 \lambda_3 T + \lambda_1 \lambda_2 \lambda_3 T =0\\
+    &T^3 - (\lambda_1 + \lambda_2 + \lambda_3)T^2 + (\lambda_1\lambda_2 + \lambda 1 \lambda_3 + \lambda_2 \lambda_3)T - \lambda_1 \lambda_2 \lambda_3 I = 0
+  \end{aligned}
+\]
+
+In this matrix, the columns gives the
+eigenvalues of $(A - \lambda_kI)$.
+It is clear the final product has 
+all zero eigenvalues.
+
+\[ \begin{bmatrix}
+  0 & \lambda_1 - \lambda_2 & \dots & \lambda_1 - \lambda_n\\
+  \lambda_2 - \lambda_1 & 0 & \dots     & \lambda_2 - \lambda_n\\
+  \vdots & \vdots & \ddots & \vdots\\
+  \lambda_n - \lambda_1 & \lambda_n - \lambda_2 & \dots & 0
+\end{bmatrix}\]
+
+For the first eigenvalue of the product:
+
+\[
+  \begin{aligned}
+    &\lambda_1^3 - (\lambda_1 + \lambda_2 + \lambda_3)\lambda_1^2 + (\lambda_1\lambda_2 + \lambda 1 \lambda_3 + \lambda_2 \lambda_3)\lambda_1 - \lambda_1 \lambda_2 \lambda_3  = 0\\
+    & \lambda_1^3 - \lambda_1^3 - \lambda_1^2 \lambda_2 - \lambda_1^2 \lambda_3 +\lambda_1^2\lambda_2 +\lambda_1^2 \lambda_2 +\lambda_1\lambda_2\lambda_3 - \lambda_1\lambda_2\lambda_3\\
+    & 0 = 0
+    \end{aligned}
+\]
+
+and so on.
+
+## 25.
+
+Proving Cayley-Hamilton:
+
+\[
+  \begin{aligned}
+    & A^2 (a+d)A + (ad-bc)I_2 = 0\\
+    & \begin{bmatrix}
+      a^2 +bc & ab + ad\\
+      ac + dc & bc-ad
+    \end{bmatrix} -
+    \begin{bmatrix}
+      a^2 + ad & ab + bd\\
+      ac +dc & ad + d^2
+    \end{bmatrix} +
+    \begin{bmatrix}
+      ad-bc & 0\\
+      0 & ad-bc
+    \end{bmatrix}\\
+    & = \begin{bmatrix}
+      bc -ad & 0\\
+      0 & bc-ad
+    \end{bmatrix} +
+    \begin{bmatrix}
+      ad-bc & 0\\
+      0 & ad-bc
+    \end{bmatrix}\\
+    & = \begin{bmatrix}
+      0 & 0\\
+      0 & 0
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+## 26.
+
+```{r, results='asis'}
+Jordan <- function(A) {
+  lambda <- unique(eigen(A)$values)
+  lapply(lambda, function(x) {
+    J <- diag(x = x, nrow = nrow(A))
+    J[col(J) - row(J) == 1] <- 1
+    J
+  })
+}
+A <- matrix(rep(0, 16), nrow = 4)
+A[upper.tri(A)] <- 1
+mat2latex(Jordan(A))
+```
+## 29.
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      3 & -2\\
+      -4 & 3
+    \end{bmatrix} \begin{bmatrix}
+      2 & 1\\
+      0 & 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      3 & 2\\
+      4 & 3
+    \end{bmatrix}\\
+    & A^{10} = M^{-1} \begin{bmatrix}
+      1024 & 10\\
+      3 & 1024
+    \end{bmatrix}
+    M\\
+    & e^A = M^{-1} \begin{bmatrix}
+      e^{2} &  1e^{2} \\
+      0 & e^{2}
+    \end{bmatrix} 
+  \end{aligned}
+\]
+
+## 30.
+
+a. $M = \m{0& 1\\ 1& 0}$
+
+b. $M = \m{-1 & 0 \\ 0 &1}$
+
+## 31.
+
+Only $A_1$ has eigenvalues 1 and 1, so it is similar to none. The same for $A_2$ and $(-1, -1)$.The latter two pairs are similar to each other.
+
+## 32.
+
+\begin{center}
+\begin{tabular}{l | l | l | l}
+Family & Description & Number & $\lambda$\\
+\hline
+1 & Zero matrix or one 1 & 5 & $(0, 0)$\\
+2 & Row or column of ones & 4 & $(1, 0$)\\
+3 & All 1s & 1 & $(2, 0)$\\
+4 & Upper triangular 1 &  1 & $(1, 1)$\\
+5 & Lower triangular 1 & 1 & $(1, 1)$\\
+6 & Identity transpose & 1 & $(-1, -1)$\\
+7 & Identity & 1 & $(1, 1)$\\
+\end{tabular}
+\end{center}
+
+## 35.
+
+\[
+  \begin{aligned}
+    & J = \begin{bmatrix}
+      c & 1\\
+      0 & c
+    \end{bmatrix}\\
+    & J^2 = \begin{bmatrix}
+      c^2 & 2c\\
+      0 & c^2
+    \end{bmatrix}\\
+    & J^3 = \begin{bmatrix}
+      c^3 & 3c^2\\
+      0 & c^3
+    \end{bmatrix}\\
+    & J^k = \begin{bmatrix}
+      c^k & kc^{k-1}\\
+      0 & c^k\\
+    \end{bmatrix}\\
+    & J^0 = I_2\\
+    & J^{-1} = \begin{bmatrix}
+      c^{-1} & -1c^{-2}\\
+      0  & c^{-1}
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+## 33.
+
+Similar matrices have kernels with the same basis.
+
+## 34.
+
+\[ \begin{bmatrix}
+  0 & 1\\
+  0 & 0
+\end{bmatrix} \neq 
+\begin{bmatrix}
+  0 & 2\\
+  0 & 0
+\end{bmatrix}\]
+
+## 36.
+
+Squaring an $A$ like this just moves
+the off-diagonal 1s one diagonal upward. So there are two eigenvectors:
+
+```{r, results = "asis"}
+A <- square(rep(0, 25))
+A[col(A) - row(A) ==1] <- 1
+A <-  A %^% 2
+
+J <- square(rep(0, 25))
+J[2,1] <- 1
+J[3, 2] <- 1
+mat2latex(J)
+```
+
+## 38. 
+
+$J$ has non-distinct eigenvectors $e_1, e_3$, while $K$ has non-distinct eigenvectors $e_1, e_4$.
+So they cannot be similar.
+# 41.
+
+a. True. A singular matrix will have a 0 eigenvalue somewhere, an
+invertible one will not.
+
+b. False. $\m{1&2\\0&2}$ is similar to $\m{1&0\\0&2}$
+
+c. True. $\Lambda_A = - \Lambda_{-A}$.
+
+d. True; they obviously have different eigenvalues.
+
+## 42.
+
+The respective Jordan forms are
+
+\[
+  \begin{aligned}
+    & AB = M^{-1}JMN^{-1}KN\\
+    & BA = N^{-1}KNM^{-1}JM
+  \end{aligned}
+\]
+
+# 44.
+
+a. $A^2$ and $B^2$ both have eigenvalues $\Lambda^2$.
+
+b. The square is not a one-to-one
+transformation, since squares have two roots
+
+c. $B$ is a Jordan block with the same eigenvalues ()
+
+d. $B$ is a non-Jordan form that
+cannot be diagonalized.
+
+e. Swapping two rows and then two columns is a similarity relation
+defined by a permutation matrix
+with the initial block $\m{0&1 \\1 & 0}$ (the identity with $e_1$ and $e_2$ swapped). So the output of the transformation is similar to the
+original matrix and therefore has the same eigenvalues.

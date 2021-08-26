@@ -1,0 +1,1859 @@
+
+Affine transformations aren't linear because THEY ARE NONVECTORIZED
+
+
+Note on transposes: a matrix can be seen either as a collection of linear combination of scalars to apply to other matrices, or as bases for such a transformation. Plotting the column vectors takes the second perspective (as linear combinations of the identity). Plotting a system of equations shows every possible linear combination of each row that equals the corresponding element of $b$; intersections between the row subspaces are points of solutions. Transposing converts from one form to another
+
+Diagonal matrices are special becasue each dimension of he RHS scales only the same dimension of the RHS, so no shearing occurs. This is why the cross product zeroes the diagonals
+
+For projection, if all but one coordinate is fixed for a set of vectors, all those vectors have parallel orthogonal components.
+
+An inverse is the unique matrix for which the two interpretations of matrix multiplication - sums of columns multiplied by scalars, or columns of row-vector dot products - give the same result. THis is only possible for square matrices, obviously.
+
+## 2.1
+
+## 24. 
+
+To prove the determinant formula, just conduct row elimination and record the operations on the inverse. To clear out the second row, we subtract by $c/a$ of the first row and divide by the resulting value of $d$ to get denominators of $d-\frac{bc}{a}$. Cancellation leaves $-c$ and $b$ over $ad-bc$. We clear out the first row and factor out the common $ad-bc$. The $1,1$ element then becomes $ad-bc+bc$, the left $-ab$. Dividing by $a$ gives the final formula $\frac{1}{ad-bc}\m{d&-b\\-c&a}$. So the off-dimension interactions are inverted and the common-dimension swapped.
+
+An inverse is the unique matrix for which the two interpretations of matrix multiplication - sums of columns multiplied by scalars, or columns of row-vector dot products - give the same result. THis is only possible for square matrices, obviously.
+
+
+## 37.
+If $x$ lies on a line between $v$ and $w$, it is spanned by those vectors and can be arrived at by some linear combination of them. From the second property of linear transformations
+$$
+c_1v+c_2w=x\\
+c_1T(v) + c_2T(w) = T(x)
+$$
+so $x$ still lies on the line. A linear transformation of a line maps it onto another line.
+
+## 40. 
+A transformation may be expressed
+
+$$
+\begin{aligned}
+T(x) = x_1T(e_1)+x_2(e_2)+\dots+x_m(Te_m)\\
+=T(x_1e_1)+T(x_2e_2)+\dots+T(x_me_m)
+\end{aligned}
+$$ 
+
+By the addition property:
+
+$$
+\begin{aligned}
+& = T(x_1e_1+x_2e_2+\dots+x_me_m)\\
+&=T(Ix)\\
+&T(x)=T(x)\\
+\end{aligned}
+$$
+Any vector can be expressed as a linear combination of the identity and its elements, so the identity is proved. 
+
+## 40. 
+All $R\rightarrow{R}$ linear transformations are simply scalar multiplication, increasing or reduce a scalar $x$.
+
+## 41. 
+$R^2$ to $R$ transformations project vectors onto the number line. The graph resembles a vertical line connecting the vector to the $x_1$ axis.
+
+## 42.
+
+We see the shadow of the cube.
+
+```{r}
+library(tidyverse)
+library(matador)
+cube <- expand.grid(c(0,1), c(0,1), c(0,1)) %>% 
+  as.matrix() %>% 
+  t()
+
+proj <- cbind(rep(-.5,2), diag(nrow=2)) %*% cube
+proj %>% t() %>% 
+  as.data.frame() %>% 
+  setNames(c("x", "y")) %>% 
+  ggplot(aes(x, y)) +
+  geom_point()+
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 0)
+             
+  
+```
+
+The null space of the transformation is
+$$
+\begin{bmatrix}
+x_1\\.5x_1\\.5x_1
+\end{bmatrix}
+$$
+
+
+##43.
+The dot product can be represented as $v_1^Tv_2$, so it is linear.
+
+For a $R^3\rightarrow{R}$ transformation, the matrix is a $3\times{1}$ projection. If we define this as $v$, the dot product of $v$ and any $x$ gives the projection.
+
+
+## 44. 
+We need a $3\times{3}$ matrix here
+
+The definition can be expanded:
+
+$$
+a\times{b} =
+\begin{bmatrix}
+0a_1b_1-a_3b_2+a_2b_3\\
+a_3b_1+0b_2+a_1b_3\\
+-a_2b_1+a_1b_2+0b_3
+\end{bmatrix}
+$$
+
+Using the signed elements of $v$ as coefficients, we have:
+
+$$
+\begin{bmatrix}0&-v_3&v_2\\
+v_3&0&-v_1\\
+-v_2&v_1&0\end{bmatrix}
+$$
+
+What an interesting pattern - the diagonals (the distance in the same dimension the vectors point in the same direction) get zeroed out, and the signs of the off-diagonals, (distance moved in opposite directions) are opposites. If we multiplied by -1 we could reverse the right-hand rule.
+
+## 45.
+The composite transformation is linear.
+
+$$ 
+\begin{aligned}
+T(x + h) = T(x) + T(h)
+kT(x) = T(kx)
+
+S(T(x) + S(T(h)) = S
+\end{aligned}
+$$
+## 50. 
+Only the trivial solution to the transition matrix exists, so there is no distribution vector. 
+
+To solve the transition matrix, first find the matrix $A$ of $Ax=y$ (the transition matrix itself). FOr each node, the coefficients of the other nodes are the the inverse of the number of connected nodes, so if $x_1$ connects only to $x_4$ its vector is $(0,0,0,1)$.
+
+Then note we are trying to solve for an equilibrium where each $x_i=0$. Set the augment column to 0, then replace the diagonals with -1 (to represent that each node should lose as much traffic as it gains).
+
+For instance:
+
+$$
+\begin{aligned}
+&A = \begin{bmatrix}
+0&1&0&0\\
+1/2&0&1/2&1\\
+1/2&0&0&0\\
+0&0&1/2&0
+\end{bmatrix}\\
+
+&A = \begin{bmatrix}
+-1&1&0&0\\
+1/2&-1&1/2&1\\
+1/2&0&-1&0\\
+0&0&1/2&-1\end{bmatrix}
+\end{aligned}
+$$
+
+Then solve the homogeneous system. With the solution, find the value of $t$ that results in the elements summing to 1. Then solve for each component in terms of that value of $t$.  If any elements are negative, it is not a distribution vector, and no even distribution is possible.
+
+## 51. 
+The distribution vector is $(1/13, 4/13,3/13,5/3)$.
+
+## 53.
+We obtain the distribution matrix by setting each node's coefficients to .05 and evenly distributing the remaining .8 among connected nodes. Note the diagonals are 1-.05 (traffic staying on each node). The obvious formula is:
+
+\[
+B = .2/NE +.8A
+\], four-fifths sent to connected nodes and the remainder divided evenly (E is the identity) because we assume 5% of traffic randomly stays in each node.
+
+I don't really feel like finding the distribution vector.
+```{r, results = "ais"}
+library(pracma)
+dist <- matrix(c(-.95,.45,.05,.05,
+                 .45, -.95, .05, .85,
+                 .45, .45, -.95, .05,
+                 .05,.05, .85, -.95), nrow = 4, byrow = T)
+
+mat2latex(rref(dist))
+```
+
+## 55.
+Solve a nasty distribution matrix.
+```{r, results="asis"}
+
+library(pracma)
+mat <- matrix(c(-.95,.45,.45,.05,
+                .05, -.95, .05, .85,
+                19/60, 19/60, -.95, 19/60,
+                .05,.45,.45,-.95), byrow = TRUE, nrow = 4)
+
+mat2latex(rref(mat))
+```
+## 57. 
+We solve the system to get 14 5-franc and 37 2-franc coins. The matrix to get the value and number of coins from the number of each is the inverse of the transformation matrix. I'll let R handle this:
+
+```{r, results = "asis"}
+mat2latex(solve(matrix(c(2,1,5,1), nrow = 2)) %*%  as.matrix(c(144, 51)))
+```
+
+Affine transformations aren't linear because THEY ARE NONVECTORIZED
+
+Diagonal matrices are special becasue each dimension of he RHS scales only the same dimension of the RHS, so no shearing occurs. This is why the cross product zeroes the diagonals
+
+For projection, if all but one coordinate is fixed for a set of vectors, all those vectors have parallel orthogonal components.
+
+The transpose of the identity reverses the order of vector elements. Is that what transposes do in general?
+
+Each added dimension gives a new degree of freedom; unless there are zeroes somewhere to nullify it, projecting to higher dimensions may be inconsistent, without enough information to produce the right linear combination.
+
+0 is the one constant that can appear in linear transforms because only it always gives the same scalar of 0, just as only the zero vector solves all systems.
+
+## 58.
+We solve the system to find the masses of platinum and silver to be 2400 and 2600, respectively. Clearly Hiero has been cheated.
+
+```{r}
+solve(matrix(c(1, .05, 1, .1), nrow=2)) %*% as.matrix(c(5000, 370))
+```
+
+##59. 
+The Fahrenheit-Celsius matrix is invertible. The matrix is:
+\[\m{-5/9&32\\
+0&1}\]
+and the inverse Celsius-Fahrenheit matrix is (by the formula):
+
+\[9/5\m{1&-32\\
+0&-5/9}\]
+
+which multiplies by 9/5, adds 32, and puts a placeholder 1 in the second element.
+
+##60. 
+Given this matrix, the product is:
+
+```{r}
+matrix(c(1,8,1/8,1), nrow= 2) %*% as.matrix(c(100, 1600))
+```
+
+The shearing here compresses one dimension into the other, since the off-diagonals are inverses of each other and the diagonals 1. _Off-diagonals of the matrix product contribute interactions between dimensions to the product_. Here each element of $b$ is the sum of the amount's value in _both_ currencies.
+
+b. Because both within-dimension and cross-dimension are exactly the same, , the determinant is 0 and the column vectors are just each others' inverses with order swapped. It will only be consistent for multiples of $(1,8)$ becasue that is the ratio of the vectors to each other.
+
+
+##62. 
+For exchange matrices in general:
+
+a. Diagonals are 1s: each currency in itself. 
+b. $a_ij=1/a_ji$. The first is the column currency in the row currency, the second the row currency in the column currency.
+
+The table comes out to:
+
+\[\begin{bmatrix}1&4/5&4/25&5/4\\
+5/4&1&4/25&1\\
+25/4&25/4&1&10\\
+4/5&1&1/10&1\end{bmatrix}\]
+
+c. $a_ik$ is i in units, of k, $a_kj$ k in units of j, and $a_ij$ their product: $i$ in units of $k$. Each elements may be expressed as a chain of linear combinations this way. 
+
+d. Just 1, since each vector is a linear combination of the others. Each row $i$ is the inverse of column $i$. Therefore, every vectors is some linear combination of the others and the rank is 1.The RREF would give the simplest linear combination of the uneliminated row in terms of each other currency.
+
+##63.
+This is as simple as creating a coefficient matrix from the free variables. FOr this example
+
+\[\m{x_1\\x_3\\x_4}=
+\m{1&-4\\
+0&5\\
+0&2}
+\m{x_2\\x_5\].
+
+##64.
+The bottom two rows eliminate, leaving 
+\[\m{1&2&0&3\\
+0&0&1&4}\]
+The matrix is 
+\[
+\m{-2&-3\\
+0&-4}\]
+
+Don't forget to flip the signs!
+
+# 2.2
+
+Using my plotting function, we see both horizontal and vertical shearing.
+
+```{r}
+plot_transform(m = matrix(c(0,2,1,0), nrow = 2), trans = matrix(c(3,1,1,2), nrow = 2))
+```
+
+2. A counterclockwise 60-degree rotation is:
+
+```{r}
+rotate <- function(theta){
+  matrix(c(cos(theta), sin(theta), -sin(theta), cos(theta)), nrow = 2)
+}
+
+rotate(60)
+```
+
+4. This is a rotation (right, I thin) combine with both horizontal and vertical shearing.
+So -1 in $1,2$ means rotate right.
+```{r}
+plot_transform(m = matrix(c(1,0,0), nrow = 2),
+               matrix(c(1, -1, 1,1), nrow = 2))
+```
+
+5. $cos(x)=.8sin(x)=.6$, so take the inverse to get in radians: `r asin(.6)/(2*pi)`
+
+## 6,7.
+
+If the line is $\v{2\\1\\2}$ and the line $\v{1\\1\\1}$, then the orthogonal projection is $\frac{5}{9} \v{2\\1\\2}$. The reflection over this line is the vector minus twice its component orthogonal to the line, which is the vector minus its _parallel_ component. This rearranges to twice $x^{\perp}$ minus $x$.
+\[refl=\v{2\\1\\2} - 2(\v{2\\1\\2}-\frac{5}{9} \v{2\\1\\2})\]
+\[refl= 2(-\frac{5}{9} \v{2\\1\\2}))- \v{2\\1\\1}\]
+
+
+8. \[\m{0&-1\\-1&0}\] is a dual shear.
+
+9. \[\m1&0\\1&1\] is a vertical shear with no scaling.
+
+10. By the formulas, the matrix of the projection onto $\v{4\\3}$ is 
+\[\frac{1}{25}\m{16&12\\
+16&9}\]
+
+The squares on the diagonals come from dotting $x$ with $w$ twice
+
+## 11.
+
+The reflection is $2P-I$. The unit vector on this line is $\v{4/5\\3/5$}, so we compute the projection onto that vector:
+
+\[\m{.64&.48\\
+.48&.36}\]
+then double and subtract 1. No need for scaling, these being unit vectors.
+\[\begin{bmatrix}\m{.28&.96\\
+.96&-.28}\]
+
+
+
+13. A reflection of a unit vector has the matrix:
+
+\[\m{2u_1^2-1-1&2u_1u_2\\
+2u_1u_2&u_2^2-1}\]
+There is no need to scale the orthogonal matrix because this is a unit vector.
+
+13. Generalizing to three dimensions, we find the row denotes the dimension of $u$, the column the dimension of $u$ by which it must be multiplied $u$. Thus:
+
+\[\m{u_1^2&u_1u_1&u_1u_3\\
+u_1u_2&u_2^2&u_2u_3\\
+u_1u_3&u_2_u_3&u_3^2}\]
+
+the sum of the diagonal is obviously $u$'s sum of squares.
+
+## 14.
+
+The reflection is obvious $2P-I$.
+
+## 16. 
+The reflection about a line $L$ defined by the angle $\theta$ is just the transformations composed in either order. So we just smush the matrices
+
+\[\m{(\cos{\theta}-sin{\theta})(u_1^2 +u_1_u_2)&
+(\cos{\theta}-sin{\theta})(u_2^2 +u_1_u_2)\\
+(\sin{\theta}+cos{\theta})(u_1^2 +u_1_u_2)
+(sin{\theta}+\cos(\theta)(u_2^2u_1+u_1u_2)\]
+
+
+A vector for which $Av=v$ lies on the line of reflection and is a multiple f$\v{b-1//b}$
+
+
+## 18.
+
+The projection onto the $xy$ plane in $R^3$ is given by:
+
+\[\m{1&0&-1/2\\
+0&1&-1/2}\]
+
+We just drop the movement in the $z$ direction, scaling by 1/2 to ensure unit length.
+
+## 19.
+
+Projection onto $xy$ plane:
+
+```{r}
+tcrossprod(c(0, 1, 0)) + tcrossprod(c(1, 0, 0)) %>% 
+  matador::mat2latex(sink = FALSE)
+```
+## 20.
+
+$xz$ reflection. 
+```{r}
+tcrossprod(c(0, 0, 1)) +tcrossprod(c(1,0, 0))
+
+A <- matrix(c(0, 0, 1, 1, 0, 0), nrow = 3)
+
+A %*% solve(t(A) %*% A) %*% t(A)
+```
+## 21.
+
+Rotation about $z$ through $\pi/2$. The $z$ coordinate
+stays constant, so \[\m{0&-1&0\\
+1&0&0\\
+0&0&0}\]
+
+## 23.
+
+Reflection over $xz$. 2 ways to solve this:
+
+1. Find an orthogonal basis for the subspace of the reflection. Compute
+matrices of projections for each vectors, then sum, then
+convert to a reflection.
+
+2. Obtain the matrix of the projection using the $A^T$
+trick. The cross-products matrix _is_ just $A$ with all directions scaled to unit length. 
+
+```{r}
+I <- diag(nrow =3)
+P <- tcrossprod(c(1,0, 0)) + tcrossprod(c(0, 1/sqrt(2), 1/sqrt(2)))
+
+A <- matrix(c(1, 0, 0, 0, 1 / sqrt(2), 1 / sqrt(2)), nrow = 3)
+P <- A %*% solve(t(A) %*% A) %*% t(A)
+
+```
+
+## 26.
+
+a.
+
+\[\m{4&0\\
+0&4}\]
+
+b. \[\m{1&0\\0&0}\]
+
+
+d.
+
+\[\m{1&2\\
+0&1}\]
+
+e.
+
+
+
+## 37. 
+The trace is:
+
+a. Projection: $u1_^2+u_2^2$: squared magnitude
+
+b. reflection: 0
+
+c. rotation: 2a
+
+d. Shear: 0
+
+
+## 38.
+
+Determinants:
+
+a. Projection: $u_1^2u_2^2-u_1u_2u_1u_2=0$. Noninvertible, since infinitely many points have the same projection.
+b. Reflection: $a^2-b^2$; always invertible, since $a^2=1-b^2\rightarrow{a\neq{b}}$
+c. Rotation: $a^2-b^2$, always invertible for the same reasons.
+
+d. $0k=0$, noninvertible.
+
+The inverse of a simple shear matrix is just the matrix with the shear constant's sign reversed, as in
+
+\[\m{1&k\\0&1}\]
+and \[\m{1&-k&0&1}\]
+
+The "unshear" matrix subtracts the vertical component that the original matrix added to the horizontal component.
+
+## 42.
+
+The projection of a projection is the same point; the transformation is idempotent.
+If the point lies on the line of reflection, then:
+
+\[u_1^4+u_1^2+u_2^2\\
+u_1^2(u_1^2+u_2^2)\\
+u_1^2\]
+
+by the unit-length constraint, an identity,a nd also:
+
+\[\meq{&u_1^3u_2+u_1u_2^3\\
+&u_1u_2(u_1^2+u_2^2)\\
+&u_1u_2}\]
+
+
+## 43.
+The inverse of the rotation matrix simply switches the sings of the diagonal. This amounts to rotating clockwise instead of counterclockwise.
+
+## 44.
+
+The inverse of a rotation combined with a scaling is:
+
+\[\frac{1}{a^2-+b^2}\m{a&b\\
+-b&a}\]
+
+such that the rotation is in the opposite direction and the determinant (the scaling factor) is divided out.
+
+## 45.
+
+The inverse of a reflection is 
+
+\[\frac{1}{-a^2-b^2}{-a&b\\
+b&a}\]
+Given that $a^2+b^2=1$ (unit length), the inverse is just
+\[\m{a&b\\
+b&-a}\]
+the original matrix.
+
+## 48.
+
+The next few problems build on the fact that for every linear transformation 
+$R^2\rightarrow{R^2}$, there exist a pair of unit vectors that remain orthogonal before
+and after the transformation. For  a rotation, these are the standard vectors.
+
+For this transformation, only the standard vectors and their opposite
+signs qualify.
+
+```{r}
+
+test_orthogonal <-
+  function(t_x, t = seq(0, pi / 2, length.out = 100)) {
+    out <- sapply(t, function(t) {
+      t(t_x %*% c(-sin(t), cos(t))) %*% (t_x %*% c(cos(t), sin(T)))
+    })
+    
+    t[which.min(abs(out))]
+  }
+
+test_orthogonal(matrix(c(2, 1, 2, -4), nrow = 2))
+
+t(matrix(c(2, 1, 2, -4), nrow = 2) %*% c(0, 1)) %*% (matrix(c(2, 1, 2, -4), nrow = 2) %*% c(-1, 0))
+```
+## 50.
+
+```{r}
+test_orthogonal(matrix(c(1, 0, 1, 1), nrow = 2))
+```
+
+## 51.
+
+```{r}
+test_orthogonal(matrix(c(2, 1, 1, 2), nrow = 2))
+```
+
+```{r}
+test_orthogonal(matrix(c(0, 5, 4, -3)))
+```
+
+
+
+# Sec. 2.3
+
+## 17.
+
+```{r}
+check_commute(square(1, 0, 0, 2))
+```
+All diagonal matrices
+
+## 18.
+
+```{r}
+check_commute(square(2, -3, 3, 2))
+```
+$b=-c$, $a=d$.
+
+## 23.
+```{r}
+check_commute(square(1, 3, 2, 6))
+```
+This is more complex. 
+
+\[\meq{b=2/3c\\
+&d=a + 5/3c\\
+\]
+
+## 19.
+
+All matrices \[ \m{a&b\\
+-c&d}\]
+
+commute with \[\m{0&-2\\
+2&0}\], plus whatever the inverse is.
+
+```{r}
+m <- matrix(c(0,2, -2, 0), nrow =2)
+ m %*% matrix(c(-5, 2, -2, -5), nrow = 2)
+ matrix(c(-5, 2, -2, -5), nrow = 2) %*%m
+```
+
+
+Diagonal matrices commute with diagonal matrices
+
+```{r}
+m <- diag(x = 2:4)
+
+comm <- diag(x =1, nrow = 3)
+
+comm[c(1,3)] <- c(1, 2)
+
+m %*% comm
+comm %*% m
+```
+
+
+
+## 27.
+Prove matrix distributivity. Easy from the properties of linearity.
+
+\[\meq{T(x)=A\\
+A(C+D)=AC+AD\\
+T(C+D)=T(C)+T(D)==AC+AD}\]
+
+\[T(x) = A\\
+T(y)=B
+\meq(T(x) + T(y)) =T(x+y)\\
+&T(x+y)(C)\\
+&T(x)C+T(y)C\\
+&AC + BC
+\]
+
+## 28.
+
+True by the second property of linear transformations.
+
+## 31.
+
+Row $i$ of $AB$ is the dot product $A_i\cdot{B_j}$. 
+
+
+## 31.
+
+Should two matrices have  defined product, row $i$ of AB is the the dot product of $A_i$ with each $B_j$.
+
+32. 
+$AX=XA$ for $A^{-1}$, $I$, the zero matrix, and probably others.
+# 43.
+
+the 90-degree rotation matrix squares to the identity
+
+$A^1001=A$
+
+```{r}
+mat_pows(matrix(c(0,1,1,0), nrow = 2), 2:4)
+
+```
+
+## 44.
+
+The rotation $pi/2$ degrees in either direction.
+
+45. A rotation matrix, for example
+
+
+```{r}
+mat_pows(matrix(c(0, 1, -1, 0), nrow = 2), 1:4)
+```
+
+## 43.
+
+The matrix of the rotation $2\pi/3$ radians counterclockwise.
+## 63. 
+
+No left inverse exists
+
+```{r}
+A <- matrix(c(1, 2,3,4,5,6), nrow = 3)
+
+l_inv <- solve(t(A) %*% A) %*% t(A)
+A %*% l_inv
+```
+## 64
+
+Nope!
+
+```{r}
+A <- matrix(c(1, 2,3,4,5,6), nrow = 2, byrow = TRUE)
+l_inv <- try(solve(t(A) %*% A) %*% t(A))
+
+```
+
+## 45.
+
+For a 120-degree rotation, $A^3=I$.
+## 46.
+
+$A^n=A$ for all projection matrices. An example:
+
+```{r}
+(matrix(c(9, 12, 12, 16), nrow = 2) * 1/25) %^% 2
+```
+
+
+## 47.
+
+Answered above.
+
+## 55.
+
+To zero out a partial-rank matrix you can multiply by a matrix whose rows are the ratios of the rows to each other.
+
+```{r}
+matrix(c(1, 2, 2, 4), nrow = 2) %*% matrix(c(-2, 1, -2, 1), nrow = 2)
+```
+
+
+## 58.
+
+If we transpose the first, have to transpose the second -columns now instead of rows.
+
+```{r}
+t(matrix(c(-2, 1, -2, 1), nrow = 2)) %*% matrix(c(2, 4, 1, 2), nrow = 2)
+```
+
+## 59. 
+How to "invert" a linearly dependent matrix...you can't, moron, because if no inverse exists $A^{-1}A=I$ has no solution.
+
+Trying to "find" the inverse $X$ results in an inconsistent systems:
+\[A = \m{2&1\\
+4&2}\]
+
+\[x_1+2x_2=0\\
+x_1+2x_2=1\]
+Because a dimension is collapsed $(ad=bc)$, you can't distinguish between diagonals and off-diagonals tog et the identity.
+
+## 60.
+
+No such matrix exists, as this matrix has no inverse.
+
+## 62.
+
+There is no left inverse.
+
+```{r}
+A <- matrix(c(1, 2, 3, 0, 1, 2), nrow = 3)
+
+l_inv <- ((solve(t(A) %*% A)) %*% t(A))
+
+A %*% l_inv
+```
+
+
+##. 66.
+
+Any lower triangular matrices where the nonzero elements do not share any row-column indices, e.g.:
+\[m{0&0&0\\
+0&0&0\\
+c&0d&0\] or
+
+
+## 67. 
+The product \[\m{1&1&1&1&\dots&1}A\] for any transition matrix is just \[\m{1&1&1&1&\dots&1}\], because this matrix sums the columns, and $A$ is only a transition matrix if all columns sum to 1.
+
+## 68.
+
+\[e = \m{1&1&1&\dots&1}\]
+\[\begin{aligned}
+& T(A)=T(B) =e\\
+& T(A(B))=T(A)B=eB=e
+\end{aligned}\]
+
+
+
+## 74.
+
+If $A$ is positive and and $B$ is not, their product in either direction must be positive.
+
+## 75.
+
+No $A^m=0$ and every column of $A$ contains at least one nonzero entry by the definition of a distribution vector. So $A^m_i\cdot{A_j}\neq{0}$, because for the nonzero $j$ $A^m_{ij}\cdot{A_{ji}}\neq{0}$
+
+
+## 77.
+Finding an example distribution vector. Page 1 has the highest rank.
+```{r}
+A <- matrix(c(0.4,0, 0.6, 0.2, 0.6, 0.2, 0.7, 0.1, 0.2), nrow =3)
+
+(A %^% 20) %>% round(digits = 1)
+```
+
+## 79.
+
+This is cheating, but the identity is $Ax=x$ for all $x$. Also any distribution matrix where the nodes have identical distributions.
+
+```{r}
+m <- matrix(c(.25, .75, .25, .75), nrow=2)
+m %*% matrix(c(1,3))
+
+m %*% c(3, 1)
+```
+
+## 80.
+
+A transition matrix has no limit if it involves column permutations, for example
+
+\[\m{0&1\\
+1&0}\]
+,which just shuffles its columns endlessly.
+
+## 81.
+
+If $Av=5v$, then $v$ is an eigenvector of $A$, so the eigenvalue gets squared as $A$ is raised to higher powers.
+
+\[A^2v=25v\\
+A^mv=5^m\]
+
+## 82.
+
+Walkthrough of a special case.
+
+```{r}
+A <- matrix(c(.4, .6, .3, .7), nrow = 2)
+A %*% as.matrix(1):2
+A %*% c(1, -1)
+```
+
+
+Obviously $A\m{1\\-1}=0.1\m{-1\\1}}$
+
+b.
+
+```{r}
+
+x <- c(1,0)
+solve(matrix(c(1, 2, 1, -1), nrow =2), c(1,0))
+
+Ax <- A %*% x
+```
+To express $Ax$ as a linear combination of these vectors, we find an LC of those vectors that gives $x$ and multiply $A$ by it.
+
+```{r}
+A %*% (matrix(c(1, 2, 1, -1), nrow =2) %*% c(1/3, 2/3))
+```
+
+
+```{r}
+A %^% 5 %*% matrix(c(1, 2, 1, -1), nrow =2) %*% c(1/3, 2/3)
+
+A %^% 5 %*% x
+```
+
+So we have:
+
+\[A^mx=A^m\m{1&1\\
+2&-1}\m{1/3\\2/3}\]
+
+
+This just finds an alternate basis for $x$.
+
+## 83.
+
+$Ax=x$ for a distribution vector with a zero if and only if, for the zero element
+$x_m$, every element of row $i$. This is so because that component of $Ax$ must
+be zero, so the sum of each $A_{ij]$ scaled by $x$'s nonzero components must be 
+0 as well, and the term corresponding to $x$'s zero component must also be 0,
+since otherwise the matrix's row sums after scaling by $x$ would not sum to 1,
+meaning $Ax$ would not be a distribution vector.
+If this is so, all entries of row $i$ of $A^m$ will remain 0 because $0k=0$ for
+all $k$. So $A$ cannot be regular if $Ax=x$ for an $x$
+with a zero component.
+
+## 84.
+
+If $A$ has rank $n$, then $n<m$, so it has full row rank. That means any $n$ of
+its column vectors span $R^n$, so some linear
+combination of the columns gives the identity.
+But because the matrix lacks full column rank, any
+$b$ has infinitely many solutions, so infinitely many right inverses exist.
+
+## 85.
+
+One, the inverse.
+
+##  Sec. 2.4
+
+## 21.
+
+$f(x)=x^2$ is noninvertible because negative and positive roots have the same square.
+
+## 22.
+
+$2^x$ is noninvertible because it is undefined for $y\leq{0}$.
+
+## 23.
+
+$f(x)=x^3+x$ is invertible.
+
+## 24.
+
+$f(x)=x^3-x$ is noninvertible; $f(1)=f(0)$.
+
+## 25.
+
+Invertible; $x1^3$ and $x_2$ both span $R$ and 
+have unique solutions.
+
+## 26.
+Invertible; both functions are invertible
+
+## 27.
+
+$x_1+x_2$ is noninvertible, any $x_1=-x_2$ returns 0
+
+$x_1(x_2)$ is also noninvertible, since same-signed pairs correspond to the same $y$.
+
+
+## 32.
+
+Only the identity and scalars of it have inverse $A^{-1}=A$.
+
+If $A$ is invertible, then $cA$ is invertible with matrix($cA^{-1})$
+
+\[T(A)=A^{-1}\\
+c(T(A)=c(T(A))=cA^{-1}\]
+
+## 30.
+
+If we have \[/m0&a&b\\
+-a&0&c\\
+-b&-c&0}\]
+
+none of the variables can be 0.
+
+## 31.
+
+The values have to satisfy
+\[\meq{&c_2a\neq{b}\\
+&-c_1a\neq{c}\\
+&-c_1b\neq{c_2c}}\]
+
+all must be nonzero.
+
+## 32.
+
+\[\meq{a^2+c^2=a\\
+}\]
+
+## 33.
+
+Matrices of the form
+
+\[\m{a&b\\
+b&-a}\]
+
+are involutory if $a^2+b^2=1$, without other constraints. All reflections have this property
+
+## 34.
+
+a. Diagonal matrices are invertible IFF all diagonal values are nonzero. If so, the inverse is:
+
+\[\m{1/a&0&0\\
+0&1/b&0\\
+0&0&1/c}\]
+
+the diagonal values inversed. 
+
+Obviously, if a diagonal element is 0, _an entire dimension is lost_, leaving no way to recover the input.
+
+b. This is true for a diagonal matrix of any size.
+
+## 35.
+
+The upper triangular matrix is invertible so long as the diagonal is all nonzero, with no other constraints. Because each column vector contains
+$m-j$ zeroes, none can be linearly dependent no 
+matter what values are chosen.
+
+c. The inverse of an upper triangular matrix is also upper triangular, as follows from the process of row elimination.
+
+d. The same rules apply to lower triangular matrices.
+
+## 36.
+
+If a diagonal element of a triangular matrix is 0, then the RREF inevitably produces a zero row
+because 0 is not a multiple of any nonzero scalar. so the system is singular.
+
+## 37.
+Scalars of invertible matrices remain invertible.
+\[A^{-1}A=I\\
+(1/5)A^{-1}(5A)=I\\
+\]
+
+The scalar's inverse is the inverse of the scalar,
+naturally.
+## 38.
+
+Inverse of a shear
+
+\[\m{1&k\\
+0&-1}^{-1}=\m{
+1&-k\\
+0&-1}\]
+
+
+## 39.
+
+Matrices of this form are invertible. The inverse
+just has the opposite sign of the shear term.
+
+\[\m{1&0&0\\
+0&1&0\\
+-1/2&0&1}^{-1}=
+\m{1&0&0\\
+0&1&0\\
+1/2&0&1\]
+
+The opposite sign of the shear value would be scaled by the inverse of the value of the corresponding diagonal.
+
+## 40.
+
+If $A$ has two equal columns, then $A$ does not
+form a basis because each column has infinitely 
+many linear relations in terms of the others.
+Therefore, each $y$ in its range, even if spans the target, lacks a unique representation and so
+fails to be invertible.
+
+## 41.
+
+Inverses of:
+
+a. Rotation: 
+\[/m{\cos\theta&s\sin\theta\\
+-\sin\theta&\cos\theta}\]
+
+Counterclockwise subtracts $y$ from $x$, clockwise $x$ from $y$.
+
+b. Refection: Itself:
+
+c. Projection: noninvertible, as $u_1^2u_2^2=(u_1u_2)^2$
+
+d. Scaling: invertible, as always diagonal with nonzero values.s
+
+
+## 42.
+Permutation matrices are invertible. If $P$ has a 1 in $ij$, $i\neq{j}$, then $P^{1}$ has a 1 in $ji$. In less dumb words, the inverse is the transpose and the transpose the inverse because the columns are orthogonal:
+
+```{r}
+solve(matrix(c(0, 0, 1,1,0,0,0,1,0), byrow = TRUE, nrow = 3))
+
+```
+
+
+## 43.
+
+Given $A$ and $B$ are invertible:
+\[y=A(Bx)\\
+A^{-1}y=Bx\\
+x =B^{-1}A^{-1}y\]
+
+44. The inverse of the rotation-scaling
+
+\[m{a&-b\\
+b&a}\]
+is
+\[\frac{1}{a^2+b^2\m{a&b\\
+-b&a}\]
+
+like that for a regular rotation, except we have to reverse the scaling factor.
+
+## 45.
+
+The reflection inverse is trickier. But we know $-a^2-b^2=-1$, so:
+
+\[\m{a&b\\
+b&-a}\
+\meq{\m{\frac{1}{-a^2-b^2}}\m{-a&-b\\
+-b&a}
+\m{a&b\\
+b&-a}\]
+
+As we'd expect geometrically, the reflection is its own inverse.
+
+## 45.
+
+
+## 28.
+
+Scalar associativity
+
+\[T(x) = A
+\meq{k(AB)
+kT(b)=T(kB)=A(kB)}\\
+\]
+
+## 29. 
+Consider a rotation followed by a rotation. GEometrically, this is obviously a rotation. Its matrix is
+
+\[\m{\cos{\alpha}\cos{\beta-\sin{\alpha}\sin{\beta}& -\cos{\beta}\sin{\alpha}-\cos{\alpha}\sin{\alpha}\\
+\cos{\alpha}\sin{\beta}+\cos{\beta}\sin{\alpha}&\cos{\beta-\sin{\alpha}\sin{\beta}\\]
+
+with the typical matrix form of a rotation. Using trig identities, this is 
+\[\m{\cos{\alpha-\beta}&-\sin{\alpha+\beta}\\
+\sin{\alpha+\beta}&\cos{\alpha-\beta}\]
+
+So we rotate by the sum of the angles.
+
+
+# 44.
+
+Matrices filled by column sequence seem to be uninvertible past the $2\times{2}$
+```{r}
+map(2:12, ~matrix(seq(1, .x^2), nrow = .x)) %>% 
+  map(~try(solve(.x)))
+```
+
+## 47.
+
+$3^x$ has a unique value for every $x$ but is
+noninvertible ebcause undefined for $(-\infty,0]$.
+
+## 48.
+\[\meq{B=A^{-1}\\
+BA=I_n}\]
+so $B$ has $n$ rows. If it has $m$ columns, $I$ has
+$m rows$. But.
+
+\[\meq{AB=I_m}\]
+so $A$ has $m$ rows and $n$ columns so multiplication with $B$ is defined. $B$ has
+$m$ columns, so $m=n$.
+
+## 49.
+
+\[\meq{I_n-A)x=b\\
+&x=(I_N-A)^{-1}}\]
+
+For the Israeli economy, the tech matrix and its
+inverse. This ignores the consumer demand vector,
+which has to be dded to $Ax$.
+
+```{r}
+A <- matrix(c(.293, .0, 0, 
+                   .014, .207, .017,
+                   .044, .01, .216), byrow = TRUE, nrow = 3)
+I <- diag(nrow = 3) 
+b <- c(13.3, 17.6, 1.8)
+A <- I - A
+A_inv <- solve(A)
+
+mat2latex(A_inv)
+```
+
+b.
+If only one industry requires output, multiplying by the demand vector just selects that industry's column, giving the demands $j$ makes of each industry $i$ to ensure $Ax=x$.
+just selects the inverse's first column.
+Subtracting $I$ removes the demand each industry puts on itself (always 1 per unit), leaving only
+what must be produced to satisfy other industries.
+
+```{r}
+A_inv %*% c(2, 0, 0)
+```
+c.
+The matrix represents the demands the industries require to produce as much as they consume; it is the amount "left over" after multiplying by some $b$. Industries always require some of their own input.
+
+d.
+Since the required demands are now `r A_inv %*% c(1, 1, 0)`, the manufacturing sector must make greater demands to satisfy its own needs in addition to consumer demand.
+
+e. 
+
+The columns represent industry $j$'s demands of the other industries in order to work together with the other industries to generate enough output for a given input.
+
+In general, subtracting $I$ from a removes the values of the input vector from computation - a useful property!
+## 67.
+
+False: $(A+B)^2\neq{A^2+2AB+B^2}$. 
+
+```{r}
+A <- matrix(sample(1:100, 4), nrow = 2)
+B <- matrix(sample(1:100, 4), nrow = 2)
+
+(A+B ) %^% 2
+
+(A %^% 2) + (2 *(A %*% B)) + (B %^% 2)
+```
+
+
+
+## 51.
+
+If $A$ lacks full row rank, at least one row is
+redundant. That row, $i$, will zero out in elimination. The system holds only if $b_i$ is
+the same linear combination of $b$'s elements as that row is of $A$'s rows, i.e.$Eb_i\neq{b_i}$ of the row-reduced $b$.
+
+So $Ex=c$ is inconsistent for some $c$. We have
+shown elsewhere that $E^{-1}E=A$, so $A$ must be
+inconsistent for some vectors as well.
+
+Something not right here.
+## 52.
+
+Not hard to find an inconsistent vector.
+
+```{r}
+A <- matrix(c(0,0,0,1, 1, 2, 3, 4, 2, 4, 6, 8), nrow =4)
+
+try(gen_inverse(A, c(3, 6, 9, 13)))
+```
+
+## 53.
+
+```{r}
+A <- square(3, 3, 1, 5)
+lambda <- 2
+
+A2 <- A -diag(nrow =2) *lambda
+```
+
+I choose a vector in $A$'s kernel, $\m{1\\-1}$.
+
+Is how that $Ax=\lambda{x}$ - this linear combination equals the value that must be subtracted from the original matrix to cause linear dependence. So the eigenvalue can be seen as a scalar of the identity that if added to $A$ would make it linearly independnet.
+
+We could also use the determinant and solve
+\[(3-\lambda)(5-\lambda)=3\]
+
+```{r}
+x <- c(1, -1)
+A %*% x
+diag(nrow =2) %*% x * lambda
+```
+## 54.
+
+$\lambda=6$.
+
+
+We are asked to interpret some inverses.
+
+## 57.
+
+Reflection over the line that forms the angle $\theta$.
+
+## 60.
+
+Reflection over the line of `r asin(-.8)`.
+
+## 61.
+
+Clockwise rotation 45 degrees.
+
+```{r}
+plot_transform(trans = square(1, -1, 1, 1))
+```
+## 65.
+
+Horizontal shear.
+
+```{r}
+plot_transform(trans = square(1, 1, 0, 1))
+```
+## 66.
+If two matrices are invertible, so is the
+product.
+\[\meq{(AB)(BA)^{-1}=I\\
+&AB = BA}\]
+The equation only holds if both $A$ and $B$ are
+invertible.
+
+## 68.
+
+\[\meq{&(A+B=C)\\
+&(A+B)^2\\
+&CC\\
+&C(A+B)\\
+&CA+CB\\
+&(A+B)A + (A+B)B}\]
+
+False for the same reasons
+
+## 69.
+
+False. Am invertible sum of matrices does not mean the components are invertible. 
+
+## 70.
+
+\[\meq{&(A^2)^{-1}=(A^{-1})^2\\
+&(AA)^{-1} = 5A^{-1}A^{-1}\\
+&A^{-1}A^{-1}=A^{-1}A^{-1}}\]
+
+# 72.
+
+\[\meq{&ABA^{-1}=B\\
+&BA^{-1}\neq{A^{-1}B}}\]
+
+## 73.
+
+True.
+
+\[\meq{(ABA^{-1})^3=AB^3A^{-1}}\\
+ABABABA^{-1}=AB^3A^{-1}\\
+AB^3=AB^3\]
+
+
+## 74.
+
+I'm satisfied this works.
+
+```{r}
+I = diag(nrow = 2)
+
+A <- matrix(sample(-100:100, 4), nrow = 2)
+
+(I +A) %*% (I + solve(A))
+
+2*I + A + solve(A)
+```
+
+
+
+For any invertible $S$ in $R^m$,t here exists a unique transformation to $R^n$ that may be expressed:
+
+\[B=\m{T(v_1)&T(v_2)&\dots&T(v_m)}\]
+
+Which is just the definition of any linear transformation using $S$ as a basis instead of $I$.
+
+## 75.
+
+True if both $A$ and $B$ are invertible.
+
+## 78.
+
+We invert the matrix of inputs to get the underlying transformation from $I$, then multiply the matrix of the outputs by this inverse to "peel off" the intermediate transformation and reveal $A$.
+
+```{r}
+A_inv <- solve(matrix(c(1, 2, 2, 5), nrow = 2))
+
+res <- matrix(c(7, 5, 3, 1, 2, 3), nrow = 3) %*% A_inv
+
+res %*% solve(A_inv)
+```
+
+## 79.
+
+```{r}
+A_inv <- solve(matrix(c(3, 1, 1, 2), nrow = 2))
+
+res <- matrix(c(6, 2, 3, 6), nrow = 2) %*% A_inv
+
+res %*% solve(A_inv)
+```
+
+
+## 81.
+
+Find matrices of a geometric rotation and reflection.
+```{r}
+A_inv <- solve(matrix(c(1, -1, -1, 1, 1, 1, -1, -1, 1), nrow = 3))
+
+res <- matrix(c(-1, -1, 1, 1, 1, 1, 1, -1, -1), nrow = 3) %*% A_inv
+
+res %*% solve(A_inv)
+
+res <- matrix(c(-1, 1, -1, 1, 1, 1, -1, -1, 1 ), nrow = 3) %*% A_inv
+
+res %*% solve(A_inv)
+```
+
+## 82.
+
+This one asks us to try elimination matrices.
+
+a. 
+\[EA=\m{a&b&c\\
+-3a+d&-3b+e&-3c+f\\
+g&h&k}\]
+
+b. 
+
+\[EA=\m{a&b&c\\
+d/4&e/4&f/4\\
+g&h&k}\]
+
+c. The permutation to swap the bottom two rows is:
+
+\[P=\m{1&0&0\\
+0&0&1\\
+0&1&0}\]
+
+We have the three elementary matrices: addition, scaling, and permuting.
+
+## 83.
+
+Yes. The inverse reverses the transformation, so it is the opposite sign of the row subtraction, the inverse of the scalar for scaling, and the transpose of the permutation for permutations. 
+
+## 84.
+
+It should be obvious that elementary matrices exist for all matrices. We can compose them all into a single matrix. For example:
+
+```{r}
+E <- compose_trans(list(
+  matrix(c(1, -3, 0, 1), byrow = TRUE, nrow = 2),
+  matrix(c(1, 0, 0, 1 / 2), nrow = 2, byrow = TRUE),
+  matrix(c(0, 1, 1, 0), nrow = 2)
+))
+
+A <- matrix(c(0, 1, 2, 3), nrow = 2)
+
+E %*% A
+```
+
+The inverse of the elimination matrix is the original matrix. This works for any invertible matrix because:
+
+\[\meq{&EA=I\\
+&A=E^{-1}I\\
+&A=E^{-1}}\]
+
+so since $E$ exactly reverses the transformation $A$ applied to $I$, its inverse _is_ $A$.
+
+```{r}
+solve(E)
+```
+
+
+## 88.
+
+Say we have an invertible $A$ and noninvertible $B$. Applying $A$'s elimination matrix to $AB$ reverts it to $B$
+
+\[\meq{&EA=I\\
+&(EA)B=IB\\
+E(AB)=B}\]
+
+If we apply it to $I$, we get the square of the elimination applied to $A$:
+
+\[\meq{&EA=I\\
+&A=E^{-1}I\\
+&E^2A=EI}\]
+
+## 89.
+
+The product of two lower-triangular matrices is also lower triangular because only the elements in the lower triangle interact in multiplication, meaning the upper triangle remains zeroes.
+
+## 90.
+
+Time for $LU$ factorization. We factor out the matrix. Note that the lower triangle of the _elimination_ matrix is multiples of the rows _after each successive elimination_, while $L$ is multiples _of the original rows_, since it works in one pass.
+
+```{r}
+A <- matrix(c(1, 2, 2, 2, 6, 2, 3, 7, 4), nrow = 3)
+A_l <- mat2latex(A, sink = TRUE)
+
+I <- diag(nrow =3)
+E <- replace(I, lower.tri(I), c(-2, -4, 1)) 
+L <- replace(I, lower.tri(I), c(2, 2, -1))
+
+U <-  E %*% A
+D <- diag(x = diag(U))
+U_scaled <- sweep(U, 1, diag(U), `/`)
+
+L %*% U
+
+L %*% D %*% U_scaled
+
+```
+\[A = `r A_l`\]
+\[A = `r mat2latex(L, sink=TRUE)``r mat2latex(U, sink = TRUE)`\]
+\[\[A = `r mat2latex(L, sink=TRUE)``r mat2latex(D, sink = TRUE)``r mat2latex(U_scaled, sink = TRUE)`\]
+
+## 92.
+
+The matrix \[\m{0&1\\1&0}\] can't be factorized because the diagonal is zeroes; the on-dimension elements would zero out in the multiplication
+
+\[L=\m{}]
+# True or False?
+
+
+## 2.
+
+True, inverses commute.
+
+## 6.
+
+True.
+\[(A^2)^{-1}=(A^{-1})^2\\
+(AA)^{-1}=A^{-1}A^{-1}\\
+A^{-1}A^{-1}=A^{-1}A^{-1}\]
+
+
+## 99.
+
+\[\meq{&A^2=A\\
+&A^2A^{-1}=AA^{-1}\\
+A=I\]
+
+The identity is the only invertible matrix such that $A^2=A$.
+
+## 101.
+
+The entries of $A$ are less than or equal to $s$, the column sums of $B$ less than or equal to $r$. Each entry of $AB$ is the dot product of a row of $A$ and a column of $B$ Assuming both quantities are maximal, the $s$ of the row factor out, so.
+
+\[\meq{&sB_{j1}+sB{j2}+\dots4B_{jn}\\
+&s(B_{j1}+B_{j2}+\dots+B_{jn})\\
+&sr}\]
+
+## 102.
+
+a. If all column sums of $A$ are less than 1 and all entries positive or nonzero, than all entries are also less than 1. So scaling any column by any element reduces the column sum further.
+
+Assume entry $ii$ of $A$ is $r$, such that all other entries of column $i$ are 0. Then $A^2_{ii}=r^2$, etc. More generally, this dot product is the sum of squares, which is at most $r^2$:
+
+\[\meq{&A_{kk}=A_1^A_2+\dots+A_nA_n}\\
+=\sum_{i=1}^{n}A_i^2\\
+&=r^2}\]
+
+C. The limit is 0, so the result can be expressed $I-A$
+
+
+d.
+
+\[\meq{&(I_n-A)(I_n+A+A^2+\dots+A^m)\\
+&I-A+A-A^2+A^2-A^3+\dots+A^m-A^{m+1}\\
+&I-^#+A^m-A^{m-1}}\]
+
+So in other words,
+
+
+## 104.
+
+From the given information, here are the matrix for the eye's color conversion and the sunglasses.
+
+The eye performs the inverse of the M transformation, converting intensities back to colors.
+
+a.
+```{r}
+M <- matrix(c(rep(1/3, 3),
+              1, -1, 0,
+              1, -1/2, -1/2), nrow = 3, byrow = TRUE)
+
+A <- diag(x = c(1, 1, 0), nrow = 3)
+
+C <- M %*% A
+
+M
+A
+C
+
+solve(M)
+```
+a. 
+
+
+# True or False?
+
+## 1.
+
+## 2.
+
+True; invertible matrices commute with their
+inverses.
+
+## 4.
+
+True; it's a rotation combined with a scaling.
+
+```{r}
+matador::plot_transform(trans = matador::square(.5, .5, -.5, .5))
+```
+
+## 7.
+
+False, few matrices commute
+
+## 8.
+
+True, $AB=I_n$ means inverse.
+
+## 9.
+
+False; it will be $3\times{5}$.
+
+## 11.
+
+False; it is non-invertible if $k$ is 5 or 1.
+\[\meq{&k^2- 6k = -10\\
+&k^2-6k +10 = 0\\
+&(k-5)(k-1) =0}\]
+
+## 12.
+
+\[\m{k-1&-2\\
+-4&k-3}\]
+
+Noninvertible if:
+
+\[\meq{&k^2-4k + 5 = 0}\]
+
+## 13.
+
+True for some ugly polynomial roots.
+
+## 14.
+
+False, \[\m{1&1/2&0&1/2}\] never becomes regular because the 2,1 dot product is always 0.
+
+## 16.
+
+True; we can use inverses.
+```{r}
+B <- matrix(1:4, nrow = 2, byrow = TRUE)
+C <-  matrix(5:8, nrow =2)
+D <- matrix(rep(1, 4), nrow =2)
+
+A <- solve(B) %*% D %*% solve(C)
+
+B %*% A %*% C
+```
+## 18.
+
+True
+
+## 21.
+
+False; invertible matrices never, ever have identical rows.
+
+# 22.
+
+True, $A^2=I$ means invertibility.
+
+## 23.
+
+False.
+
+## 24.
+
+False.
+
+## 25.
+
+False.
+```{r}
+plot_mat(square(1, 1, 1, -1), fix_coords = TRUE)
+```
+
+
+
+
+True.
+
+\[\det(2A) = 2ad-2bc=2(ad-bc)\]
+
+but
+
+\[\det(A)=0
+\det(2A)=2(ad-bc)=2(0)=0\]
+
+## 27. 
+
+True; it is a diagonal matrix with a diagonal of
+$ad-bc$.
+
+## 38. 
+
+If $A$ and $B$ commute, then:
+
+\[\meq{A^2N=BA^2\\
+AAB=BAA
+ABA=Aba
+}\]
+
+## 28.
+
+True for an upper triangular matrix with a zero diagonal:
+
+```{r}
+square(0,0, 1, 0) %^% 2
+```
+
+
+## 29.
+
+True; \[\m{0&-1\\1&0}^4=I\] because it is a 90-degree rotation. Were the rotation not a multiple of $2\pi$ this would not be so.
+
+## 30.
+
+False. No matrix has inverse
+\[\m{1&1\
+1&1}\]
+because that would require _this_ matrix to have an inverse, which it cannot.
+
+## 31.
+
+False. If a transition matrix is regular, its zeroes eventually become nonzero, so at the very least$A^2\neq{A}$.
+
+
+## 25.
+
+If $A^17=I_2$, this matrix could be the rotation about $2\pi/17$ radians.
+
+## 33.
+
+True; if a matrix is invertible, so are all its
+submatrices.
+
+## 34.
+
+True 
+\[A^2(A^2)^{-1}=I\\
+AAA^{-1}A^{-1}=I\\
+I=I\]
+
+## 35.
+
+False. If $A^17=I$, $A$ could be a rotation $2\pi/17$ radians
+
+```{r}
+theta = (2*pi) /17
+square(cos(theta), sin(theta), -sin(theta), cos(theta)) %^% 17
+```
+## 36.
+
+False for the same reasons; it could be any
+involutory matrix.
+
+
+Matrix commutativity doesn't chain
+\[AB=BA\\
+BC=CB\\
+BCA=CBA=CAB\\
+ABC=ACB=BAC\]
+
+
+```{r}
+A <- matrix(c(1,2,-1,0,
+              0,1,1,5,
+              3,-4,2,-2,
+              1,0,3,-1,
+              1,-1,0,0), nrow =5, byrow = TRUE)
+
+b <- matrix(c(2, 3, -2, 0), nrow = 4)
+
+A %*% b
+```
+
+## 36. 
+
+False. If $A^2=I_2$, it could be a reflection, not just $I$ or $-I$.
+
+## 39.
+
+True.
+\[AB=BA\\
+AAB=ABA\\
+AAB=BAA\\
+A^2=BA^2
+\]
+
+
+## 40.
+
+False; involutory matrices beyond the identity exist.
+
+## 41.
+
+True; once it becomes positive, a transition matrix never loses that property because a zero dot product cannot occur when all values are positive.
+
+# 42.
+
+False; an invertible transition matrix would most likely have negative entries for its inverse, making it not a transition matrix.
+## 43.
+
+False; the sum of invertible matrices is not necessarily invertible
+
+
+# 45. 
+
+True; all reflections are their own inverses:
+
+\[\frac{1}{-a^2-b^2}\m{-a&-b\\-b&a}\\
+-1\m{-a&-b\\
+-b&a}
+\m{1&b\\
+1&-b}\]
+
+# 46.
+
+True, I think...
+\[(Av)\cdot(Aw)=v\cdot{w}\]
+
+Let $Av=c$ and $Aw=b$
+
+\[c\cdot{b}=v\cdot{w}\\
+Av=c\\
+v=A^{-1}c\\
+AA^{-1}c\cdot{AA^{-1}b}=v\cdot{w}\\
+v\cdot{w}=v\cdot{w}\]
+
+
+## 47, 48.
+
+These questions are about left and right inverses, which exist for some matrices. 
+
+
+## 49.
+
+True if $A$ is the opposite sign of its inverse?
+
+\[A^2+3A+4I=0\\
+AA+3A=-4I\\
+A(A+3A)=-4I\\
+A+3A=A^{-1}4I\\
+4A=-4A^{-1}\\
+A=-A^{-1}\]
+
+
+## 50.
+
+True. $A$ must be the zero matrix
+\[(A^2=0\\
+AA=0\\
+A=A^{-1}0\]
+
+## 52.
+
+True. $T$ is a linear transformation,a nd so is the cross product (since it has a matrix form). Let $A$ be that matrix. Therefore:
+
+\[T(A)=A\]
+
+## 53. 
+False. An invertible matrix of only one digit must have at least $n-1$ zeroes to prevent linear dependence, since otherwise a row or column must be repeated. 8 zeroes in a $10\times{10}$ is not enough.
+
+```{r}
+try(solve(matrix(c(rep(1, 92), rep(0, 8)), nrow = 10, byrow = TRUE)))
+```
+
+## 55.
+
+Nope!
+
+```{r}
+try(solve(matrix(c(0, 0, 1, 0), nrow = 2)))
+```
+
+## 56. 
+
+False. If $A$ lacks full row rank, then $A^2$ will as well (since $A$ does not span $R^n$). Therefore inconsistent systems are possible for some $b$. If $A$ is invertible:
+
+\[A^2x=b\\
+Ax=A^[-1}b]\]
+
+False unless $b$ is the zero vector and/or $A$ the identity.
+
+## 57.
+
+False. Proof by contradiction.
+\[A^{-1}A=I\\
+-(A)A=I\\
+-A^2=I
+A^2=-I\\
+A=-A^{-1}I\\
+A=-A\]
+
+## 58.
+
+True. If any such matrix existed, it would satisfy $A^4=I$. 
+
+```{r}
+library(matador)
+A <- matrix(c(1, 0, 0, -1), nrow =2)
+mat_pows(A, 2)
+M <- mat2latex(A, sink = TRUE)
+```
+
+\[\begin{aligned}
+&A^2=M\\
+&A=A^{-1}M\\
+&(A^{-1})^2=M\\
+&(A^{-1})^2=A^2\\
+&A^4=I\\
+&A^2A^2=I\\
+&A^4=I
+\end{aligned}\]

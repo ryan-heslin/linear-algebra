@@ -1,0 +1,125 @@
+---
+title: "Notes"
+author: "Ryan Heslin"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+```
+
+
+```{r}
+
+```
+
+##4.
+
+If $Q_1$ and $Q_2$ are both orthogonal, so is $Q_1Q_2$. 
+\[
+  \begin{aligned}
+    & (Q_1Q_2)(Q_1Q_2)^T=I\\
+    & Q_1Q_2Q_2^TQ_1^T = I\\
+    & Q_1Q_1^T = I\\
+    & I = I
+  \end{aligned}
+\]
+
+##5.
+
+Show the reflection matrix $R = 2P-I$ is orthogonal. I proved in the last chapter that $R^2=I$, and since it is symmetric, $R^TR=I$, making it orthogonal as well.
+
+
+## 8.
+
+Example showing that projections onto non-orthogonal vectors sum to more than $b$:
+
+
+```{r}
+b <- 1:2
+
+b - (tcrossprod(c(1, 0)) %*% b) + (tcrossprod(c(1, 2))) %*% b
+```
+
+## 9.
+
+If $q_1$ and $q_2$ are orthogonal, the closest combination to $q_3$ is $0q_1 + 0q_2$
+
+## 10.
+
+Given GRaham-Schmidt inputs $a$ and $b$, $a = ||a||u_1||$, and $b = ||a||u_1 + u_1 \cdot b$
+
+## 11. 
+
+Upper triangular orthogonals must be diagonal. Since $Q^2=I$, each diagonal element $Q_{ii}$ must be $\pm 1$. 
+
+## 18.
+
+\[
+  \begin{aligned}
+    & A = QR\\
+    & P = QR((QR)^TQR)^{-1}(QR)^T\\
+    & = QR(R^TQ^TQR)^{-1}R^TQ^T\\
+    & = QR(R^TR)^{-1}R^TQ^T\\
+    & = QQ^T
+  \end{aligned}
+\]
+
+If $Q$ is square, then the projection is the identity.
+
+## 31.
+
+a. If $Q$ is orthogonal, $Q^{-1}$ is as well by definition.
+
+b. True. For a $3 \times 2$,  $Qx = x_1q_1 + x_2q_2$. Since the columns are unit length, the sum of squares doesn't change.
+
+## 32.
+
+\[x_1 + x_2 + x_3 - x_4 = 0\]
+
+All solutions
+\[
+  \begin{bmatrix}
+  -1 & -1 & 1\\
+  1 & 0 & 0\\
+  0 & 1 & 0\\
+  0 & 0 & 1
+  \end{bmatrix}
+\]
+
+Non-solutions: $\m{-1\\-1\\-1\\1}$
+
+If $b = (1, 1, 1, 1)$, then its projection $S^{\perp}$ is $` r tcrossprod(1/4 * c(-1, -1, -1, 1)) %*% rep(1, 4)$, leaving $\m{7/8\\7/8\\7/8\\9/8}$ in $S$.

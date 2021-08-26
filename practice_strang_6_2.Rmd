@@ -1,0 +1,673 @@
+---
+title: "Section 6.2 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+$QQ^T=I$ is analogous to $\pm 1^2 = 1$
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+\newcommand{\rot}[1]{
+\begin{bmatrix}
+\cos{(#1)} & -\sin{(#1)}\\
+
+\sin{(#1)} & \cos{(#1)}\\
+\end{bmatrix}
+}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+## 1.
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      a & 2 & 2\\
+      2 & a & 2\\
+      2 & 2 & a
+    \end{bmatrix} \quad
+    B = \begin{bmatrix}
+      1 & 2 & 4\\
+      2 & b & 8\\
+      4 & 8 & 7
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+$A$: $a > 2$. $B$: no numbers 
+
+## 2.
+
+$A$: pivots are $(2, 3/2, 0)$, so no
+
+$B$: pivots are $(2, 3/2, 1)$, so yes
+
+\[C^2 = \begin{bmatrix}5 & 2 &1\\
+2 & 3 & 2\\
+1 & 2 & 5
+\end{bmatrix}\]
+
+By inspection, it's obvious some
+pivots are 0.
+
+## 3.
+
+\[\begin{aligned}
+& \det A = 1(1- b^2) - b(b + b^2) + -b(b^2 + b)\\
+& = 1 - b^2 - 2(b^3 + b^2)\\
+& = -2b^3 -3b^2 +1
+\end{aligned}
+\]
+
+Can't find an obvious value
+to make it negative.
+
+## 4.
+
+We can diagonalize since $A$ is symmetric.
+
+\[
+  \begin{aligned}
+    & A = S \Lambda S^{-1}\\
+    & A^2 = S \Lambda^2 S^{-1}\\
+    & A^{-1} = S \Lambda^{-1} S^{-1}
+  \end{aligned}
+\]
+
+## 5.
+
+\[
+  \begin{aligned}
+    & x^T(A + B)x > 0\\
+    &x^TAx + x^TBx > 0
+  \end{aligned}
+\]
+
+Both terms are greater than zero, so their sum is too.
+
+## 6. 
+
+Some factorizations
+
+\[A = \begin{bmatrix}
+  5 & 4\\
+  4 & 5
+\end{bmatrix}\]
+
+\[
+  \begin{aligned}
+    & (L \sqrt D)( \sqrt D L^T) = \Bigg( \begin{bmatrix}
+      1 & 0\\
+      4/5 & 1
+    \end{bmatrix} \begin{bmatrix}
+      \sqrt 5 & 0\\
+      0 & 3 / \sqrt 5
+    \end{bmatrix}\Bigg)\Bigg( \begin{bmatrix}
+      \sqrt 5 & 0\\
+      0 & 3/ \sqrt 5
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 4/5\\
+      0 & 1
+    \end{bmatrix}\Bigg)\\
+    & (Q \Lambda)( \Lambda Q^T) = \Bigg( \begin{bmatrix}
+      1/ \sqrt 2 & 1/ \sqrt 2\\
+      1 / \sqrt 2  & -1/ \sqrt 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      3 & 0\\
+      0 & 1
+    \end{bmatrix}\Bigg) 
+    \Bigg(
+    \begin{bmatrix}
+      3 & 0\\
+      0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1/ \sqrt 2 & 1/ \sqrt 2\\
+      1 / \sqrt 2  & -1/ \sqrt 2
+    \end{bmatrix}\Bigg)
+    \\
+    & (Q \sqrt \Lambda Q^T)^2 = \Bigg(
+    \begin{bmatrix}
+      1/ \sqrt 2 & 1/ \sqrt 2\\
+      1 / \sqrt 2 & -1/ \sqrt 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      3 & 0\\
+      0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1/ \sqrt 2 & 1/ \sqrt 2\\
+      1 / \sqrt 2 & -1/ \sqrt 2
+    \end{bmatrix}
+    \Bigg)
+  \end{aligned}
+\]
+
+## 7.
+
+As a square root of symmetric PD $A$, $R = Q \sqrt \Lambda Q$ has the same 
+signs of eigenvalues.
+
+\[A  = \Bigg ( \begin{bmatrix}
+  1/ \sqrt 2 & 1 / \sqrt 2\\
+  1/ \sqrt 2 & -1 / \sqrt 2
+\end{bmatrix}
+\begin{bmatrix}
+  4 & 0\\
+  0 & 2
+\end{bmatrix}
+\begin{bmatrix}
+  1/ \sqrt 2 & 1 / \sqrt 2\\
+  1/ \sqrt 2 & -1 / \sqrt 2
+\end{bmatrix}\Bigg )
+\]
+
+$\lambda = 10 \pm 6i$, so we find the square roots by DeMoivre's formula ($\sqrt r (\cos \theta/2 + i \sin \theta /2)$)
+
+\[
+  \begin{aligned}
+    & r = 10^2 + 6^2 = 136\\
+    & \theta = \arctan(6/10) \approx .27
+  \end{aligned}
+\]
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      10 & -6\\
+      6 & 10
+    \end{bmatrix}\\
+  & A = \frac{1}{2} \begin{bmatrix}
+    1 & 1\\
+    i & -i
+  \end{bmatrix}
+  \begin{bmatrix}
+    \sqrt  {136}(\cos .27 + i \sin .27) & 0\\
+    0 & \sqrt  {136}(\cos .27 - i \sin .27)
+  \end{bmatrix}
+ \begin{bmatrix}
+  1 & i\\
+  1 & -i
+\end{bmatrix}
+\end{aligned}
+\]
+
+## 8.
+
+If $A$ is positive definite, it may be expressed as $A = R^TR$. then
+
+\[
+  \begin{aligned}
+    & B = C^TAC\\
+    & = C^TR^TRC
+  \end{aligned}
+\]
+
+$R^TR$ is positive definite,a s are all $A^TA$ of full rank. given that $C$ is invertible, $C^TC$ is positive definite as well, so the product of the two matrices must be positive.
+
+## 9.
+
+The generalized Schwarz inequality. I think I 
+have the steps backward, but
+the logic is sound.
+
+\[
+  \begin{aligned}
+    & |x^TAy|^2 \leq (x^TAx)(y^TAy)\\
+    & \leq (x^TR^TRx)(y^TR^TRy)\\
+    & \leq (Rx)^2(Ry)^2\\
+    & |(RxRy)^2| \leq (Rx)^2(Ry)^2\\
+    &|(x^TR^TRy)^2| \leq (x^TR^TRx)(y^TR^TRy)\\
+    &|x^TAy|^2 \leq x^TAxy^TAy
+  \end{aligned}
+\]
+
+The right side is invariably positive, but the left only is for
+all vectors if $A$ is positive definite or $x = y$
+
+## 10.
+
+Values obviously 1 and 4, vectors the standard vectors.
+
+The major axis cuts through the x-axis, the minor axis the y-axis.
+
+# 11.
+
+From the polynomial $3u^2 -2 \sqrt uv + 2v^2$, we have:
+
+\[S = \begin{bmatrix}
+  \sqrt 2 / \sqrt 3 & 1/\sqrt 3\\
+  1 / \sqrt 3 & -\sqrt 2 / \sqrt 3
+\end{bmatrix}\]
+
+implying the eigenvector factorization:
+
+\[4 \Bigg( \frac{\sqrt 2}{\sqrt 3}u  + \frac{v}{\sqrt 3} \Bigg)^2 + \Bigg( \frac{u}{\sqrt 3} - \frac{\sqrt 2}{\sqrt 3}v \Bigg)^2\]
+
+This factorization just uses the eigenvalues as factors of squares to 
+stand in for the effect of transforming $x^Tx$ by $A$.
+
+## 13.
+
+Tests for a _negative_ definite matrix:
+
+I. $x^Tkx < 0$ for all real $x$
+II. All $\lambda < 0$
+III. All upper-left submatrices have
+determinants of alternating signs, starting with negative,
+and the overall determinant is negative. The overall determinant must be negative because 
+the opposite-sign of the matrix is positive definite. 
+IV. All pivots $<0$
+
+## 14.
+
+$A$: positive, since pivots
+are 1, 1, 17.
+
+$B$: Indefinite, since the pivots are
+1, 2, 1, -7, and the subdeterminants don't go int he right pattern.
+
+$C$: also indefinite.
+
+$D$ positive, as inverse of  a
+positive.
+
+## 15.
+
+a. False. 
+
+b. True. This matrix is similar to $A$, and similar matrices have the
+same eigenvalues.
+
+c. True, by similarity.
+
+d. True; this is just the diagonal matrix of $E$ raised to each eigenvalue, always positive.
+
+## 17.
+
+The product $a_{11}a_{22}\dots a_{nn}$ is the product of the trace of $R^TR$. When $A$ is diagonal, then
+$R = R^T = \sqrt A$. By the volume interpretation, all of $A$'s columns
+are orthogonal, so the parallelopiped is a perfect hyper-rectangle.
+
+\[
+  \begin{aligned}
+    & R = R^T\\
+    & \det A = \det (R^TR)\\
+    & = \det(R)^2
+  \end{aligned}
+\]
+
+## 19.
+
+Matrix 1 is 
+
+\[ \begin{bmatrix}
+  2 & -1 & 0\\
+  -1 &  2 & -1\\
+  0 & -1 & 2
+\end{bmatrix}\]
+
+Matrix 2 fills in the remaining zeroes and is not positive definite
+because the third row now requires elimination to get the pivots..
+
+## 20.
+
+\[A = \begin{bmatrix}
+  2 & 2 & 0\\
+  2 & 5 & 3\\
+  0 & 3 & 8
+\end{bmatrix}\]
+
+\[
+  \begin{aligned}
+    & det(2) = 2\\
+    & 2(5) - 2(2) = 6\\
+    & 2(5(8) - 3(3)) - 2(2(8) - 3(0)) + 0(2(3) - 5(0)) = 2(40 -9) - 2(16-0)=30
+  \end{aligned}
+\]
+
+Indeed, pivot 2 is $6/2 = 3$ and pivot 3 is $30/6 = 5$.
+
+## 21.
+
+The quadratic form $2(x_1^2 +x_1x_2 +x_3x_1 + 2x_2x_3 + 5x_2^2)$ is -71 if, for example, $(x_1,x_2,x_3) = 1, -10, 1$
+
+## 22. 
+
+If entry $A_{jj}$ of a PD matrix is
+smaller than any $\lambda$, then $A - a_{jj}I$ would be PD as well. Yet this matrix has a zero in the place of $a_{jj}$, so it cannot be PD.
+
+## 23.
+
+a. It cannot have zero eigenvalues,
+always present in invertible matrices.
+
+b. All projection matrices have rank $m$, where $m$ is the dimension of the
+subspace of projection. The only such matrix for which $m=n$ is the projection
+onto $R^n$ - the identity.
+
+c. The eigenvalues are the diagonal 
+and are all positive.
+
+d.Example:
+
+\[ \begin{bmatrix}
+  0 & 1\\
+  1 & 0
+\end{bmatrix}\]
+
+## 24.
+
+a. 
+\[
+  \begin{aligned}
+    & \det A = s(s^2 + 16) + 4(-4s + 16) - 4(16 +4s)\\
+    & = s^3 - 16s\\
+    & = s(s + 4)(s-4)
+  \end{aligned}
+\]
+
+$s \geq 4$
+
+b.
+
+\[
+  \begin{aligned}
+    & \det A = t(t^2 -9) - 3(3t-0)\\
+    & = t^3 -25t\\
+    & t^2 > 5\\
+    & t \neq 0, -5, 5\quad t> -5
+  \end{aligned}
+\]
+
+## 25.
+
+The coefficients of the completion of the square for the ellipse 
+equation are $\frac{1}{\sqrt \lambda}$. For $9x^2 + 16y^2=1$ they are
+$1/3$ and $1/4$.
+
+This works because the ellipse
+formula can be written as a a sum of $x_i^T \lambda_x x_i$ for each eigenvector, computing
+the elements of the final dot product separately.
+
+## 26.
+
+The matrix is just
+
+\[
+\begin{bmatrix}
+  1 & 1/2\\
+  1/2 & 1
+\end{bmatrix}  
+\]
+
+So $\lambda = (3/2, 1/2)$, so
+the half axes are $\sqrt 2 / \sqrt 3, \sqrt 2$.
+
+## 27.
+
+```{r, results = 'asis'}
+cholesky <- function(C){
+  L <- diag(nrow = nrow(C))
+  L[lower.tri(L)] <- C[lower.tri(C)] 
+  D <-  diag(C)
+  L %*% sqrt(D) %*% sqrt(D) %*% t(L)
+}
+C <-  square(3, 1, 0, 2)
+mat2latex(cholesky(C))
+A <- square(4, 8, 8, 25)
+C <- square(1, 2,0, 1) %*% sqrt(diag(x = c(4, 25)))
+mat2latex(C)
+```
+
+## 28.
+
+\[\begin{aligned}
+&A = \begin{bmatrix}
+  9 & 0 & 0\\
+  0 & 1 & 2\\
+  0 & 2 & 8
+\end{bmatrix}\\
+& C = L \sqrt D = \begin{bmatrix}
+  3 & 0 & 0\\
+  0 & 1 & 0\\
+  0 & 2 & 2 \sqrt 2
+\end{bmatrix}
+\end{aligned}
+\]
+
+\[
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      1 & 1 & 1\\
+      1 & 2 & 2\\
+      1 & 2 & 7
+    \end{bmatrix}\\
+    &L \sqrt D = C  = \begin{bmatrix}
+      1 & 0 & 0\\
+      1 & 1 & 0\\
+      1 & 1 & \sqrt 5
+    \end{bmatrix}
+  \end{aligned}
+\]
+
+## 29.
+
+Writing out $x^TAx = x^TLDL^Tx$ reveals the square completion - $(c-b^2/a)^2$ is the second term.
+The formula squares the sum of $x$ and the ratio of base $b$ to $a$, then adds the square of the difference of the third base and $b^2$ in units of $a$.
+
+\[
+  \begin{aligned}
+    & 2(x + 2y)^2 +(10 -2)y^2)\\
+    &2x^2 +8y^2 + 8xy +8y^2\\
+    & 2x^2 + 8xy + 16y^2
+  \end{aligned}
+\]
+
+## 30.
+
+a. $\det A = 2 \times 5 = 10$
+
+b. $\lambda = 2, 5$
+
+c. $\m{1 \pm i}$
+
+d. It admits an $LDL^T$ factorization, which can be 
+expressed $CC^T$
+
+## 31.
+
+$B = (x_1 + x_x + x_3)^2$
+
+## 32.
+
+a. No; second subdeterminant is $1^2 - 1^2 =0$.
+
+b. All eigenvalues are 0 or 
+positive, so positive semidefinite.
+
+## 35. 
+
+It does. After eliminating one row we have:
+
+\[\begin{bmatrix}
+  2.5 & 3 & 0\\
+  3 & 5.9 & 7\\
+  0 & 7 & 7.5
+\end{bmatrix}\]
+Clearly $7(7/5.9) > 7.5$.
+
+## 36.
+
+a. The squared eigenvectors magically disappear because they're orthornormal
+
+\[
+  \begin{aligned}
+    & z = a_1x_1 + \dots + a_px_p = v_1Cy_1 + \dots + b_qCy_q\\
+    & z = S \alpha\\
+    & z^TAz = z^T AS \alpha\\
+    & = z^T( \sum^{p}_{i=1}{\lambda_i a_i x_i })\\
+    & = \lambda_1 a_1^2 +\dots + \lambda_p a_p^2 \geq 0
+  \end{aligned}
+\]
+
+Since
+
+\[
+  \begin{aligned}
+    & C^TACy = \mu y\\
+    & ACy = (C^T)^{-1} \mu y
+  \end{aligned}
+\]
+\[
+  \begin{aligned}
+    & z = b_1Cy_1 + \dots + b_1Cy_1\\
+    &z^TAz = z^TA (b_1Cy_1 + \dots + b_1Cy_1)\\
+    & = (b_1y_1^TC^T + \dots + b_qy^TC^T)(\mu_1 b_1(C^T)^{-1} y + \dots + \mu_qb_1 (C^T)^{-1}y)\\
+    & = \mu_1b_1^2 + \dots + \mu_1 b_q^2
+  \end{aligned}
+\]
+
+
+b. Because these expressions of $z$ are equal, they fail to hold if any term of either side is nonzero, since $\lambda_pa_p^2$ is always positive and $\mu_qb_q^2$ always negative. So
+all $a,b$ are zero. And if the eigenvectors are independent, then $p + q \leq n$.
+
+c.
+
+\[
+  \begin{aligned}
+    & n - p + n -q \leq n\\
+    & 2n \leq n + p + q\\
+    & n \leq p+q
+  \end{aligned}
+\]
+
+This is compatible with $p + q \leq n$ only if $p + q = n$.
+
+## 37.
+
+If $C$ is nonsingular, then only the zero vector solves $C^Tx =0$.
+Then the kernel of $C^TAC$ is that of $AC$. Let $Cx = y$. Then $C^TAy$ 
+has the kernel of $A$ and therefore its rank.
+
+
+## 39.
+$C$ has to be square.
+
+Orthogonal eigenvectors for a similarity transformation:
+
+\[M = \begin{bmatrix}
+  1 & 0\\
+  0 & 2
+\end{bmatrix} \quad x_i = \begin{bmatrix}
+  \sqrt 3 -1\\
+  1
+\end{bmatrix}\quad x_j = \begin{bmatrix}
+  \sqrt 3 + 1\\
+  -1
+\end{bmatrix}\]
+
+\[
+  \begin{aligned}
+    & \begin{bmatrix}
+      \sqrt 3 -1 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0\\
+      0 & 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      \sqrt 3 + 1\\
+      -1
+    \end{bmatrix}\\
+    & \begin{bmatrix}
+      \sqrt 3 - 1 & 2
+    \end{bmatrix}
+    \begin{bmatrix}
+      \sqrt 3 + 1\\
+      -1
+    \end{bmatrix}\\
+    & (3 + -1) + 2\\
+    & 0
+  \end{aligned}
+\]
+
+## 41.
+\[
+  \begin{aligned}
+    & \begin{bmatrix}
+      6 & -3\\
+      -3 & 6
+    \end{bmatrix}
+  x =
+  \frac{\lambda}{18} 
+  \begin{bmatrix}
+    4 & 1\\
+    1 & 4
+  \end{bmatrix}x\\
+  & R = \begin{bmatrix}
+    1 & 1/4\\
+    0 & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    2 & 0\\
+    0 & 2
+  \end{bmatrix}=
+  \begin{bmatrix}
+    2 & 1/2\\
+    0 & 2
+  \end{bmatrix}\\
+  & R^{-1} = C= \begin{bmatrix}
+    2 & -1/2\\
+    0 & 2
+  \end{bmatrix}\\
+  & C^TAC = \begin{bmatrix}
+    12 & 0\\
+    -6 & 57/2
+  \end{bmatrix}
+  \end{aligned}
+\]
+The values are 216 and 513, the vectors the standard vectors.

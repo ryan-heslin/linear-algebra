@@ -1,0 +1,433 @@
+---
+title: "Section 4.3 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+Remember, scalars $a,b,c,\dots$ apply after every computation is finished when calculating a transformation.
+
+% Standard custom LaTeX commands
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+% 1: term 1
+% 2: subscript 1
+% 3: term 2
+% 4: subscript 2
+% 5. operation
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+## 12.
+
+\[T(M) = M \m{2 &0\\
+0 & 3}\]
+
+\[
+  \begin{bmatrix}
+  2 & 0 & 0 & 0\\
+  0 & 0 & 0 & 0\\
+  0 & 0 & 0 & 0\\
+  0 & 0 & 0 & 3
+  \end{bmatrix}
+\]
+
+## 13.
+
+\[T(M) = \m{1 & 1\\ 2& 2}\]
+\[B = \begin{bmatrix}1 &0 &1 &0\\
+0&1 &0 &1\\
+2 &0 &2 &0\\
+0 &2 & 0 &2\end{bmatrix}\]
+
+## 14. 
+
+A matrix transformation with an ugly alternate basis.
+
+\[
+  \begin{bmatrix}
+  0 & 0
+  \end{bmatrix}
+\]
+
+## 15.
+
+\[
+\begin{aligned}& T(x +iy) = x -iy\\
+& \begin{bmatrix}1 & 0\\
+0 & -1\end{bmatrix}
+\end{aligned}
+\]
+
+## 16.
+
+\[T(x +iy) = x -iy\]
+
+\[
+  \begin{aligned}
+    & T(x) = x\\
+    & T(iy) = -iy
+  \end{aligned}
+\]
+
+\[
+  \begin{bmatrix}
+  1 & 0\\
+  0 & -1
+  \end{bmatrix}
+\]
+
+## 18.
+
+\[
+\begin{aligned}
+&T(z) = (2 + 3i)z\\
+&=2x +3ix +2iy + 3i^2y\\
+& = 2x + 3ix  -iy\\
+& B = \begin{bmatrix}1 &0\\
+3 & -1\end{bmatrix}
+\end{aligned}
+\]
+
+Isomorphism.
+
+# 19.
+
+\[
+\begin{aligned} 
+& T(z) = (p +iq)z\\
+&= px +iqx +piy +i^2qy\\
+& = px + iqx +piy -qy\\
+& B = \begin{bmatrix}p & -q\\
+q & p\end{bmatrix}
+\end{aligned}
+\]
+
+Isomorphism.
+
+## 21.
+
+\[
+\begin{aligned}&T(f(t))=f'-3f\\
+& = b + 2ct -3a - 3bt -3ct^2\\
+& B = \begin{bmatrix}-3 &1 &0\\
+0 & -3 &2\\
+0 & 0 &-3\end{bmatrix}
+\end{aligned}
+\]
+
+Isomorphic.
+
+## 22.
+
+\[T(f(t)) = f'' + 4f'\]
+\[
+  \begin{aligned}
+    & T(1) = a(0 + 4(0)) = 0\\
+    & T(t) = b(0 + 2) = 2b\\
+    & T(t^2) = c(2 + 4(1 + 2t)) = 6c + 8ct
+  \end{aligned}
+\]
+
+\[
+  \begin{bmatrix}
+  0 & 2 & 1\\
+  0 & 0 & 8\\
+  0 & 0 & 0
+  \end{bmatrix}
+\]
+
+## 23.
+
+\[
+\begin{aligned}& T(f(t)) =\quad f(3) P_2\rightarrow P_2\\
+& B =\begin{bmatrix}1 & 3 & 9\\
+0 & 0 & 0\\
+0 & 0 &0
+\end{bmatrix}
+\end{aligned}
+\]
+Correct.
+
+## 24.
+
+\[T(f(t)) = f(3\]
+and basis $(1, (t-3), (t-3)^2)$
+
+\[
+  \begin{aligned}
+    & T(1) = 1\\
+    & T((t-3) = b(3-3)=0\\
+    & T((t-3)^2) =  (3-3)^2 =0
+  \end{aligned}
+\]
+
+This represents the zero of a function.
+
+\[
+  \begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 0 & 0\\
+  0 & 0 &0
+  \end{bmatrix}
+\]
+
+## 25.
+
+\[
+  \begin{aligned}
+  & T(f(t)) = f(-t)\\
+  & = a -bt +ct^2\\
+  & \begin{bmatrix}
+  1 & 0 & 0\\
+  0 & -1 & 0\\
+  0 & 0 &1
+  \end{bmatrix}
+  \end{aligned}
+\]
+
+Isomorphic
+
+## 26.
+
+\[T(f(t) = f(2t)\]
+
+\[
+  \begin{aligned}
+    & T(1) = a(1) = a\\
+    & T(t) = b(2t)= 2bt\\
+    & T(t^2) = c((2t)^2) = 4ct^2
+  \end{aligned}
+\]
+
+\[
+  \begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 2 & 0\\
+  0 & 0 & 4
+  \end{bmatrix}
+\]
+
+## 27.
+
+\[
+\begin{aligned}& T(f(t)) =f(2t-1)\\
+& f(2t-1) = a +2b-2 +c(2t-1)^2\\
+&=a +2bt -2b +c(4t^2-4t +1)\\
+& = a + 2bt -2b +c(4t^2 - 4t +1)\\
+& B = \begin{bmatrix}1 & -1 &1\\
+0 & 2 & -4\\
+0 & 0 &4\end{bmatrix}
+\end{aligned}
+\]
+
+Isomporphism.
+
+## 28.
+
+With basis $(1, t-1, t-1)^2$
+
+\[
+  \begin{aligned}
+    & T(f(t)) = f(2t-1)\\
+    & T(f(1)) = a\\
+    & T(f(2t-1)) = b(2t-1 -1) = 2b(t-1)\\
+    & T(f(t-1)^2) = c(2(t-1)^2 -1) = c(2(t^2-2t)) = 2c(t - 1)^2
+  \end{aligned}
+\]
+
+Change of basis makes this a lot easier to interpret.
+
+\[
+  \begin{bmatrix}
+  1 & 0 & 0\\
+  0 & 2 & 0\\
+  0 & 0 &2
+  \end{bmatrix}
+\]
+
+## 29.
+
+\[T(f(t)) = \int_0^2f(t)dt\]
+
+First get the transformed bases:
+
+\[
+  \begin{aligned}
+    & T(1) = a(t1) = at\\
+    & T(t) = b(t^2/2)=bt^2/2\\
+    & T(t^2) = c(t^3/3)
+  \end{aligned}
+\]
+
+Then compute the integral:
+
+\[\int_0^2f(t)dt = 8\]
+
+\[
+  \begin{bmatrix}
+  2 & 2 & 8/3\\
+  0 & 0 & 0\\
+  0 & 0 &0
+  \end{bmatrix}
+\]
+
+## 30.
+
+This joy:
+
+\[T(f(t) = \frac{f(t +h) - f(t)}{h}\],
+where $h$ is nonzero
+
+\[
+  \begin{aligned}
+    & T(1) = a\frac{1-1}{h}=0\\
+    & T(t) = b(\frac{t + h - t}{h}) =b\\
+    & T(t^2) = c( \frac{(t^2 + h^2 + 2ht - t^2}{h}) = c(h + 2t)
+  \end{aligned}
+\]
+
+And the matrix:
+
+\[
+  \begin{bmatrix}
+    0 & 1 & h + 2\\
+    0 & 0 & 2\\
+    0 & 0 & 0
+  \end{bmatrix}
+\]
+
+## 33.
+
+\[T(f(t)) = f(1) + f'(1)(t-1)\]
+
+\[
+  \begin{aligned}
+    & T(1) = (a +0) = a\\
+    & T(t) = b(1 + 1(t -1) = bt\\
+    & T(t^2) = c(1 +2(t-1)) =c(2t -1) =2ct -c
+  \end{aligned}
+  \]
+  
+\[
+  \begin{bmatrix}
+   1 & 0 & -1\\
+   0 & 1 & 0\\
+   0 & 1 & 0
+  \end{bmatrix}
+\]
+
+
+## 39.
+
+\[T(M) = \m{0 & 1 \\1 & 0}M - M \m{1 & 0\\ 0 & -1}\]
+
+I think this is
+
+\[
+  \begin{bmatrix}
+  1 & 0 & 1 & 1\\
+  1 & 0 & 0 & 0\\
+  0 & 0 & 1 & 0\\
+  0 & 0 & 0 & 1
+  \end{bmatrix}
+\]
+
+Some transformations in the space $\sin (t) + \cos(t)$.
+## 48.
+
+\[T(f) = f'\]
+
+\[ \begin{bmatrix}
+  0 & 1\\
+  -1 & 0
+\end{bmatrix}\]
+
+
+## 49.
+
+\[T(f) = f`` + 2f` + 3f\]
+
+\[
+  \begin{aligned}
+    & T(\cos(t))  =2 \cos t - 2 \sin t\\
+    & T(\sin(t)) = 2 \cos t - \sin t
+  \end{aligned}
+\]
+
+\[\begin{bmatrix}
+  2 & -2\\
+  2 & 2
+\end{bmatrix} \]
+
+## 50.
+
+\[T(f) = f'' +bf' + cf\]
+
+\[ \begin{aligned}
+  & T(\cos t) = (- \cos t) + a( - \sin t) + b( \cos t)\\
+  & = (b - 1) \cos t - a \sin t\\
+  & T(\sin (t)) = -\sin t + a \cos t + b \sin t\\
+  & = a \cos t + (b - 1) \sin t
+  \end{aligned}
+\]
+
+implying the matrix
+
+\[ \begin{bmatrix}
+  b-1 & -a\\
+  a & b-1
+\end{bmatrix}\]
+
+Not isomorphic if $b=1$ and $a =0$ or $(b-1)^2 + a^2 = 0$
+
+## 51.
+
+\[ \begin{bmatrix}
+  0 & -1\\
+  1 & 0
+\end{bmatrix} \]
+
+
+## 52.
+
+\[T(f(t)) = f(t - \pi/4) \]
+
+\[ \frac{1}{\sqrt 2} \begin{bmatrix}
+  -1 & 1\\
+  1 & 1
+\end{bmatrix}\]
+
+## 53.
+
+The general rotation matrix
+\[
+\begin{bmatrix}
+  \cos \theta & -\sin \theta\\
+  \sin \theta & \cos \theta
+\end{bmatrix}
+\]

@@ -1,0 +1,750 @@
+---
+title: "Section 5.5 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+```{r}
+inner_c <- function(v1, v2){
+  t(Conj(v1)) %*% v2
+}
+```
+
+## 1.
+
+Numbers are $a = 3+4i$, $B = 1 -i$
+
+a. $5e^{i \arctan(4/3)}$ and $\sqrt{2}e^{i \frac{5 \pi}{4}}$
+
+b. 
+$$
+  \begin{aligned}
+    & 
+a +b = 4 -i\\
+& ab = 3(1) +4i -3i -4i^2= 7 + i 
+  \end{aligned}
+$$
+
+c. 
+$$
+  \begin{aligned}
+    & r_a = (3^2 + 4^2) =\sqrt 25 =5\\
+    & r_b = \sqrt{1^2 + 1^2} = \sqrt{2}
+  \end{aligned}
+$$
+
+Neither lies on the unit circle.
+
+## 2.
+
+a. $x + \bar x = 2a$
+b. $\bar z z =1$
+c. $1e^{i \theta}1e^{i \alpha} = e^{i(\theta + \alpha)}$
+
+d. If they aren't orthogonal or identical, $||x +y|| < 2$. If opposite-signed, 0.
+
+## 3. 
+$x = 2 +i$ and $y = 1 + 3i$
+
+$$
+  \begin{aligned}
+    & \bar x =2 -i\\
+    & x \bar x = 2^2 + 1^2 =5
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & 2 = r \cos \theta \\
+    & 2 = \sqrt {5} \cos
+    \theta \\
+    & \theta \approx .46
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & \frac{1}{x} = \frac{1(2-i)}{(2-i)(2 +i)}\\
+    & = \frac{2-i}{5}
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & x/y = \frac{(2-i)(1+3i)}{(1+3i)(1-3i)}\\
+    & = \frac{2 -i +3i -3i^2}{1^2 + 3^2}\\
+    & = \frac{1 +i}{5}
+  \end{aligned}
+$$
+
+## 4.
+
+```{r}
+i <- complex(1, 0, 1)
+e <- 2.71828 
+theta <- pi /c(6, 3, 2)
+
+tab <- e^(i * theta) %>% {
+  tibble(a = Re(.), b = Im(.) )
+}
+tab
+```
+
+Angles behave as they should:
+```{r}
+(e^(i * theta[1]))^2
+(e^(i * theta[1]))^3
+```
+
+## 5.
+
+a.
+$$
+  \begin{aligned}
+    &x^2 = r^2e^{i}2 \theta\\
+    & x^{-1} = \frac{1}{r}\\
+    & \bar x = re^{i(2\pi - \theta)}
+  \end{aligned}
+$$
+
+## 6.
+
+$$
+\begin{aligned}
+& x = \begin{bmatrix}
+  2-4i\\
+  4i
+\end{bmatrix}\\
+& y = \begin{bmatrix}
+  2 + 4i\\
+  4i
+\end{bmatrix}
+\end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & ||x|| = \sqrt{36} = 6\\
+    & ||y|| = ||x|| = 6\\
+    & x^Hy = (2 +4i)(2+4i) + 4i(4i)\\
+    & = 4 + 8i + -16 -16\\
+    & =8i - 32
+  \end{aligned}
+$$
+
+## 7.
+
+$$
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      1 & i & 0\\
+      i & 0 & 1
+    \end{bmatrix}\\
+    & A^H = \begin{bmatrix}
+      1 & -i\\
+      -i & 0\\
+      0 & 1
+    \end{bmatrix}\\
+  & A^HA = \begin{bmatrix}
+    2 & i & -i\\
+    -i & 1 & 0\\
+    i & 0 & 1
+  \end{bmatrix}
+  \end{aligned}
+$$
+
+$C = A^HA$ is Hermitian, though $A$ itself is not, just as $A^TA$ is always symmetric.
+
+## 8.
+
+a. 
+$$
+  \begin{aligned}
+    & A = \begin{bmatrix}
+      1 & i & 0\\
+      i & 0 & 1
+    \end{bmatrix}\\
+    & \ker(A) = \begin{bmatrix}
+      -i\\
+      -1\\
+      1
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+This is clearly orthogonal to $A^H$, but not $A^T$:
+
+$$
+ \begin{bmatrix}
+  1 & i\\
+  i & 0\\
+  0 & 1
+\end{bmatrix} 
+$$
+## 9.
+
+a. We have that Hermitian matrices have only real eigenvalues. Since $\det A = \prod_{i=1}^n \lambda_n$, and the trace for $A$ and $A^H$ is the same, $\det A = \det A^H$.
+
+b. 
+$$
+  \begin{aligned}
+    & \det A = \det A^T\\
+    & \det(\bar A) = \det(\bar A^T)\\
+    & \overline{ \det A} = \det (A^H)
+  \end{aligned}
+$$
+
+b. If $A$ is Hermitian, $A^H = A$, so $\det A = \det A^H = \overline {\det A}$. Only real values are always equal to their conjugates.
+
+## 10.
+
+a. Real symmetric: $\frac {n(n-1)}{2}$. Real diagonal: $n$.
+Orthogonal: $\sum^{n-1}_{i=1}$. This reflects the fact that triangular matrices can be orthogonal.
+
+b. $3 \times 3$ Hermitian matrices have 9 degrees of freedom: 3 for the trace, 3 for the real part of one triangle, 3 for the complex part. Unitary matrices have 9 as well; the first column has 6 (from the complex components), the second 3.
+
+## 11.
+
+Disclosure: I forgot to scale the eigenvectors to unit length before checking my work.
+$$
+P = 1 \begin{bmatrix}
+  1/\sqrt 2\\
+  1/ \sqrt 2
+\end{bmatrix}
+\begin{bmatrix}
+  1/ \sqrt 2 & 1/ \sqrt 2
+\end{bmatrix}
+$$
+
+For $Q$, $\lambda = \pm i$, and so:
+
+$$
+Q = -i \begin{bmatrix}
+  i\\
+  1
+\end{bmatrix}
+\begin{bmatrix}
+  -i & 1
+\end{bmatrix} +i
+\begin{bmatrix}
+  -i\\
+  1
+\end{bmatrix}
+\begin{bmatrix}
+  i & 1
+\end{bmatrix}
+$$
+
+$$
+  \begin{aligned}
+    &  R = 5 \begin{bmatrix}
+      2/ \sqrt 5\\
+      2/ 4 \sqrt 5
+    \end{bmatrix} \begin{bmatrix}
+      2 / \sqrt 5 & 2 / 4 \sqrt 5
+    \end{bmatrix} - 5 \begin{bmatrix}
+      1 / \sqrt5\\
+      -2 / \sqrt 5
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 / \sqrt 5 & -2 / \sqrt 5
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+## 12.
+
+a. True. Hermitians are guaranteed real eigenvalues, so adding $iI$ will never result in zero eigenvalues.
+
+b. True. If $-1/2$ is an eigenvalue of $Q$, than
+adding $1/2I$ will shift that eigenvalue to 0, meaning singular. But $Q$ only ever has $\lambda = 1$.
+
+c. So very false, since a real matrix may have $\lambda = -i$. $\m{0 & 1 & 1 &0}$
+
+## 13.
+
+a. They are real and orthogonal, and one exists in the kernel. 
+
+b. The kernel is spanned by $u$. The other vectors lie in the kernel.
+The kernel and image of the transpose are the exact same, since $A$ is
+symmetric.
+
+c. Yes. $Ax=b$ has infinitely many solutions in general, but $v$ and $w$ are orthogonal to $u$, meaning no component of $u$ is in the solution, and $A$ has rank 2, so only one combination of $A$ corresponds to $v + w$.
+
+d. $b \cdot u = 0$
+
+e. $S^{-1}$ is God knows what, $SAS^{-1}= \Lambda$.
+
+## 14.
+
+$A$ is:
+
+\begin{enumerate}
+  \item Orthogonal
+  \item Invertible
+  \item A permutation matrix
+  \item Markov
+  \item Diagonalizable
+\end{enumerate}
+
+$B$ is
+
+\begin{enumerate}
+  \item A projection matrix
+  \item Hermitian
+  \item Rank 1
+\end{enumerate}
+
+Since the trace is 0 and determinant -1, $\lambda_a = \pm i\, \pm 1$
+$\lambda_b = (0, 0, 0, 4)$
+
+## 15.
+
+It is $\frac{n(n-1)}{2}$: $n$ for the diagonal, the remainder for one of the triangles. But there are only $n$ independent eigenvectors. The projections of the spectral decomposition have to add up tot he _rank_, which is not the same thing as the dimension.
+
+## 16.
+
+a. Real.
+
+b. All $|\lambda| \leq 1$
+
+c. All 1.
+
+d. One is 1.
+
+e. Multiple eigenvectors correspond to single eigenvalue.
+
+d. At least one is 0..
+
+## 17.
+
+$$
+  \begin{aligned}
+    & VV^H = U^HU = I\\
+    & UVV^H = U\\
+    &(UV)V^H = U
+  \end{aligned}
+$$
+
+If $V^H$ remains orthogonal, $UV$ must be.
+
+## 18.
+
+$$
+  \begin{aligned}
+   & Ux = \lambda x\\
+   & U^HUx = \bar \lambda \lambda x\\
+   & x = |\lambda|x
+  \end{aligned}
+$$
+
+Since $|\lambda| =1$, $\det U = \prod_0^n \lambda = |1|$. The eigenvalues of
+$U^H$ are the conjugates of those of $U$, so they are different if $U$ has
+complex eigenvalues. $2 \times 2$ unitaries are $I_2$; the 90-, 180-, and 270-degree rotations; and various complex matrices.
+
+## 20.
+$$
+A = \begin{bmatrix}
+  1 & -1\\
+  1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+  2i & 0\\
+  0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+  1/2 & 1/2\\
+  -1/2 & 1/2
+\end{bmatrix}
+$$
+
+## 21.
+
+The trace must be real (Hermitian) with absolute values of 1 (unitary). That
+leaves the six matrices with $\pm 1$ on the diagonal.
+
+## 22.
+
+$$
+  \begin{aligned}
+    & \frac{1}{2}(Z + Z^H) = 
+    \begin{bmatrix}
+      3 + i & 0\\
+      2 - i & 5
+    \end{bmatrix}\\
+    & \frac{1}{2}(Z - Z^H) = 
+    \begin{bmatrix}
+      0 & 4 +2i\\
+      -2 + i & 0
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+For the second matrix, there is no "imaginary part"
+
+$$
+  \begin{aligned}
+    & \frac{1}{2}(Z + Z^H) = \begin{bmatrix}
+      i & i\\
+      -i & i
+    \end{bmatrix}\\
+    & \frac{1}{2}(Z - Z^H) = \begin{bmatrix}
+      0 & 0\\
+      0 & 0
+    \end{bmatrix} 
+  \end{aligned}
+$$
+
+## 26.
+
+$$
+  \begin{aligned}
+    & u = \begin{bmatrix}
+      1 +i\\
+      1-i\\
+      1+2i
+    \end{bmatrix} & v = \begin{bmatrix}
+      i\\
+      i\\
+      i
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & ||u|| = \sqrt{ 2 + 2 + 5} =3\\
+    & ||v|| = \sqrt {3}\\
+\end{aligned}
+$$
+
+
+$$
+  \begin{aligned}
+    & u^Hv = i((1 -i) + (1 + i) + (1 - 2i)\\
+    & = i(3 - 2i) \\
+    & = 2 + 3i
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & v^Hu = -i((1+i) + (1-i) + (1 +2i)\\
+    & = -i(3 + 2i)\\
+    & = 2 - 3i
+  \end{aligned}
+$$
+
+Should just use the fact that the product of the conjugates is the conjugate of the products.
+
+## 27.
+
+The diagonal elements are $\overline {a_{j}}\cdot a_{j}$ the lengths of each column 
+and therefore always real. Off-diagonal elements are a mirrored pair of $a_j \dots a_{k}$ and $a_k \dots a_j$. Because those dot products yield conjugates (since only the first element of the complex dot product is conjugated), $A^HA$ is Hermitian.
+
+## 27.
+
+$$
+  \begin{aligned}
+    & Az = 0\\
+    &A^HAz = 0\\
+    &z^H(A^HA)^H = 0^H\\
+    &z^HA^HA = 0^H\\
+    & Az =0
+  \end{aligned}
+$$
+
+$A^HA$ and $A$ have identical kernels, and $A$ is invertible only when the kernel is limited to $z = 0$.
+
+$$
+  \begin{aligned}
+    & A^HA = \begin{bmatrix}
+      1 & 0 & 1+i\\
+      0 & 2 & 1+i\\
+      1-i & 1-i & 2
+    \end{bmatrix} & AA^H = \begin{bmatrix}
+      3 & 1\\
+      1 & 1
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+## 29.
+
+Yes $cA$ is a linear transformation, so $a_{ij} = \overline{a_{ji}} \implies ca_{ij} = \overline {ca_{ji}}$. If $c = i$, then $a_{ij} = - a_{ji}$ since $iz \implies -b + ai$. So the opposite elements are opposite-signed conjugates.
+
+## 30.
+
+This matrix is orthogonal, invertible, and unitary. It can be factored into $QR$, if $R = I_3$
+
+## 31.
+
+\[
+  \begin{aligned}
+    & P^2 = \begin{bmatrix}
+      0 & 0 & 1\\
+      1 & 0 & 0\\
+      0 & 1 & 0
+    \end{bmatrix}
+    \\& P^3 = I_3\\
+    & P^{100} = P
+  \end{aligned}
+\]
+The eigenvalues are ugly.
+
+## 32.
+
+Orthogonal amtrices have unitary eigenvectors for distinct
+eigenvalues since
+
+\[
+  \begin{aligned}
+    & Ax = \lambda_x x\\
+    & Ay = \lambda_y y\\
+    & (Ay)^TAx = (\lambda_y y)^T \lambda_x x\\
+    & y^T A^TA x = \lambda_x \lambda _y y^T x\\
+    & y^Tx = \lambda_x \lambda _y y^T x\\
+  \end{aligned}
+\]
+but $\bar \lambda_x \bar \lambda_y \neq 0$ because since the eigenvalues
+can only be $\pm 1$ or $\pm i$, the possible products of distinct eigenvalues 
+are 
+
+## 34.
+
+$$
+  \begin{aligned}
+    & U^HU = I\\
+    & U^{-1} = U^H\\
+    & U^H(U^H)^H = U^HU = I
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & U^HU = Q^TQ = I\\
+    & U^H = Q^TQU^H\\
+    & U = U(Q^TQ)T\\
+    & U = UQ^TQ\\
+    & U = U
+  \end{aligned}
+$$
+
+$$
+  \begin{aligned}
+    & UQ(UQ)^H = I\\
+    & UQQ^HU^H = I\\
+    & UQQ^TU^H = I\\
+    &UU^H = I\\
+    & I = I
+  \end{aligned}
+$$
+## 31.
+
+$$
+  \begin{aligned}
+    & P^2 = \begin{bmatrix}
+      0 & 0 & 1\\
+      1 & 0 & 0\\
+      0 & 1 & 0
+    \end{bmatrix}\\
+    & P^3  = I\\
+    &P^100 = P
+  \end{aligned}
+$$
+
+The eigens are $\frac{-1 \pm \sqrt3 i}{2}$ and 1.
+
+## 32.
+
+They're guaranteed to be orthogonal by $P$ being unitary.
+
+```{r, results="asis"}
+mat2latex(eigen(square(0, 0, 1, 1, 0, 0, 0, 1, 0))$vectors)
+```
+
+For $A$:
+
+$$
+  \begin{aligned}
+  2(- i +3)
+    & \begin{bmatrix}
+      (i + 1)/2 & i-1\\
+      1 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      2 & 0\\
+      0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & -i + 1\\
+      -1 & (i + 1)/2
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+For the second:
+
+$$
+  \begin{aligned}
+  2(1 - i)
+    & \begin{bmatrix}
+      1-i & (1-i)/2\\
+      1 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      i & 0\\
+      0 & 2i
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & (2)-1 + i)/2\\
+      -1 & 1
+    \end{bmatrix}
+  \end{aligned}
+$$
+
+## 38.
+
+It is unitary. Any vector in $C^N$ has zero or more of its length parallel to each vector of this basis, and these components sum to the vector's length because the basis is orthonormal, so each component has its length respected.
+
+## 40.
+
+An orthogonal basis for $C^n$:
+
+$$
+\begin{bmatrix}
+  1 & i & 1/2\\
+  i & 1 & -i/2\\
+  1 & 0 & 1
+\end{bmatrix} 
+$$
+
+## 41. 
+
+No. $S$ must be a skew-symmetric matrix with a real diagonal in order for $A$ to be Hermitian. But $R$ has to be symmetric:
+
+$$
+  \begin{aligned}
+    & A = A^H\\
+    & R +iS = (R + iS)^H\\
+    & = R^T +\overline{iS}^T\\
+    & = R^T + i \overline{S}^T
+  \end{aligned}
+$$
+
+## 43. 
+
+For all scalar matrices, just $\m{1}$. 
+
+## 44.
+
+They are the same
+
+$$
+  \begin{aligned}
+    & Ax = \lambda x\\
+    &(Ax)^H = \overline \lambda x^H\\
+    &x^HA^H = \overline \lambda x^H
+  \end{aligned}
+$$
+
+They are the same if $A$ is symmetric, the complex conjugate otherwise.
+
+## 45.
+
+Hermitian proof
+
+$$
+  \begin{aligned}
+    & (I - 2uu^H) = (I - 2uu^H)^H\\
+    &= I - (2uu)^H\\
+    & = I - 2uu^H
+  \end{aligned}
+$$
+
+Unitary proof:
+$$
+  \begin{aligned}
+    & u^Hu =1\\
+    &(I-2uu^H)(I^H - (2uu^H)^H) = I\\
+    & (I - 2uu^H)(I - 2uu^H) = I\\
+    & I - 4uu^H +4(uu^H)^2 =I\\
+    & I -4I +4I = I\\
+    & I = I
+  \end{aligned}
+$$
+
+It is the projection onto the line of $u$.
+
+## 48.
+
+$$
+  \begin{aligned}
+    & A = A^H\\
+    & A^{-1} = (A^H)^{-1}\\
+    & = (A^{-1})^H
+  \end{aligned}
+$$
+
+## 50. 
+
+That is a symmetric matrix.
+
+$$
+  \begin{aligned}
+    & AA^H = U \Lambda  U^{-1}(U  \Lambda U^{-1})^H\\
+    & = U \Lambda U^{-1} (U^{-1})^H \Lambda U^H\\
+    &U \Lambda ^2 U^{-1}
+  \end{aligned}
+$$
+
+Won't show the derivation for $A^HA$, but the matrix is either Hermitian ($A = A^H$) or unitary with distinct eigenvalues $(U^H = U^{-1})$

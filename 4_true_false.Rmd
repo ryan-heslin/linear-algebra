@@ -1,0 +1,245 @@
+---
+title: "Chapter 4 True or False"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+
+
+## 1.
+
+True.
+
+## 2.
+
+True, $T(f) = 3f-4f'$ is linear and infinite-dimensional.
+
+##3.
+
+True.
+
+
+\[ \m{a & 0\\b & c} + \m{d  & 0\\e &f}= \m{a+d & 0\\b +e & c+f}
+\]    
+\[ k \m{a & 0\\ b & c} =\m{ka & 0 \\ kb & kc}
+\]
+
+##4. 
+
+True, the kernel is a subspace of the domain, as with matrices.
+
+## 5.
+
+False. $R^{2 \times 3}$ has 6 independent elements and so is 6-dimensional.
+
+## 6.
+
+True, by definition of the basis.
+
+## 7.
+
+True; they both have a basis of $(1, t)$, where $t$ is some coefficient.
+
+## 8. 
+
+True. Since the transformation is $P_4 \rightarrow P_4$, the zero kernel implies it is one-to-one as well as onto.
+
+## 9.
+
+True. They must intersect at least in the zero element, and the zero element qualifies as a subspace.
+
+## 10.
+
+False. The kernel could easily be larger.
+
+## 11.
+
+True; there is no other way to account for the constant, degree-1, and degree-2 terms of a member of $P_3$.
+
+## 12.
+
+True.
+
+## 13.
+
+False. It has kernel $f'' = f$.
+
+## 14.
+
+False. Counterexample: 
+
+\[T(P) = \m{1 & 1 & 1 & 1\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 &  0}\]
+
+## 15.
+
+False. They can be exactly the same, as in one homework problem where they were both $\sin x, \, \cos x$
+
+## 16.
+
+True. The transpose is a linear transformation.
+
+## 17.
+
+True.
+
+## 18.
+
+True. 
+
+## 19.
+
+False.
+
+\[
+  \begin{aligned}
+    & \det(3I + 5I) = \det(8I) =64\\
+     & \det(3I) + \det(5I) = 9 + 25 = 36
+  \end{aligned}
+\]
+
+## 21.
+
+True; that is the rank of its matrix.
+
+## 23.
+
+True.
+
+## 24.
+
+True. Inverse is $M = S^{-1}BS^{-1}$.
+
+## 25.
+
+
+## 26.
+
+True, I think.
+
+## 27.
+
+True; we know it is onto, but also must be one-to-one if it is $P \rightarrow P$.
+
+## 28. 
+
+True; those three elements are independent and span the space.
+
+## 29. 
+
+False.
+
+\[
+  \begin{aligned}
+    & kT(f(t)) = kf(4t-3)\\
+    & T(kf(t)) = f(k(4t-3))
+  \end{aligned}
+\]
+
+## 30.
+
+True. Inverse is $\frac{g +3}{4}$
+
+## 31.
+
+False. $P_n$ is a finite-dimensional subspace of the infinite-dimensional $P$.
+
+## 33.
+
+False. Consider $\m{1 & 0\\0 & 0},\m{0 & 0\\ 1 & 0}$
+
+## 36.
+
+False. It has rank $n-1$.
+
+## 37.
+
+True; this matrix is invertible.
+
+## 38.
+
+True; any subspace with dimension 10 will do.
+
+## 39.
+
+True. If they are orthogonal complements, then their union is $R^{2 \times 2}$, which is a subspace of itself.
+
+## 40.
+
+True; it is possible to represent every element in a low-dimensional subspace with some combination of a higher-dimensional subspace.
+
+## 41.
+
+True, for the same reason a triangular matrix already has full rank. Basis member $k$ is absent in members $[1, k-1]$, so no linear dependence is possible.
+
+## 42. 
+
+False. the polynomial derivative zeroes out the constant term, making it noninvertible.
+
+## 43.
+
+True. It is impossible to represent every member of  a space of dimension $ n>p$ with a subspace of dimension $p$.
+
+## 44.
+
+True; it is just the zero kernel!
+
+## 45.
+
+True. $T(f) =f$ for at least the zero element, which is itself a subspace.
+
+## 50.
+
+False. A $2 \times 2$ matrix is invertible only with at least two nonzero elements, and some members of the subspace will have only one dimension.
+
+## 51.
+
+True. 
+
+## 55.
+
+True. 
+
+## 60.
+
+False. Two distinct three-dimensional subspaces of the five-dimensional $P_4$ is impossible.

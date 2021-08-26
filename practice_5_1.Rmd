@@ -1,0 +1,250 @@
+---
+title: "Notes"
+author: "Ryan Heslin"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+                        <!-- % 5. operation -->
+                        \newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+                        
+```{r setup, include=FALSE}
+                        knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                                        tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+## 8.
+
+Acute.
+\[ \theta = r` angle(rep(c(1, -1), times = 2), c(3, 4, 5, 3))`\]
+
+## 11.
+
+Using Cauchy-Swarz to prove the triangle inequality
+
+$$
+  \begin{aligned}
+    & ||v+w|| \leq ||v|| + ||w||\\
+    & ||v + w||^2 = (v \cdot w) \cdot (v \ cdot w)\\
+    & ||v + w||^2 = v\cdot v + 2(v \cdot w) + w\cdot\\ w
+    & ||v+w||^2 = ||v||^2 + ||w^2|| + 2(w\cdot v)\\
+    & ||v + w|| \leq ||v|| + ||w|| + \sqrt{2(w \cdot v)}\\
+  \end{aligned}
+$$
+
+Of course, the dot product is zero only for orthogonal vectors.
+
+## 16.
+
+Solve for the kernel of the transpose.
+
+```{r, results = "asis"}
+m <-
+  cbind(rep(1 / 2, 4), c(1 / 2, 1 / 2, -1 / 2, -1 / 2), c(1 / 2, -1 / 2, 1 /2, -1 / 2))
+pracma::rref(t(m))
+
+mat2latex(c("1/2", "-1/2", "-1/2", "1/2"))
+```
+
+
+## 22.
+
+A vector is orthogonal to a subspace only if it is orthogonal to every vector of its basis. 
+
+Say this was not true. Then $\frac{(x \cdot w)}{w \cdot w}x > 0$. Then $x^{\parallel} > 0$, which means $x^{\perp} < x$, so the vector cannot be orthogonal.
+
+Remember that dividing by the sum of squares produces the unit vector, proving a basis by which to scale $x$ $(A^TA)^{-1}$ merely generalizes this to higher dimension, accounting for directions among the column vectors. Multiplying this by $A^T$ maps $R^M$ onto the matrix.
+
+## 23.
+
+Proof that $V^{\perp})^{\perp}=V$.
+
+If two vectors are orthogonal,
+ $v \cdot w = w \cdot v =0$. $V$ consists of all vectors orthogonal to $V^{\perp}$
+ by this definition.  This is the same as $V^{\perp})^{\perp}=V$. Also,
+ $\dim(V) = \dim(V^{\perp})^{\perp})$. If $\dim(V) = p$, $\dim(V^{\perp})$ = $n-p$.
+ Since the two spaces are complementary, $\dim(V^{\perp})^{\perp}) = n-(n-p) =p$,
+ 
+##24.
+
+Proving the linearity of $T(x) =x^{\parallel}$. Since the dot product is a linear
+transformation:
+
+$$
+  \begin{aligned}
+    & T(x) + T(y) = (x\cdot u)u + (y\cdot)u\\
+    & T(x +y) = ((x+y)\cdot u)u\\
+    & = (x \cdot u + y \cdot u)u\\
+    & = (x\cdot u)u + (y\cdot u)u
+  \end{aligned}
+$$
+
+## 25.
+
+Given the absolute value, we can ignore
+nonreal roots.
+
+$$
+  \begin{aligned}
+    & ||kv|| =|k|||v||\\
+    & = |k|\sqrt{v \cdot v}\\
+    & = \sqrt{{k}v \cdot kv}\\
+    & =||kv||
+  \end{aligned}
+$$
+
+## 30.
+
+Consider a subspace where $y$ is the projection of $x$. Then
+
+$$
+  \begin{aligned}
+    & ||y||^2 \geq y \cdot x
+  \end{aligned}
+$$
+
+because $||x|| \leq ||y||$ (projections are always the same length or shorter), $so ||y||^2=y \cdot x$ only if $x = y$, in which case $x$ is in the subspace.
+
+## 31.
+
+Along similar lines, $(u_1\cdot x)^2 + (u_2 \cdot x)^2 + \dots +(u_m \cdot x)^2 \leq ||x^2||$ because the sum of squares of the projections can only equal the sum of squares of $x$ when $x$ lies entirely in the subspace of projection.
+
+## 32. 
+
+The matrix \[
+  \begin{bmatrix}
+  v_1 \cdot v_1 & v_1 \cdot v_2\\
+  v_2 \cdot v_1 & v_2 \cdot v_2
+  \end{bmatrix}
+\]
+
+Is invertible if and only if $v_1$ and $v_2$ are orthogonal, meaning the off-diagonal is zeroes. This is an example of an orthogonal (but not orthonormal) amtrix.
+
+## 33.
+
+All elements $\pm \frac{1}{n}$. In that case, the vector is the hypotenuse of a right isoceles triangle, minimizing its length.
+
+## 34.
+
+\[
+  \begin{aligned}
+    & \sqrt{x_1^2 + \dots x_n^2} =1\\
+    & x_1^2 + \dots x_n^2 =1
+  \end{aligned}
+\]
+
+This is maximal for a basis vector ($\m{1\\0}$, etc.), because for any
+$|x| < 1$ $x^2 \leq x$.
+
+## 35.
+
+There is a more involved computation, but
+obviously this is minimized by $e_1$.
+
+## 36.
+
+```{r}
+fit <- function(A){
+  solve(t(A) %*% A) %*% t(A)
+}
+
+A <- c(.2, .3, .5)
+fit(A)
+```
+
+## 37.
+
+Let $A$ be the basis of the plane. Then the reflection is $2A(A^TA)^{-1}A^T - I_3$. Or subtract from $x$ twice its projection onto $u_1 \times u_2$.
+
+## 38.
+
+$v_1 \cdot v_2 = v_1\cdot v_3 = 1/2$. Since they are unit vectors, $\theta = \arccos 1/2 \approx 1.047$ - about 60 degrees. So $v_1$ and $v_2$ are on opposite sides of $v_3$. So $\cos \frac{2 \pi}{3} = \cos (v_2 \cdot v_3) \implies v_2 \cdot v_3 \approx 2 \pi/3)$
+
+## 39.
+
+$x \cdot proj_l{x}$ is invariably positive. We have:
+
+$$
+  \begin{aligned}
+    & x = x^{\parallel} + x^{\perp}\\
+    &  x \cdot proj_l{x} = (x^{\parallel} + x^{\perp})x^{\perp}\\
+    & = ||x^{\parallel}||^2 + x^{\parallel}x^{\perp}\\
+    & =||x^{\parallel}||^2
+  \end{aligned}
+$$
+
+which is never negative. 
+
+## 40.
+
+Given 
+
+\[
+  \begin{bmatrix}
+  3 & 5 & 11\\
+  2 & 9 & 20\\
+  11 & 20 & 49
+  \end{bmatrix}
+\]
+
+$||v2|| = 3$
+
+The angle of $v_2$ and $v_3$ is ` r acos((20)/(3 * 7))`
+
+## 42.
+
+$||v_1 + v_2|| = \sqrt{( v+w) \cdot (v +w)}$, so:
+
+$$
+  \begin{aligned}
+    & ||v_1 + v_2|| = \sqrt{( v+w) \cdot (v +w)}\\
+    & = \sqrt{v \cdot v + w \cdot w + 2(v \cdot w)}\\
+    & =\sqrt{3 + 9  +10}\\
+    & = \sqrt{22}
+  \end{aligned}
+$$
+
+## 43.
+
+$proj_{v_2}v_1 = 5/9v_2$
+
+## 44. 
+
+A vector in $\text{Span}(v_2, v_3)$ orthogonal to $v_3$ is $v_2 - \text{proj}_{v_3}(v_2)$, which is $v_2 - 20/49v_3$.
+
+## 45. 
+
+$proj_v(v_3) = 5/9v_2 + 11/49v_3$ 
+
+## 46.
+
+$proj_V(v_3) = 11/3v_1 + 20/9v_2$ 

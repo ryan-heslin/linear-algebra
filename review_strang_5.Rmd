@@ -1,0 +1,353 @@
+---
+title: "Chapter 5 Review Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+\newcommand{\rot}[1]{
+\begin{bmatrix}
+\cos{(#1)} & -\sin{(#1)}\\
+
+\sin{(#1)} & \cos{(#1)}\\
+\end{bmatrix}
+}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+## 1.
+
+\[A = \begin{bmatrix}
+  1 & 0\\
+  -1 & 1
+\end{bmatrix}
+ \begin{bmatrix}
+   1 & 0\\
+   0 & 3
+ \end{bmatrix}
+ \begin{bmatrix}
+   -1 & 0\\
+   1 & 1
+ \end{bmatrix}\]
+ 
+ \[B = \frac{2}{3} \begin{bmatrix}
+   1 & 1\\
+   3/2 & 3
+ \end{bmatrix}
+  \begin{bmatrix}
+    2 & 0\\
+    0 & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    3 & -1\\
+    -3/2 & 1
+  \end{bmatrix}\]
+  
+## 2.
+
+$\det A = \lambda_1 \lambda_2$; $\det A^{-1} = \frac{1}{\lambda_1 \lambda_2}$
+
+## 3.
+The eigenvectors are orthogonal and the values real, a pair of properties unique to symemtric matrices. The trace is 1, the sum of the eigenvalues, the determinant 0, the product. 
+
+I multiply out the diagonalziation to get:
+\[ \frac{-1}{5}\begin{bmatrix}
+  -4 & 2\\
+  2 & -1
+\end{bmatrix}\]
+
+## 4.
+
+The eigenvectors remain the same, as will the eigenvalues, because $0^2=0$ and $1^2 =1$.
+
+## 5.
+
+For real $r$, $A +ri$ is invertible
+if $A = \m{1 & 2\\-2 & 4}$ because skew-symmetirc matrices have complex eigenvalues, so there will never be a zero eigenvalue. Likewise, adding $cI$ to an invertible Hermitian does not make it noninvertible because Hermitians always have real eigenvalues. 
+
+## 6.
+
+\[A^t = \frac{1}{2} \begin{bmatrix}
+  e^{4t} + e^{2t} & e^{4t} - e^{2t}\\
+  e^{4t} - e^{2t} & e^{4t} +e^{2t}
+\end{bmatrix}\]
+
+From this the solutions for $u_0 = e_1$ and $u_0 = e_2$ just select the columns.
+
+## 7.
+If $t$ is 1 year:
+\[
+  \begin{aligned}
+    & P = (1 + \frac{.4}{4})^{4t} =1.1^{4t}\\
+    & P =(1 + \frac{1}{2})^t = 1.5^t
+  \end{aligned}
+\]
+The annual interest is somewhat better.
+
+## 8.
+
+a. False. Row exchanges change the eigenvalues.
+
+b. False. $\m{1 & 1\\ 0 & 2}$ is similar to $\m{1 & 0\\0 & 2}$
+
+c. True. If a matrix is unitary and Hermitian, its transpose is real and its
+inverse, so $A^2 = I$. If $A^2 = I$ and the matrix is Hermitian, it must be
+unitary because $A^{-1} = A$. If unitary and $A^2=I$, the inverse is the Hermitian and also $A$ itself, so $A$ is Hermitian. 
+
+d. False. Consider $A = \m{2&0\\0&1}$, $B = \m{1&2\\0&2}$
+
+## 9.
+
+The bizarro Fibonacci sequence starts with $F_{-1}=1$, so $F_{-2} + 1 =0 \implies F_{-2} = 1$. from there it's the regular sequence: $1,-1, 2,-3, 5, -8$. Matrix I think is $\m{-1 & 1\\0 & 1}$ 
+
+## 10.
+
+## 11.
+
+For any vector $s$ in $S$, $Ps =s$ because $s^{\perp} = 0$, so $Ax = \lambda s \implies \lambda = 1$. For vectors $v$ orthogonal to the subspace, $Pv =0$, again satisfying the criterion. The eigenvalues are $n- \text{rank}(P)$ zeroes and the rest ones.
+
+## 12.
+
+Probably not the intended reasoning, but this could be done by splitting the
+column vectors over two matrices, filling with zeroes, and summing.
+
+## 13.
+
+## 14.
+
+\[A = \begin{bmatrix}
+  -7 & 20\\
+  -4 & 11
+\end{bmatrix}\]
+
+\[Au = \begin{bmatrix}
+  17\\
+  8
+\end{bmatrix}\]
+
+\[\begin{aligned}
+& u_{k+1} = 1(1^k) \begin{bmatrix}
+  5\\
+  2
+\end{bmatrix} + 2(3^k) \begin{bmatrix}
+  2\\
+  1
+\end{bmatrix}\\
+& = \begin{bmatrix}
+  5\\
+  2
+\end{bmatrix} +
+3^k \begin{bmatrix}
+  4\\
+  2
+\end{bmatrix}
+\end{aligned}\]
+
+## 15.
+
+The eigenvectors, as expected, are complex but orthogonal.
+```{r, results='asis'}
+A <- matrix(complex(9, imaginary = c(0, 1, 0, -1, 1, -1, 0, 1, 0)), nrow = 3)
+mat2latex(round(eigen(A)$vectors, digits = 3))
+```
+
+## 16.
+From the multiplication
+
+\[ \begin{bmatrix}
+  a^2 +bc & b(a+d)\\
+  c(a+d) & bc +d^2
+\end{bmatrix}\]
+Neither $a$ nor $d$ can  be zero, so $bc= - \sqrt a = - \sqrt d$. But then $c$ must be zero for the bottom left to be 0 yet nonzero for the diagonal to be 0. 
+If $A = \m{4 & 1\\ 0 &4}$, then a possible square root is $\m{2 & 1/4\\ 0 & 2}$
+
+## 17.
+a.
+
+\[du/dt = \frac{1}{8} \Big ( 500 e^t \begin{bmatrix}
+  4\\
+  1
+\end{bmatrix} - 300 e^{-t} \begin{bmatrix}
+  4\\
+  -1
+\end{bmatrix}
+\Big )
+\]
+
+## 18.
+
+a. True.
+
+b. False. Consider $A = \m{1&0\\0&0}$.
+
+e. False. Consider
+
+\[ \begin{bmatrix}
+  1 & 1\\
+  0 & 1
+\end{bmatrix}\]
+
+d. False. Consider
+
+\[\m{1 & 1\\ 1 & 1}\]
+
+e. False. This is true only of Hermitian matrices.
+
+## 19.
+
+a. The column vectors are linearly independent, and 1 cannot be an eigenvalue, so $K - I$ is invertible.
+
+b. The orthogonal eigenvectors can be converted to a unitary matrix and used to diagonalize $K$.
+
+c. Since $e^{\lambda i}e^{-\lambda i}= e^{\lambda i - \lambda i}=e^0=1$, 
+$e^ {\Lambda t}$ is unitary.
+
+d. From the above,
+\[
+  \begin{aligned}
+    & KK^H = U e^{\Lambda t}U^HU (e^\Lambda t)^H U\\
+    & = Ue^{\Lambda t} (e^{\Lambda t})^HU^H\\
+    & = UU^H\\
+    & = I
+  \end{aligned}
+\]
+
+## 21.
+
+a. \[ M = \begin{bmatrix}
+  d & 0 & 0\\
+  0 & d^2 & 0\\
+  0 & 0 & d^3
+\end{bmatrix}\]
+
+b. 
+\[M^{-1}AM = \begin{bmatrix}
+  1 & d & d^2\\
+  1/d & 1 & d\\
+  1/d^2 & 1/d & 1
+\end{bmatrix}\]
+
+## 22.
+The eigenvalues must be all -1, since the standard vectors 
+are all flipped. But such a rotation is possible only if 
+$\det A =1$ (orientation does not change), and this is impossible if $n$ is odd, since then $\det A = -1$. So $A$ must be a 180-degree rotation matrix, e.g., $\m{-1 & 0 \\0 & -1}$
+
+## 23.
+
+\[
+  \begin{aligned}
+    & x^tA^T = \lambda_x x^T\\
+    & x^TA^TA^Ty = \lambda_y x^TA^Ty\\
+    & \lambda_x x^TA^Ty = \lambda_y 
+  x^TA^Ty\end{aligned}
+\]
+Since $\lambda_1 \neq \lambda_2$, this is only true if the eigenvectors are orthogonal.
+
+## 24.
+
+```{r, results='asis'}
+A <- sin(1/sqrt(2) *outer(1:3, 1:3) * (pi/4))
+
+S <- eigen(A)$vectors
+mat2latex(round(S %*% t(S)))
+```
+
+## 25.
+\[N = \begin{bmatrix}
+  0 & 1\\
+  0 & 0
+\end{bmatrix}\]
+a. $\lambda^3x = N^3x$, and $N^3 =0$
+
+b. Let element $ji=ij$ be nonzero. Then $N^2_{ji}=N^2_{ij}$ would be nonzero as well, so the matrix could never reach 0. This
+also holds if any part of the trace is nonzero.
+
+## 26.
+
+a. \[A = \frac{1}{9} \begin{bmatrix}
+  4 & 2 & 4\\
+  2 & 1 & 2\\
+  4 & 2 & 4
+\end{bmatrix}\]
+
+b. $\lambda = 1$, since the dimension of the subspace is 1.
+
+c. Since $P^n =P$, we just have to solve $Pu_0$.
+
+\[Pu_k = \begin{bmatrix}
+  6\\
+  3\\
+  6
+\end{bmatrix}\]
+
+## 27.
+
+From the trace and determinant rules:
+
+\[A = \begin{bmatrix}
+  7 & 6\\
+  -25/3 & -7
+\end{bmatrix}\]
+
+## 28.
+
+a. Any real $d$ and $c = 5$.
+
+b. $c = 5$ and $d \neq 37/3$
+
+## 29.
+
+In each case the eigenvectors are the columns of $S$ and the eigenvalues are $(2, 1)$ because the matrices are similar.
+
+## 30.
+
+The dominant eigenvector is $ \m{1\\2}$,so
+
+\[ \frac{-a}{3} \begin{bmatrix}
+  1\\
+  2
+\end{bmatrix}\]

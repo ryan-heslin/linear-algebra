@@ -1,0 +1,186 @@
+---
+title: "Notes"
+author: "Ryan Heslin"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+```
+
+
+## 1.
+
+The least squares solution to
+
+\[
+  \begin{aligned}
+    & 3x = 10\\
+    & 4x = 5
+  \end{aligned}
+\]
+
+is 
+
+```{r}
+fit <- function(A){
+  (solve(t(A) %*%A) %*% t(A))
+}
+
+fitted <- c(3, 4) %*% fit(c(3, 4)) %*% c(10, 5)
+
+t((c(10, 5) - fitted)) %*% c(3, 4)
+
+```
+
+I check the solution is orthogonal, jsut to be safe.
+
+
+
+
+## 7.
+
+Find a projection matrix:
+
+```{r, results = 'asis'}
+A <- cbind(c(1, 1, -2), c(1, -1, 4))
+
+matador::mat2latex(A %*% fit(A))
+```
+
+## 8.
+
+If $P$ projects onto the $k$-dimensional subspace, then $P$'s image is $k$, and its rank is the dimension of $k$.
+
+## 9.
+
+IF $P=P^TP$, then $P$ is a projection matrix. Projection matrices are both symmetric and respect unit length, so $P^TP=P^2=P$.
+
+b. $P=0$ projects into the kernel of the transpose, since $0_n$ (from the right-hand matrix) resides there.
+
+## 10.
+
+Say $v$, $w$, and $b$ are orthogonal, then $A^TA=I_m$ and $A^Tb$ maps $b$ onto $A$'s column space.
+
+## 11.
+
+Say $P$ projects onto $S$ and $Q$ onto $S^{\perp}$. Then $P + Q = I$ because every vector consists of $Px + Qx$, so $(P + Q)x =x$ $PQ =0$ because $Px \cdot Qx = 0$. Then
+
+\[
+  \begin{aligned}
+    & (P - Q)^2 = I\\
+    & P^2 - QP - PQ + Q^2 =I
+    & P + Q = I\\
+    & I = I
+  \end{aligned}
+\]
+
+## 12.
+
+The kernel of the transpose is 
+
+\[
+  \begin{bmatrix}
+  -1 & -1\\
+  1 & 0\\
+  0 & 0\\
+  0 &1
+  \end{bmatrix}
+\]
+
+```{r}
+A <- cbind(c(-1, 1, 0, 0), c(-1, 0, 0, 1))
+
+A %*% fit(A)
+```
+Since all vectors in $V$ and $V^{\perp}$ are orthogonal, the projection of a vector in one onto the other is 0.
+
+
+## 15.
+
+Show the reflection matrix $R$ is involutory:
+
+\[
+  \begin{aligned}
+    & R^2 = (I - 2P)^2\\
+    & = I^2 +4P^2 -2PI - 2IP + I^2\\
+    & = I^2\\
+    & = I
+  \end{aligned}
+\]
+
+## 16.
+
+Show $P = uu^T$.
+
+Symmetri is obvious. For idempotence, consider the first element of $P^2$:
+
+
+\[
+  \begin{aligned}
+    & = (u_1^2)^2 + (u_1+u_2)^2\\
+    & = u_1^2(u_1^2 +u_2^2)\\
+    & = u_1^2
+  \end{aligned}
+\]
+
+## 17.
+
+That matrix is
+`r tcrossprod(1/sqrt(2) * c(-1, 1))`
+
+## 19.
+
+The row space projection is of course $A^T(AA^T)^{-1}A$
+
+
+## 23.
+
+The best fit to a constant function is the average. Then $||\hat x - x|| =||\bar x - x|| = \sqrt{\bar x - x}$, which is the exact definition of the residual sum of squares.
+
+
+## 24.
+
+Quadratic fit:
+
+```{r}
+A <- matrix(c(1, -1, 1,
+            1, 0, 0,
+            1, 1, 1,
+            1, 2, 4), nrow = 4)
+fit(A) %*% c(2, 0, -3, -5)
+```
+The equation is $1 -5t$; the coefficeint on $t^2$ is barely significant.

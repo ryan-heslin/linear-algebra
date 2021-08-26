@@ -1,0 +1,431 @@
+---
+title: "Section 4.1 Problems"
+author: "Ryan Heslin"
+date: "`r  Sys.Date()`"
+output: pdf_document
+---
+
+% Standard custom LaTeX commands
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+%\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+
+
+% 1: term 1
+% 2: subscript 1
+% 3: term 2
+% 4: subscript 2
+% 5. operation
+\newcommand{\dotsn}[5]{#1_2#3_1#5#1_2#3_2#5#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+```
+Check some subspaces
+
+# 1.
+
+\[p(0)=2\]
+
+Not closed under addition:
+
+$$
+ap(0)+bp(0)=2a+2b \neq 2
+$$
+
+# 2.
+
+\[p(2)=0\]
+
+Nice and closed.
+\[ap(2) +bp(2) = 0a + 0a = 0\]
+
+\[k(p2)=0k=0\]
+
+# 3.
+
+\[\begin{aligned}& (f(x)+g(x))'=f'(x)+g'(x)\\
+& 1 + 1 = f(x) + g(x)\end{aligned}\]
+
+\[\begin{aligned}4a + 2b +c + 4d + 2e +f\\
+&4(a+d)+2(b + e) +(f+ c)\end{aligned}\]
+
+# 4.
+
+Valid subspace
+\[
+  \begin{aligned}
+    & \int_0^1(p(t)dt + \int_0^1g(h)dh=0 + 0 = 0\\
+    & k\int_0^1p(t)dt =k0 =0
+  \end{aligned}
+\]
+
+Basis: $(1, t, t^2)$
+
+# 5.
+
+$p(-t)=-p(t)$. This satisfies the scalar axiom by definition.
+
+# 6.
+
+$3\times{3}$ invertibles are not a subspace because not closed under
+addition:
+
+```{r}
+library(matador, quietly = TRUE)
+try(solve(diag(nrow =3) + square(0, 1, 1, 1, 0, 1, 1, 1, 0)))
+```
+
+# 7.
+
+Diagonals are obviously a subspace.
+
+# 8.
+
+Ditto upper triangular; the zero elements never become nonzero.
+
+# 9.
+
+$3\times{3}$ with positive nonzero entries: yes.
+
+# 10
+
+Matrices whose kernel is $v=\m{1\\2\\3}$: yes. We can use the properties since all matrix transformations are linear.
+
+\[\begin{aligned}&Av=0&Bv=0\\
+&Av+Bv = (A+B)v=0\\
+&kAv=0\\
+&A(kv)=0\end{aligned}\]
+
+# 11.
+
+$3\times{3}$ RREFS: not closed under scalar multiplication or 
+addition, since scaling converts to non-RREF form.
+
+The following concern the space of infinite sequences.
+
+# 12.
+$(a, a+k, a+2k,\dots)$ is a subspace.
+
+\[\begin{aligned}&A =(a, a+k, a+2k,\dots)\\
+& B= (b, b+c, b+2c,\dots)\\
+&A+B=(a+b)+(a+b+k+c) +(a+b+2k+2c)\\
+&cA=(ca+(ca+ck)+ca+2kc)=(ca+(ca+ck)+ca+2kc)\end{aligned}\]
+
+# 13.
+Geometric sequences $(a, ar, ar^2, ar^3,\dots)$ are not a subspace.
+
+Not closed under addition:
+
+\[\begin{aligned}
+&(a,ar,ar^2)+(b, bq, bq^2)=((a+b), (a+b)(r+q), (a+b)(r^2+q^2)\\
+&(a+b, ar+bq, ar^2+bq^2) \neq((a+b), ar+br+aq+bq, ar^2+br^2+aq^2+bq^2
+\end{aligned}\]
+
+Scalar multiplication
+
+\[\begin{aligned}&k(a, ar, ar^2)=(ka, kar, kar^2)\\
+&(ka, kar, kar^2)=(ka, kar, kar^2)\end{aligned}\]
+
+# 14.
+
+Sequences that converge on 0 are a subspace, because limits
+obey the adding and scalar multiplication axioms.
+
+\[\begin{aligned} &A+B=0\\
+& k(A)=0=A(k)=0\end{aligned}\]
+
+# 15.
+
+Square-summable (converge on $\sum^{\infty}_{i=0}x^2_i$ are not 
+a subspace. The squares of the summed sequence are not the same as those of
+the separate sequences.
+
+\[\begin{aligned}
+&X +Y = (x_1+y_1), (x_2+y_2),\dots,(x_n+y_n)\\
+&\sum^{\infty}_{i=0} = (x^2+y^2+2xy,\dots,x_n^2+y_n^2+2x_ny_n)\end{aligned}\]
+
+Now we find bases.
+
+# 16.
+
+$R^{3\times{2}}$: one-hot matrices with a 1 in each of the six elements, dimension 6.
+
+# 17.
+
+$R^{n \times {m}}$: $mn$ one-hot matrices, dimension $mn$.
+
+# 18.
+
+All $2\times{2}$ with trace that sums to 0: 
+
+\[\m{1&0\\
+0&0},
+\m{0&b\\
+0&0},
+\m{0&0\\
+c&0}\]
+
+We don't need a basis for $d$ because it's the opposite sign of $a$.
+So we've lost one degree of freedom.
+
+# 19.
+
+$C^2$: $(1, i)$
+
+# 20.
+
+All diagonal matrices: $n$ one-hot matrices, one with 1 in each
+diagonal position
+
+# 24.
+
+Lower and upper triangular matrices: standard one-hots, with dimension $\sum_{i=1}^n$.
+
+# 25.
+
+All polynomials $P_2$ such that $f(1)=0$: dimension is 2, since $a +1b + 1c=0$. A basis could be $1, t$.
+
+Not at all right!
+
+# 26.
+
+# 27.
+
+Such a matrix implies the system:
+
+\[\begin{aligned}&a^2+bc=1\\
+&ab+dc=0\\
+&ac+bd=0\\
+&bc+d^2=2\end{aligned}\]
+
+which requires the off-diagonal to be 0. So the components matrix itself are the basis
+
+\[\m{1&0\\0&1}\]
+
+Note the basis doesn't have the ratio of components to each other
+of the final matrix: keep it one hot.
+
+# 28.
+
+# 29.
+
+All matrices such that $A\m{1 & 1\\ 1& 1} = \m{0 & 0\\ & 0 & 0}$: dimension 2, since the kernel is a single vector, requiring only 2 unique elements,w with one having the opposite sign of the other.
+
+This is wrong.
+
+\[\m{1&0\\0 & 0},\m{0 & 0\\  1 &0}\]
+
+# 30.
+
+\[\m{1&2\\3&6}A=\m{0&0\\
+0&0}\]
+
+Dimension 2. Rows have to be multiples of $(1, -3)$
+
+\[\m{1&0\\
+1&0}\]
+
+# 31.
+
+\[\m{0&0\\1&0},\m{0&-1\\0&0}\]
+
+dimension 2.
+
+# 32.
+
+The basis is $\m{1&-2\\1&1}$, from the
+implied system $a=c$ and $b=-d$.
+
+```{r}
+S <- matrix(c(1, 1, -1, 1), nrow = 2)
+
+matrix(rep(1, 4), nrow = 2) %*% S
+
+S %*% matrix(c(2, rep(0, 3)), nrow = 2)
+```
+
+# 34.
+
+```{r}
+solve(matrix(c(3, 4, 2,5), nrow = 2))
+```
+
+Find $S$ for $\m{3&2\\4&5}S=S$.
+
+The implied system:
+
+\[\begin{aligned}&a=3a+2c\\
+&b=3b+2d\\
+&c = 4a+5c\\
+&d=4b+5d
+\end{aligned}\]
+
+Thus:
+
+\[\begin{aligned}& a=-c\\
+& b=-d
+\end{aligned}\]
+
+So a basis is $\m{1&0\\0&1},\m{0&1\\0&0}$
+
+# 35.
+
+We want to find the basis for matrices commuting with $`r mat2latex(diag(x= c(2, 3, 4), nrow = 3), sink = TRUE)`$. Obviously we need three for the diagonal elements, since all diagonal matrices commute. But we need an additional three for the upper and lower triangles, since $A$ would still commute if it were symmetric. So adding the bases together,one possibility is:
+
+\[\m{1&1&1\\
+0&1&1\\
+0&0&1}\]
+
+# 36.
+
+Our matrix is $`r mat2latex(diag(x = c(2, 3, 3), nrow = 3))`$ The space of 
+matrices that commute with this matrix has dimension 5. We need three values to
+account for each element of the diagonal, but since 3 is repeated  we gain two
+degrees of freedom, for the $(2,3), (3, 2)$ interactions, since those values
+in the commuting matrix ar arbitrary. because the row-column interaction is the same for either side.
+
+# 37.
+
+The possibilities for an $3\times{3}$ matrix are
+3 (all unique values), 5 (two distinct values), 9, (the same value). In general,
+each repeated value adds $n-1$ to the basis, except for the last.
+
+# 38.
+
+For a $4\times{4}$ diagonal, the possibilities for the basis dimension are 4, 
+6, 10, and 16. It looks like the pattern is $\dim(A) + 2(\dim(A)-N)$, where $n$
+is the distinct values on the diagonal.
+
+```{r}
+LHS <- paste0(letters[1:16], rep(letters[23:26], 4)) %>% matrix(nrow = 4, byrow = TRUE)
+
+RHS <- paste0(letters[1:16], rep(letters[23:26], each = 4)) %>% matrix(nrow = 4, byrow = TRUE)
+```
+
+# 39.
+
+The dimension of the space of all upper triangular is $\sum^n_{i=1}$. For a
+$3\times{3}$ it is 6.
+# 40.
+
+$n^2-n,n^2-2n,\dots,0$. Each increment of rank
+adds $n$ elements to the basis for the matrix. If $c$ is the zero vector, the 
+dimension could b3 $n^2$, since full-rank matrices have only the zero kernel.
+
+# 41.
+
+If $B$ is the zero matrix, any dimension. If $B$ has full rank, 0. Otherwise
+$dim(\ker(B))*3$
+
+# 42.
+
+\[n(n-rank(B))\]
+
+# 43.
+
+$A$ is a reflection matrix about $L$. We are given:
+
+\[AS=S\m{1&0\\0&-1}\]
+
+$A$ is involutory, so $A=A^{-1}$ Therefore:
+
+\[\begin{aligned}&S=\m{v\\w}\\
+&A\m{v\\w}=\m{v\\-w}
+\end{aligned}\]
+
+So $A$ has to reverse the signs of $S$'s second column while being a reflection.
+This is guaranteed only if $v$ is parallel to $L$ and $w$ orthogonal. But in that
+case the vectors must be orthogonal to each other as well, so a dimension of 2
+is sufficient
+
+\[\begin{aligned}&v=x^{\parallel}\\
+&w=x^{\perp}\\
+&v\cdot{w}=0 \end{aligned}\]
+
+# 44.
+
+# 45.
+
+# 46
+
+Simply $(a, k)$, so dimension 2.
+
+# 47.
+
+Even functions satisfy the scalar property:
+
+\[
+  \begin{aligned}
+    & f(-t) = f(t)\\
+    &kf(-t) =kf(t)
+  \end{aligned}
+\]
+
+\[
+  \begin{aligned}
+    & f(-t) +g(-h) = f(t) + g(h)  
+  \end{aligned}
+\]
+
+They are. The scalar multiples remain part of the subspace because the evenness condition does not apply to them. The same is true of odd functions
+
+# 48.
+
+# 49.
+
+# 50.
+
+# 51.
+
+# 52.
+
+# 53.
+
+Say a space $C$ of dimension $n$ has a basis with
+$n+1$ elements. By definition, a unique linear 
+combination of this basis describes every member
+of the space. These coordinates may be mapped to vectors in $R^n$ using the
+coordinate transformation. (The standard coordinate transformation could not
+be used for $R^{n+1}$ because $C$ has dimension $n$.
+). Let $V$ designate the subspace containing the
+coordinate vector for every member of $C$'s basis. If the basis is valid,
+then the members
+of $V$ are linearly independent, such that
+$c_1v_1+\dots+c_{n+1}v_{n+1}=0$ has only the solution $c_1,\dots,c_{n+1}=0$. But a set of
+vectors in $R^n$ can contain at most $n$ linearly independent vectors, so 
+$v_{n+1}$ must be redundant. Because it is not linearly independent, $V$ cannot
+form coordinates for a a basis of $C$. But the basis would be valid if its 
+coordinates were $n$ linearly independent vectors. So a linear space of $n$
+dimensions admits at most $n$ linearly independent elements.
+
+
+# 54.
+
+# 55.
+
+# 56.
+
+# 57.
+
+# 58.
+
+# 59.
+
+# 60.

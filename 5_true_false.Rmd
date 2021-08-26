@@ -1,0 +1,267 @@
+---
+title: "Chapter 5 True or False"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+```{r}
+
+```
+
+<!--
+
+ <!-- Standard custom LaTeX commands -->
+                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                        (toc&d\end{bmatrix}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                              \newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+
+## 1.
+
+False. A linear transformation that preserves length but not angle is not orthogonal. 
+
+## 2.
+
+True: assuming invertibility, the inverse of the transpose is the transpose of the inverse.
+
+## 3.
+
+Assuming $A$ is square, $A^2$ is also orthogonal because $A_j \cdot A_j = 1$ and $A_j \cdot A_k =0$ by definition.
+
+## 4.
+
+False. $(AB)^T=B^TA^T$ The $2,1$ element in the first case is row 2 of $A$ times column 1 of $B$, in the second column 1 of $A$ times row 2 of $B$.
+
+## 5.
+
+True.
+
+## 6.
+
+
+
+## 7.
+
+False. A symmetric matrix may have zeroes on the diagonal, like \[`r mat2latex(square(0, 0, 1, 0, 0, 0, 1,0,0), sink = TRUE)`\]
+
+## 8.
+
+True. If $AA^T=I$, then $A^{-1}=A^T$, which is true only of orthogonal matrices. 
+
+## 9.
+
+False. It is $(x \cdot u)u$
+
+## 10.
+
+True.
+
+## 11.
+
+False. This is true only of parallel vectors.For two opposite-signed vectors, $||x+y||^2 = 0$.
+
+## 12.
+
+True. The determinant of $R$ is the same as that of $A$, and $R$ is identical for the transpose, since $Q^T = Q^{-1}$
+
+## 13.
+
+True. For orthogonal matrices, $A^T=A^{-1}$, and the inverse is also orthogonal.
+
+## 14.
+
+False.
+
+\[
+  \begin{aligned}
+    & AB = A^TB^T\\
+    & = (BA)^T
+  \end{aligned}
+\]
+
+## 15.
+
+## 16.
+
+False. If $A$ is not square, the projection is $A(A^TA)^{-1}A^T$. If it is square, the projection is $I$.
+
+## 17.
+
+True. If $B$ is symmetric, so is $B^2$, since $B^2=B^TB^T=B^2$.
+
+## 18.
+
+True. 
+
+\[
+  \begin{aligned}
+    & A^TB^T=B^TA^T\\
+    & BA = AB
+  \end{aligned}
+\]
+
+## 19.
+
+False. The subspaces partition $R^5$ completely, and dimensions can only be integers, so if $V^{\perp}$ has an odd dimension $V^{\parallel}$ has an even one and vice versa.
+
+## 20.
+
+True. This is just a restatement of the $QR$ decomposition.
+
+## 21.
+
+False. Since the columns are all unit length, no scaling of volume occurs. But the matrix may have negative orientation, in which case $\det(A) = -1$.
+
+## 22.
+
+True.
+
+## 23.
+
+True. If this were false, the vector would have greater than unit length.
+
+## 24.
+
+True. By definition, a basis consists of linearly independent vectors, which can always be orthonormalized.
+
+## 25.
+
+False. the columns are not unit length.
+
+## 26.
+
+True.
+
+\[
+  \begin{aligned}
+    & x = x^{\parallel} + x^{\perp}\\
+    & x - x^{\parallel} = x^{\perp}
+  \end{aligned}
+\]
+
+By definition, this vector is orthogonal to the subspace.
+
+## 27.
+
+False. consider:
+
+\[A = \begin{bmatrix}
+  -1/ \sqrt2 & 1/ \sqrt 2\\
+  1 / \sqrt2 & 1 / \sqrt 2
+\end{bmatrix}\quad B = \begin{bmatrix}
+  0 & 1\\
+  1 & 0
+\end{bmatrix}\]
+
+## 28.
+
+True. Since $A$ is symmetric, the orthogonal complement of the image  is the kernel of the transpose, which is the same as $A$'s kernel since $A^T=A$. So those vectors must be orthogonal.
+
+## 29.
+
+True; proved in an earlier problem.
+
+## 30.
+
+False. This is true of any symmetric matrix, since $A^2=A^2$.
+
+## 31.
+
+## 32.
+
+True. A scaling matrix would not leave some vectors with lengths unchanged.
+
+## 33.
+
+True. If $A^{-1}=A$, then $A_j \cdot A_i=0$ and $A_j \cdot A_j= 1$. 
+
+## 34.
+
+True. If the entries are all positive, then
+ they must be in the positive-signed quadrant, which encloses angles of less than 90 degrees in $R^2$ and less in higher dimensions.
+
+## 35.
+
+True. $\ker(B^T) = (B^T)^{\perp} = im(B^T)$
+
+## 36.
+
+True. $A^T$ is always symmetric. 
+
+## 37.
+
+## 38.
+
+True. $\ker(B^T) =  B^{\perp}$, so the image doesn't lose dimension.
+
+## 39.
+
+## 40.
+
+True. This is true only if the matrix is symmetric, which implies $\ker(A^T) = \ker(A)$
+
+## 41.
+
+## 42. 
+True. This is a restatement of Cauchy-Swarz.
+
+## 43.
+
+True.
+
+## 44.
+
+True.
+
+## 45.
+
+True. 
+
+## 46.
+
+True. This is the definition of the eigenvalue.
+
+## 47.
+
+False. $R^{2 \times 2}$ has dimension 4. But any orthogonal matrix spans $R^2$, so those basis elements would not be linearly independent and therefore not a valid basis.
+
+## 48.
+
+## 49.
+
+## 50.
+
+True. Projection matrices are always symmetric, which guarantees orthogonal eigenvectors.

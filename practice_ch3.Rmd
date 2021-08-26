@@ -1,0 +1,1090 @@
+---
+title: "Chapter 3 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 1
+    
+---
+
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+                      tidy = TRUE, fig.align = "center")
+
+library(tidyverse)
+library(rlang)
+library(matador)
+```
+
+# 3.1: Image and Kernel
+
+## 13.
+
+a = \[
+  \begin{bmatrix}
+  1 & 2 & 0 & 0 & 3 &0\\
+  0 & 0 & 1 & 0 & 2 & 0\\
+  0 & 0 & 0 & 1 & 1 &0\\
+  0 & 0 & 0 &0 & 0 & 0\\
+  0 & 0 & 0 & 0 & 0 &0
+  \end{bmatrix}
+\]
+
+\[\ker(A) =
+  \begin{bmatrix}
+  -2 & -3 & 0\\
+  1 & 0 & 0\\
+  0 & -2 & 0\\
+  0 & -1 & 0\\
+  0 & 1 & 0\\
+  0 & 0 & 1
+  \end{bmatrix}
+\]
+
+## 24. 
+Of the projection onto $x+2y+3z=0$, image is just the line perpendicular to that plane, from the cross product.
+
+```{r, results = "asis"}
+mat2latex(crossprod(matrix(c(1, -2, -1/3), nrow =3), matrix(c(2, -4, -2/3), nrow = 3)))
+```
+
+
+## 25.
+
+The kernel of a rotation is just the zero vector.
+
+## 26.
+
+$im(T^3+at^2+bt+c)=R$
+
+## 28.
+
+Though noninvertible, $im(x^3+x)=R$
+
+## 29.
+A function whose image is the unit sphere is \[\frac{1}{x^2+y^2+z^2}\m{x\\y\\z}\]
+
+
+## 30.
+
+\[A \m{1&2\\
+5&10}\]
+
+
+## 31.
+
+A matrix whose image is the plane normal to $\m{1\\3\\2}$ is that with the kernel of the transpose, namely 
+\[\m{-3&2\\
+1&0\\
+0&1}\]
+
+
+## 32.
+
+Kernel of the transpose.
+\[\m{-6/7&-5/7\\
+1&0\\
+0&1}\]  
+
+## 33.
+
+\[\m{1&2&3}\] has kernel $\m{1\\-2\\-3}$
+
+## 35.
+
+For the dot product transformation for nonzero vectors, the image is $R$ and kernel is all orthogonal vectors.
+
+## 36. 
+
+The kernel of the cross product $v\times{x}$ is $A^{\perp}$, all vectors parallel to $v$, since only the zero vector is normal to them.
+
+## 37.
+
+For the matrix  below that selects and swaps the first and second dimension
+\[A= \m{0&1&0\\
+0&0&1\\
+0&0&0}\]
+
+\[
+  \begin{aligned}
+    & im(A)=\text{Span}(e_1, e_2)\\
+& \ker(A)=\m{x_1\\0\\0}
+  \end{aligned}
+\]
+
+For $A^2$, the kernel grows to the $y$ dimension and image shrinks to the first basis vector. $A^3$ is the zero matrix.
+
+```{r, results = "asis"}
+A = matrix(c(0,0,0, 1,0,0, 0, 1, 0), nrow = 3)
+
+mat2latex( A %^% 3)
+```
+
+## 38.
+
+While column space remains the same for all $A^m$, kernel does not. In general, exponentiating a matrix expands the kernel and shrinks the image. 
+
+b. We know $im(A^m)$ is necessarily a subset of $im(A)$
+
+## 39.
+
+$\ker(AB) \geq \ker(A)$.
+
+\[\meq{ABx=0\\
+(AB)x=0}\]
+So any vector in the kernel of $B$ is in that of
+$A$ as well.
+
+b. $im(A)=im(AB)$ because $im(A)$ is simply all linear combinations of $A$'s columns, of which those provided by $B$ are a subset.
+
+## 40.
+
+If $\ker(A)=im(B)$ and the product is defined, then $AB=0$, since the kernel and image in $R^p$ are orthogonal complements.
+
+## 41.
+
+This is the projection onto the line spanned by $\m{3\\4}$. As a projection, $im(A^2)=im(A)$. 
+
+```{r, results = "asis"}
+A <-  matrix(c(.36, .48, .48, .64), nrow = 2)
+mat2latex(A %*% A)
+```
+
+
+## 42.
+
+\[\m{1&0&-3&2\\
+0&1&-2&1}\]
+
+## 43.
+
+To express one matrix as the kernel of another, row reduce it for the generic vector $y$ and note the equations that result on the zeroed rows. These provide the matrix whose kernel is the original matrix's image (since $Bx=0$ only when the equations on $y$ are equal to zero, necessary for the original matrix to be consistent, which it is for all vectors in its image).
+## 44.
+
+Given $B=\text{rref}(A)$
+
+a. $\ker(A)=\ker(B)$ because, uniquely, $Ax=0$ is true for whatever scalars
+match the ratios of linearly dependent columns to each other (o just the zero vector should none exist).
+b. The images are not necessarily equal; the columns may look very different in unreduced form.
+
+## 45.
+
+If $A$ has partial column rank, each free variable adds a dimension to the kernel, with values given by the unit of that free variable needed to cancel out $A$'s columns.
+
+## 46.
+
+If $A$ is a $3\times{4}$ RREF, its image consists of between 1 and of the four columns, respectively a line, plane, and, uh, space.
+
+## 47.
+
+If $T$ is a projection onto a line $L1$  followed by one onto another line $L2$, the image is the second line, the kernel just the zero vector. Since both lines passe= through the origin, the first transformation's image is $L1$ and kernel all vectors perpendicular to $L1$. But because $L2$ also cuts through the origin, the only vectors on $l1$ perpendicular to the zero vector are the zero vector itself. So the image is $L2$ and the kernel the orthogonal line to $L1$.
+## 48.
+
+If $A^2=A$, then for a $w$ in $im(A)$:
+
+a. \[\meq{&Ax=w\\
+&Aw=A(Ax)=A^2x=Ax=w}\]
+
+b. If $A$ has full rank, $im(A^m)=A$. Rank 0 is impossible
+
+c. By the above, $Aw=w$ if $w$ is in $A$"s image. Only projections have this property.
+
+## 49.
+
+We may as well prove the kernel is a valid subspace.
+
+\[\begin{aligned}
+&Av_1=0\\
+&Av_2=0\\
+&A(v_1+v_2)=Av_1+Av_2=0+0=0\\
+&kAv=0\\
+&A(kv)=0
+\end{aligned}\]
+
+## 50.
+
+\[\ker(A^2)=\ker(A^3)]\]
+
+We know $Ax=0$. Because this lies at the "root" of every chain of iterations of $A$, and all linear combinations of 0 are 0, $\ker(A^m) \geq \ker(A)$.
+
+\[\begin{aligned}
+&A^2x=A^3x=0\\
+&A(Ax)=A^2(Ax)=0
+\end{aligned}\]
+
+## 51.
+
+If $\ker(A)=0$ and $\ker(B)=0$:
+
+\[\ker(AB)=0\]
+
+If a matrix has the zero kernel, it has full column rank. The products of full-rank matrices always retain full rank because each matrix, by definition, consists of linearly independent vectors. No linear combination provided by another matrix can produce a vector that is linearly dependent on others.
+
+The simple proof I couldn't figure out without looking it up:
+
+\[\meq{&s=Av\\
+&v=Bu\\
+&s=ABu\\
+&s=(AB)u\\
+&s=(A)Bu}\]
+
+\[\meq{&s=Bv\\
+&v=Au\\
+&s=BAu\\
+&s=(BA)u}\]
+
+## 53. 
+Column $j$ of the RREF gives column $j$ of either the RREF or the original as a linear combination of columns 1 though $j-1$ with the corresponding coefficients. Therefore:
+
+\[H=\m{1&0&0&1&0&1&1\\
+0&1&0&1&1&0&1\\
+0&0&1&1&1&1&0}\]
+
+The kernel basis is
+
+\[M = \m{1&0&1&1\\
+1&1&0&1\\
+1&1&1&0\\
+1&0&0&0\\
+0&0&1&0\\
+0&0&0&1}\]
+
+Since $M$ is a basis for the kernel of $H$, all linear combinations of its columns yield a vector that would solve $Hx=0$. This is another way of saying the image of $M$ is the kernel of $H$. Thus, $H(Mx)=0$.
+
+## 54.
+
+The image of $M$ is the kernel of $H$, the Hamming matrix, because the free variables of $H$ represent each linearly dependent column of $H$ as a linear combination of the others. Substituting these coefficients into the elements of $M$ corresponding to the non-redundant columns, and just selecting column $j$ of $h$ with a 1 in $i$ of M, creates a basis for the kernel. Therefore, if $HMu$ is nonzero, an error occurred, because a bit changed, so $Mu$ was no longer in $H$"s kernel.
+
+This given $w$ is _not_ a linear combination of $M$ because it is outside $H$'s kernel, meaning an error occurred in transmission.
+
+
+By multiplying the last four elements of $w$ by $H$, we get a different vector than the one received. By computing $Hv$, we get a nonzero vector, indicating that errors occurred. The first and second bits of the message were flipped.
+
+If we multiply the corrected message by the Hamming matrix, we get $\m{0\\2\\2}$ - the zero vectors, by the bit addition rule $1+1=0$. Normally I'd use minus signs to cancel the columns for the kernel basis, but by the bit addition rule I don't have to.
+
+```{r}
+library(pracma)
+H <- matrix(c(1, 0, 0, 1, 0, 1, 1,
+              0, 1, 0, 1, 1, 0, 1,
+              0, 0, 1, 1, 1, 1, 0), nrow = 3, byrow= TRUE)
+
+M <- matrix(c(1, 0, 1, 1,
+            1, 1, 0, 1,
+            1, 1, 1, 0,
+            1, 0 ,0 ,0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0 , 0,1), nrow = 7, byrow = TRUE)
+
+w <- c(1, 0, 1, 0 , 1, 0, 0)
+
+M %*% c(0, 1, 0, 0)
+
+H %*% M %*% c(0, 1, 0, 0)
+
+H %*% w
+
+M %*% c(0, 1, 0, 1)
+```
+
+Clearly an error was made because solving for $w$ returns an impossible result. We correct the error by solving $M$ for $Hw$ (the vector indicating error). Then we correct that vector to binary ,multiply it by $M$ and then $H$,a nd confirm that the result is 0, so no error occurred. The third bit of the message should have been 1, not 0.
+
+```{r, results = "asis"}
+mat2latex(solve(t(M) %*% M) %*% t(M) %*% c(1,1,0 , 0, 1, 0, 0))
+
+mat2latex(H %*% M %*% c(0, 1, 0, 1))
+
+```
+
+We observe the error code corresponding to the received error 
+
+# 3.2: Subspaces of $R^n$
+
+## 1.
+
+\[W=\Bigg\{\begin{bmatrix}x\\y\\z\end{bmatrix}:x+y+x=1\Bigg\}\]
+
+Not closed under scalar multiplication, obviously.
+
+## 2. 
+
+Not a subspace:
+
+\[\begin{aligned}
+&-2\leq -1 \leq 0\\
+&-1(-2\leq -1 \leq 0)\\
+&2\geq 1 \geq 0
+\end{aligned}\]
+
+## 3.
+
+\[\subsp{x+2y+3z\\
+4+5y+6z\\
+7x+8y+9z}{\text{x, y, z arbitrary constants}}\]
+
+This is the image of a matrix $A$, always a valid subspace:
+
+1. Zero vector $Ax=0$.
+
+2. Addition: $Ax +Ay = A(x+y)$
+
+3. Multiplication: $kAx=A(kx)$
+
+## 4.
+
+The span of a set of vectors is always a valid subspace. We have:
+
+1. $v_1(0)=0$
+
+2. $v_1+v_2=v_3$
+
+3. $kv_1=v_2$
+
+## 5.
+
+The only valid subspaces of $R^3$ are the zero vector, a line through the origin, a plane through the origin, and $R^3$ itself. All must include the zero vector to qualify, and from there any vector can be extended infinitely by scalar multiplication or addition with other vectors in the subspace.
+
+## 6.
+
+a. The intersection of two subspaces is necessarily a subspace.
+
+b. The union of two subspaces is not necessarily a subspace. Consider two orthogonal lines. 
+
+## 7.
+If a nonempty subset is closed under addition and multiplication, it is necessarily a subspace because it contains the zero vector, as $0v=0$. 
+
+## 8.
+
+```{r, results = "asis"}
+A <- matrix(c(1, 2, 2, 3), nrow =2)
+mat2latex(solve(a = A, b = 3:4))
+```
+$\m{2\\3}$ is a linear combination of $\m{1 & 2\\ 2 & 3}$
+
+## 9.
+
+A set of vectors containing the zero vector cannot be linearly independent because it has infinitely many linear relations $c_1v_1+c_2v_2+\dots+k0_m=0$
+
+For these "find a basis" questions, we can find the non-redundant column vectors by inspection just by looking for dimensions where only one vector has a nonzero entry.
+
+## 34.
+
+If a $5\times {4}$  has $\m{1\\2\\3\\4\\5}$ in its kernel, then:
+
+\[\begin{aligned}
+&v_1+2v_2+3v_3+4v_4=0\\
+&4v_4=-v_1-2v_2-3v_3\\
+& v_4 =-1/4v_1 -1/2v_2 -3/4v_3
+\end{aligned}\]
+
+## 35.
+
+If $v_1c_1+\dots+c_mv_m$ is true for at least one nonzero $c_m$, then:
+\[\begin{aligned}
+&c_mv_m=-c_1v_1\\
+&v_m=-\frac{c_1}{c_m}v_1
+\end{aligned}\]
+
+which is the definition of a linear combination.
+
+## 37.
+
+Some vectors in $R^n$ are linearly independent. The transformed vectors are necessarily independent only if the transform $A$ has full column rank (i.e., spans $R^p$); otherwise it has a kernel. So:
+
+\[\begin{aligned}
+&T(x)=0\\
+&T(y)=v\\
+&kT(x)+0T(y)=0z
+\end{aligned}\]
+
+so infinitely many linear relations exist.
+
+## 38.
+
+If $m$ linearly independent vectors exist in a subspace, they must span it. 
+If they are indpendent, then every vector in the subspace has a unique linear relation. This fulfills the requirement of a basis.
+\[c_1v_1+c_2v_2+\dots+c_mv_m=0\]
+
+b. Any set of vectors can be rendered as a matrix whose image is the subspace. 
+## 39.
+
+If a vector $v$ lies outside the span of a set of linearly independent vectors, it is linearly independnet of the set.
+
+If so, there is no nontrivial relation, so if we add $v$ to both sides we just get an identity: 
+
+\[\begin{aligned}
+&c_1v_1+ \dots c_mv_m=0\\
+&c_1v_1+\dots c_mv_m+v=v\\
+&v=v
+\end{aligned}\]
+
+## 40.
+
+This is only meaningful if $n=m$. In that case, $AB$ will have linearly independent columns. Each column of $AB$ is a linear combination with the scalars $c_1\dotsc_m$ in each column of $B$. Each of these combinations is unique, since $B$ has full column rank, so since $A$'s column vectors form a basis for its image, so every vector in $AB$ is unique.
+
+## 47.
+
+The RREF of three linearly independnet vectors in $R^4$ is $I_3$ with a row of zeroes on the bottom.
+
+## 48.
+Consider the plane $3x_1+4x_2+5x_3$ It is the kernel of $\m{3\\4\\5}$ and the image of \[\m{-4/3&-5/3\\
+1&0\\
+0&1}\]
+
+So we solve for the kernel and use the image of _that_ matrix.
+
+## 49.
+
+With the vector $\begin{bmatrix}1\\1\\1\end{bmatrix}$, the image is multiples of the line, the kernel the zero vector,
+because the only vector in the subspace equal to the zero vector is the zero vector itself.
+
+## 50.
+Yes. Say $V\subset{W}$. Then there is no unique $V+W$ for the intersection of the sets, and only $0 +w$ for $W-V$. But the subspace satisfies the properties:
+
+\[\begin{aligned}
+&v_1+w_1+v_2+w_2=(v_1+v_2)+(w_1+w_2)=v+w\\
+&kv_1+kw_1=k(v+w)
+\end{aligned}\]
+
+## 51.
+
+Consider subspaces $V$ and $W$, for which all members of $V$ are linearly independent. $W$ must be as well. Since the subspaces are distinct, no linear combination of $V$ produces a member of $W$. So
+
+\[c_1v_1+c_2v_2+\dots {c_mv_m}=c_qw_q\]
+
+is true only if all constants are 0. This holds for all members of $W$. This would not hold if $W$ was a linearly  dependent set.
+
+b. Combining the bases of both subspaces forms a basis for the combined subspace.
+
+Any vector in the combined subspaces is a linear combination of all its vectors:
+
+\[\begin{aligned}
+&x= c_1v_1+c_2v_2+\dotsc_mv_m +d_1w_1+d_2w_2+\dots{d_qw_q}\\
+&x = (c_1v_1+c_2v_2+\dotsc_mv_m) + (d_1w_1+d_2w_2+\dots{d_qw_q})
+\end{aligned}\]
+$x$ can be split into the bases of the component subsets.
+So the union of the bases provides a basis for the union of the subspaces.
+
+By DeMorgan's law, we have $V \cup{W}=V + W - V\cap{W}$. Since the intersection is 0, the combined vectors form a basis for $V+W$.
+
+## 52.
+
+Consider \[
+\begin{bmatrix}
+a&b&d\\
+0&c&e\\
+0&0&f\\
+0&0&0
+\end{bmatrix}\]
+
+The set is linearly independent if:
+
+\[\meq{&c_1a+c_2b \neq{d}\\
+&c_2c \neq{e}\\
+&f \neq{0}}\]
+
+Which gives a kernel basis:
+
+\[\m{1&1\\
+0&1\\
+0&0}\]
+
+Which has the nasty solutions $c_1=d/a-\frac{be}{ac}, c_2=e/c$, provided $f=0$.
+
+I think this is wrong: at minimum $a$, $c$, and $f$ have to be nonzero. Then the last vector is:
+
+\[\begin{bmatrix}c_1a+c_2b=0\\
+c_1c=0\\
+f=0
+\end{bmatrix}\]
+
+which contains a contradictory constraint on $c_1$
+
+## 53.
+We are asked to prove $v^{\perp}$ a subspace of $R^n$. The dot product is a linear transformation, so
+
+\[\begin{aligned}
+&v\cdot{w}=0\\
+&v\cdot{w+y}=v\cdot{w}+v\cdot{y}=0
+\end{aligned}\]
+
+Scalar associativity:
+
+\[\meq{&kv\cdot{w}=0k=0\\
+&v\cdot{kw}=0\\
+&v\cdot{0}=0}\]
+
+so linear combinations remain in the subspace
+
+
+##55.
+Find a basis of $v^{\perp}$
+\[v=\m{1\\2\\3\\4\\5}\]
+
+Kernel of the transpose.
+
+\[\begin{bmatrix}
+-2&-3&-4&-5\\
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&1
+\end{bmatrix}\]
+
+## 56.
+
+Any values.
+
+## 57.
+
+Only those columns corresponding to free variables, which are redundant, can have nonzero coefficients for themselves and all preceding vectors and still solve $Ax=0$.
+
+Actually, it's possible for all the free variables because they're _linear combinations of the other variables_, so, being redundant, by definition they can be expressed as a linear combination of the preceding $j-1$ vectors.
+
+# 3.3: Subspaces of $R6n$ and Their Dimensions
+
+## 30.
+
+A basis for the subspace defined by 
+
+\[2x_1 -x_2+2x_3+4x_4=0\]
+
+is just the kernel:
+
+\[
+  \begin{bmatrix}
+  -1/2 & 2 & 4\\
+  &1 & 0 & 0\\
+  0& 1 & 0\\
+  0 & & 0 1
+  \end{bmatrix}
+\]
+
+## 31.
+
+If $V$ is the hyperplane $x_1-x_2+2x_3+4x_4=0$, it is the image of its kernel.
+\[\m{1&-2&-4\\
+1&0&0\\
+0&1&0\\
+0&0&1}\]
+
+## 32.
+
+All we need is take kernel of the transpose of \[\m{1&0\\
+0&1\\
+-1&2\\
+1&3}\]
+the orthogonal complement of the image, which is
+
+\[\m{1&-1\\
+-2&-3\\
+1&0\\
+0&1}\]
+
+## 33. 
+
+The dimension of a hyperplane in $R^n$ is $n-1$. A hyperplane is a rank-one homogeneous system, whose solutions consist of the kernel of the transpose. That kernel will also have rank 1 ($\text{rank}=m=n$), leaving a basis of $n-1$ linearly independent vectors. 
+
+## 34. 
+
+Consider a subspace defined by the kernel of a homogeneous system. Its dimension is equal to the difference of $A$'s number of columns and its rank (or the dimension of its image), so it is at most $m-n$ for a matrix of full row rank. More generally, it is $m-\text{rank}$.
+
+## 35. 
+
+If we have a nonzero vector, the dimension of all perpendicular vectors is that of the kernel of the transpose, the orthogonal complement of the image, which has dimension $n-1$. 
+
+## 36. 
+
+No, no matrix can have the same image and kernel.  For a $3\times{3}$ matrix, since $\dim(\ker)+\dim(im)=3$, they cannot have the same dimension and so cannot be equal. Even if the matrix's dimension is even, this cannot be true because the image of any
+nonzero vectors always contains nonzero vectors, while the kernel
+by definition never does. In the case of the zero matrix, the kernel is $R^m$ and the image $\{0\}$.
+
+## 37.
+
+A matrix with two linearly independent vectors fits the bill.
+```{r}
+matrix(c(rnorm(n = 4), rep(1, 16)), nrow = 4)
+```
+
+\[r+(m-r)+r+(m-r)=m+n\]
+
+## 38.
+
+a. Consider $T(x)$ from $R^5$ to $R^3$. Since the matrix has 5 columns, the dimension of the kernel is at least 2 and as much as 4, depending on the matrix's rank.
+
+For a similar transformation from $R^4$ to $R^7$, the dimension of the image is at most 4 ($m$) and at least 0 (assuming it was the zero matrix).
+
+## 39.
+
+Given $A=BC$, where $B$ is $4\times{5}$ and $C$ is $4\times{5}$, the product cannot have full rank. $C$ has at most rank 4, so its vectors do not provide a basis for $R^4$, so any vector in its image has either zero or infinite solutions.
+
+## 40.
+
+\[c_1+c_2x+c_3y+c_4x^2+c_5xy+c_6y^2=0\]
+
+The conic equation consists of a single homogeneous equation, a $1\times{6}$ matrix. To fit a conic through $m$ points, we have to find the kernel of a $m\times{6}$ matrix containing the questions. Row $i$ of this matrix $A$ is
+
+## 41.
+
+If we had four points, for a $4\times{6}$ matrix, then nullity would be at most 3, assuming maximum rank.
+
+No, actually infinitely many, because two basis vectors is enough for infinitely many conics.
+
+## 42.
+
+If we have five equations, then the dimension of the kernel is at most 5 (6-1).
+
+## 43.
+
+If we have 6 distinct points, then we can fit infinitely many conics if the kernel dimension is greater than 1, only one if it is 1, and none if all the the points vectors are linearly independent.
+
+## 44.
+
+Now we consider fitting cubics in $R^2$, which are like conics but with a cubic term added for $x$ and $y$.  
+
+```{r}
+cubic <- function(x, y){
+  c(1, x, y, x^2, x*y, y^2, x^3, x^2*y, x*y^2, y^3)
+}
+
+pivot <- function(m){
+  comp <- c(rep(0, nrow(m)-1), 1)
+  apply(m, MARGIN = 2, function(x) all(sort(x) ==comp))
+}
+
+reduced <- apply(matrix(c(0, 1, 2, 0,0,0,0,0,1,2), nrow = 5), 1, function(x) cubic(x[1], x[2])) %>% 
+  t() %>%
+  pracma::rref() %>% 
+  {rbind(.[1:4, 6:10], t(rev(.[,6])), c(0, .[5, 7:10]), .[1:4,c(5, 1:4)])} *-1
+
+```
+
+The equation $c_5xy+c_7(x^3-3x^2+2x)+c_8(x^2y)+c_9xy^2+c_{10}(y^3-3y^2+2y)$ corresponds to the vector form of the above RREF. Because the kernel is the orthogonal complement of the transpose, transposing this vector gives a homogeneous system of 1 equation that expresses all possible cubics.
+
+## 44.
+
+```{r, results = "asis"}
+apply(matrix(c(0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3), ncol = 2), 1, function(x) cubic(x[1], x[2])) %>% 
+  t() %>% 
+  pracma::rref() %>% 
+  mat2latex()
+```
+In this case the three free variables are all zeros, so th equation is just $c_5xy+x_8x^2y+c_9xy^2=0$. The zeroes do NOT mean these free variables can be ignored, just that none of the constants $c_1$ get multiplied by them. They are still multiplied by the respective points.
+
+## 45.
+
+In this case, only the variables corresponding to $xy$, $x^2y$< and $xy^2$ are free, and all are zeroes.
+```{r, results = "asis"}
+apply(matrix(c(0, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3), ncol = 2),
+1, function(x) cubic(x[1], x[2])) %>% 
+  t() %>% 
+  pracma::rref() %>% 
+  mat2latex()
+```
+
+## 55.
+
+The logic to solving cubics is similar to that for conics. Each equation had 10 parameters, so we have to row reduce the system and find a basis for the kernel, which will consist of solutions to the homogeneous system. The $i$th row of this kernel basis gives column vector $i$ as a linear combination of the free variables. It either has just one 1 (for nonredundant column vectors) or multiple nonzero coefficients (for free variables.)
+
+## 56.
+
+With 8 cubics, the maximum rank is 8, leaving a nullity of 2, so you can fit infinitely many. With 9 distinct points, only one, since multiples of a single cubic are nonunique.
+
+## 59.
+
+With 10 unique points, there might be no possible cubic (if rank is 10), one (if rank is 9), or infinitely many (if rank is less).
+
+## 60.
+
+Fact 1 is wrong. It is entirely possible to fit infinitely many cubics through nine distinct points if some of the points are multiples of each other, so the system has rank less than 9. In that case, a basis for the kernel contains multiple vectors, meaning infinitely many cubics.
+
+## 61.
+
+```{r, results="asis"}
+apply(matrix(c(0, 0, 1, 0, 2, 0, 3, 0, 0, 1, 0, 2, 0, 3, 1, 1), ncol = 2, byrow = TRUE), 1,  function(x) (cubic(x[1], x[2]))) %>% 
+  t() %>% 
+pracma::rref() %>% 
+  mat2latex()
+```
+We need a point whose cubic form is a linear combination of the others.
+
+## 62.
+
+If $V$ is contained in $W$, $\dim(V)\leq{\dim{W}}$. If $V$ had a greater dimension than $W$, some vectors in $V$ would be obtainable by linear combinations not possible with $W$. But that is impossible, because $W$ contains $V$.
+
+## 63. 
+
+If a subspace contains another of the same dimension, they are equal. If $V$ contains $W$, then every vector in $V$ is also in $W$. Because both are closed under addition and multiplication, all possible vectors in each subspace are linear combinations of vectors in the other, and since they have equal dimension, the subspaces have equal spans and are therefore identical.
+
+## 64.
+
+If a subspace in $R^n$ has $\dim{n}$, then its basis must have $n$ vectors. Any $n$ linearly vectors span a space of that dimension, so $V$ spans $R^n$ and therefore _is_ $R^n$.
+
+## 65, 66.
+
+Any vector may be decomposed into $x=x^{\perp}+x^{\parallel}$ with regard to some other vector. If $V\cap{W}=0$. then all vectors in the two subspaces must be orthogonal to each other. Since only the zero vector is shared, a $v$ in $V$ cannot be expressed as a linear combination of any $w$ in $W$, or vice versa,  so with regard to a vector's own subspace  $x^{\parallel}=x=x^{\parallel}+0$. If that is so, then all vectors in the two subspaces are distinct, so any vector in their combined span can be written as a linear combination $x=v+w$. Since both subspaces by definition have bases, and we have shown that adding susbpaces combines their bases, then $\dim(W)+\dim(V)=\dim(V+W)$.
+
+Were this last condition not true, then either or both subspaces would have too few or too many vectors to form a basis, an impossibility.
+
+## 67.
+
+If the vectors $w_i$ span $V$, then every $v_i$ is some linear combination of them. Since the $v_i$ are linearly independent, none are redundant, and they span some subspace of the subspace. The basis consists of whichever $w_i$ are linearly independent of the $v_i$, enough to make up the difference between the number of vectors among the $v_i$ and the dimension of $V$.
+
+## 68.
+
+The $m$ vectors of $V\cap{W}$ are common to both, so each subspace has at least dimension $m$. Let there be $p$ vectors in $V$ not in $W$ and $q$ vectors in $W$ not in $V$. So any vector in $V$ is a linear combination of the vectors $V\cup{C\cap{W}}$, and likewise for $W$.
+
+Let $w_i$ represent vectors in $W$ not in $V$ and $v_i$ represent vectors in $V$ not in $W$ These sets are linearly independent of the intersection (because vectors in the intersection are a linear combination of either subsapce) and of each other:
+
+\[u_i=c_1v_1+\dots+c_iv_i=d_1w_1+\dots+d_iw_i\]
+
+Because the bases of $V\setminus{W}$, $V\cap{W}$,a nd $W\setminus{V}$ are all linearly
+independent, they may be combined to form a basis with $\dim{V}+\dim{W}+\dim{V\cap{W}}$, as claimed.
+
+Combining the bases, we have:
+\[(\dim{V\setminus{W}}+\dim{V\cap{W}}) +(\dim{W\setminus{V}} +\dim{W\cap{V}})\]
+Adding in this order, $W\setminus{V}$ is linearly independent of both the intersection and $V$ (since its shares no elements with $V$ ), and the same for $V\setminus{W}$ The only linearly independent vectors in the set are the repeated ones of the intersection basis, which only contribute once to the combined dimension.
+Therefore $\dim{V}+\dim{W}=\dim{V\cap{W}}+\dim{V+W}$
+
+## 70. 
+
+We are told nothing of the independence of the vectors in $V$ and $W$. So:
+
+\[\begin{aligned} 
+& \dim(V) + \dim(W) = \dim(V \cap W) + \dim(V +W)\\
+& 13 = \dim(V \cap W) + \dim(V +W)
+\end{aligned}\]
+
+<!-- Now $\dim V \cap W$ is at most 6, assuming $ V \subset W$, and at least 4, because we are in $R^10$, so the space outside $V \cap W$ has at most dimension 3. In that case: -->
+
+In the first case:
+
+\[
+  \begin{aligned}
+    & \dim(V) + \dim(W) = \dim(V \cap W) + \dim(V + W)\\
+    &13 = \dim(V \cap W) + 7\\
+    & \dim(V \cap W) = 6
+  \end{aligned}
+\]
+\[
+  \begin{aligned}
+    & \dim(V) + \dim(W) = \dim(V \cap W) + \dim(V + W)\\
+    & 13 = \dim)V \cap W) + 10\\
+    & \dim(V \cap W) = 3
+  \end{aligned}
+\]
+
+## 71.
+
+The basis of the row space is the nonredundant rows,
+reckoned in the same way as nonredundant columns. Since this matrix is in RREF, it is the first
+three rows. 
+
+## 72. 
+
+If we have a matrix in RREF, the basis of the row space is simply the rows with leading ones. These row vectors are not multiples of preceding rows ("redundant") and are therefore linearly independent. The dimension of the row space of course equals rank.
+
+## 73.
+
+Row reduction preserves row space because each row is operated on as a unit with either addition or scalar multiplication, both linear transformations. So all linear combinations of the reduced rows can still be obtained from the RREF by multiplying by the inverse of the elimination matrix.
+
+## 75.
+
+\[\begin{aligned}
+&c_nA^n+\dots+c_2A^2+c_1A+c_0I=0\\
+&c_nA^nv+\dots+c_2A^2v+c_1Av+c_0v=0\\
+&(c_nA_n + \dots + c_2A^2 + c_1A + c_0I)v=0
+\end{aligned}\]
+
+We have $n+1$ vectors in $R^n$. So some vector $v$ lies in the kernel of the summed sequence of $A$, given the correct constants. That proves the summed sequence is noninvertible.
+
+## 76.
+
+I (exhaustively) find the one vector,, $\m{1\\-2\\5}$, that results in a 
+singular $A$. Adding just the right term to the diagonals results in $ad-bc$.
+
+This is a naive way of finding eigenvectors.
+```{r, results='asis'}
+A <- square(1, 2, -2, 1)
+v <- replicate(10000, sample(-10:10, 3, replace = TRUE))
+
+res <- apply(v, MARGIN = 2, function(v) try(solve(((A %^%2) *v[1]) + (A * v[2]) + (diag(nrow = 2) * v[3]))))
+
+inds <- which(sapply(res, function(x) !"matrix" %in% class(x)))
+
+mat2latex(v[,inds])
+```
+
+## 77.
+
+If $rank(A)=n$ for a nonsquare matrix, then $n<m$, since rank is the lesser of the two. That means there are $m-n$ free variables, for which a nontrivial relation
+\[c_1v_1+\dots+c_mv_m=0\]
+exists. But the nonredundant vectors to the left of $v_m$ are linearly independent and therefore invertible,and form a square $n\times{n}$ matrix.
+
+## 82.
+
+A projection onto a plane has rank 2 because the dimension of its image is the plane.
+
+## 83.
+
+Given a $4\times{2}$ $A$ and a $2\times{5}$ $b$
+
+## 88.
+
+$A$ and $B$ are both in RREF but are not equal. Since they are both $n\times{n}$, then at least 
+one column across the two matrices differs. There are two possibilities: in one matrix the column represents a nonredudnant vector and in the other matrix a redundant vector, or they represent redundant vectors that are different linear combinations of the preceding vectors. If $a_k$ has a leading one and $b_k$ does not, then the $kth$ dimension of  $A$'s kernel is a linear combination of at least one free variable (if $A$ lacks full column rank) or just 0 (if it does not), while in $B's$ case it consists of a 1 in the redundant column vector's place and zeroes elsewhere. Alternately, if column $k$ represents free variables in both matrices but differs in the coefficients giving the linear relations, then the dimensions of the kernel corresponding to the nonredudnant column vectors contain different scalars, because the linear combinations that zero out hat dimension are different.
+
+In either case, $\ker(A) \neq \ker(B)$.
+
+## 90.
+
+The image of the cross product is a line normal to the intersection of two vectors, the kernel the plane shared by those two vectors. Because the matrix is symmetric, the kernel and image of the transpose are exactly the same. 
+
+# True or False?
+
+## 1.
+
+True. The number of vectors that form a basis is
+always equal to the dimension of a subspace.
+
+## 2.
+
+False. The nullity is 2, the difference of $m$
+and rank.
+
+## 3.
+
+False. It is a subspace of $R^3$.
+
+## 4.
+
+True. This is the definition of span.
+
+## 5.
+
+True. $n$ linearly independent vectors in $R^n$ form a basis because they span $R^n$ and none
+are redundant.
+
+## 6.
+
+False. No four vectors can span $R^5$.
+
+## 7.
+
+True. If this were false, then $Ax=0$ would have
+infinite solutions, so the function would be noninvertible.
+
+## 8.
+
+True.
+
+## 9.
+
+True. If this is so, then for example
+
+\[\meq{&2u+3v + 4w = 5u + 6v +7w\\
+& -3u = 3v +3w\\
+& u = -v - w}\]
+
+and other nontrivial relations exist as well.
+
+## 10.
+
+False. Rank is at most the lesser of $n$ and $m$,
+so a $5\times{4}$ may have full column rank.
+
+## 12.
+
+False. Consider for example the line spanned by
+$\m{1\\2\\3}$
+
+## 13.
+
+True. If the set is linearly independent, then
+$0v_1+0v_2+v_3+0v_4=v_3$. The relation remains trivial even if $v_4$ is removed. 
+
+## 14.
+
+True, so long as both can be 0.
+
+## 16.
+
+True. These linearly independent vectors span $R^3$.
+
+## 17.
+
+True, and proved to death.
+
+## 18.
+
+True if $A$ is $n\times{n}$, false if $m \geq n$.
+
+## 19.
+
+True.
+
+## 20.
+
+True. Subspaces are closed under addition and
+scalar multiplication, so all linear combinations
+of subspace vectors remain in the subspace. 
+
+## 22.
+
+True. An invertible matrix has the zero kernel, and $(A^{-1})^{-1}=A$, and $0=0$.
+
+## 24.
+
+False. I smell a nontrivial relation here.
+
+## 25.
+
+True. The standard vectors are linearly independent and span $R^3$, so any subspace containing them encompasses all vectors in $R^3$, which is true only of $R^3$ itself.
+
+## 27.
+
+True.
+
+\[\begin{aligned}
+& Bv = 0\\
+& A(Bv) = 0\\
+& A(0) = 0\\
+& 0 = 0
+\end{aligned}\]
+
+## 28.
+
+True, because
+
+\[\meq{&c_1v_1+c_2v_2=0\\
+&c_1v_1=-c_2v_2\\
+&v_1=-\frac{c_2}{c_1}v_2}\]
+
+## 29.
+
+False. This is true only if the vectors are  also linearly independent, so the matrix they comprise is invertible.
+
+## 30.
+
+True.
+
+\[\meq{&c_1u+c_2v + c_3w=0\\
+&c_3w=-c_1u - c_2v\\
+&w = \frac{-1}{c_3}(c_1u + c_2v)}\]
+
+## 31.
+
+False; no vectors in $R^2$ are contained by $R^3$.
+
+## 33.
+
+True of any multidimensional subspace.
+
+## 34.
+True.
+
+## 35.
+
+True. If $AB=0$, then $B$ lies entirely in 
+$A$'s kernel. But the orthogonal complement of 
+
+## 36.
+
+So very false, since adding matrices easily drops ranks:
+```{r, results = "asis"}
+A <- square(1, 0, 0, 1)
+B <- square(0, 1, 1, 0)
+
+mat2latex(A)
+mat2latex(B)
+mat2latex(A + B)
+```
+
+## 37.
+
+True. The union satisfies scalar addition and
+multiplication and must contain the zero vector.
+
+## 38.
+
+True. If the kernel is limited to the zero vector, the matrix has zero or one solutions for every $b$.
+
+## 39.
+
+True. Every basis of $R^n$ spans $R^n$ by definition, so every vector in $R^n$ can be obtained by a linear combination of the basis. An alternate basis would be one such linear combination.
+
+## 41.
+
+True $A$ must be symmetric, since the oethogonal complements must be equal as well.
+
+\[\meq{Av = 0\\
+Ay = v\\
+A^2y = Av=0}\]
+
+## 44.
+
+True. If $A$'s rank were 6, then the nullity of $A$ would be 4, but then $A^2$ could not be zero 
+because $A$ would have greater dimension than its nullity, so some vectors of $A$ would be outside its kernel. But if the nullity is 5 or greater, then the 5 or fewer linearly independent vectors can "fit" in the kernel.
+
+## 45.
+
+True. This is simply the matrix of any basis of the subspace.
+
+## 49.
+
+True. If $A$ has full column rank, then every vector in its image has a unique linear relation among its columns. So if $AB=AC$, then each column $j$ of the product must be exactly the same linear combination of $A$, so the two matrices are equal.
+
+## 50.
+
+True. Projection matrices are idempotent, and a subspace and its orthogonal complement always intersect only in the zero vector.
+
+## 51.
+
+If this is true, then $A^2$ but not $A$ itself
+lies in $A$'s kernel. 
+\[\meq{A^3 = 0\\
+A(AA)=0}\]
+
+## 52.
+
+True. If $im(A) \in im(B)$, then $A$ is some
+linear combination of $B$, so $A = BC$.
+
+## 53.
+
+It turns out only 174 such matrices are invertible. False.
+
+```{r}
+perms <- permute_m(9, 0:1) %>% t()
+
+  mats <- vector("list", length = nrow(perms))
+
+for( i in 1:ncol(perms)){
+  mats[[i]] <- matrix(perms[,i], nrow = 3)
+}
+  
+sapply(mats, det) %>% 
+  {sum(. != 0)}
+```

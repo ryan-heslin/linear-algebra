@@ -1,0 +1,405 @@
+---
+title: "Notes"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+ <!-- Standard custom LaTeX commands -->
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+<!-- % 1: term 1 -->
+<!-- % 2: subscript 1 -->
+<!-- % 3: term 2 -->
+<!-- % 4: subscript 2 -->
+<!-- % 5. operation -->
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+\newcommand{\rot}[1]{
+\begin{bmatrix}
+\cos{(#1)} & -\sin{(#1)}\\
+
+\sin{(#1)} & \cos{(#1)}\\
+\end{bmatrix}
+}
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+```
+## 1.
+
+True. The eigenvalues of a diagonal matrix are the diagonal, and
+$A^TA = A^2$, and $\sqrt {\lambda ^2} = \lambda$
+
+## 2.
+True . $2(3) > 5$, so the quadratic form is positive and therefore
+an ellipse.
+
+## 3.
+
+True. All symmetric matrices have orthogoanl egeinvectors, which
+guarantees distinctness and therefore diagonalizablity.
+
+## 4.
+
+True. It is not PD unless $ac > b^2$, but if $a$ and $c$ were
+both negative then the squared terms of the quadratic form would 
+be negative.
+
+## 5.
+True. All orthogonal matrices are diagonalizable, so $A = S \Lambda S^{-1} \rightarrow \Lambda = S^{-1} A S$
+
+## 6.
+
+True. \[
+  \begin{aligned}
+    & A^TA = \begin{bmatrix}
+      25
+    \end{bmatrix}\\
+    & \sqrt {25} = 5
+  \end{aligned}
+\]
+
+## 7.
+True, of the matrix 
+
+\[ \begin{bmatrix}
+  3 & 2\\
+  2 & 5
+\end{bmatrix}\]
+
+## 8.
+False, they are the square roots of those eigenvalues.
+
+## 9.
+
+True; the positive determinant condition implies this, while if all
+eigenvalues are negative then the quadratic form cannot be positive.
+## 10.
+True, obviously.
+
+## 11.
+
+True. The eigenvalues of a triangualr matrix are the diagonal, and
+$A^TA$ is also triangualr, witht he squares of those eigenvalues.
+
+## 12.
+
+False. Conider:
+
+\[
+  \begin{aligned}
+     A = \begin{bmatrix}
+       1 & 2\\
+       3 & 4
+     \end{bmatrix} &
+     A^TA = \begin{bmatrix}
+       10 & 14\\
+       14 & 20
+     \end{bmatrix} &
+     AA^T = \begin{bmatrix}
+       5 & 11\\
+       11 & 25
+     \end{bmatrix}
+  \end{aligned}
+\]
+
+## 13.
+True, since $\sigma_i$ is the length of $v_i$ after
+transformation by $u_i$.
+\[
+  \begin{aligned}
+    & AV = U \Sigma\\
+    & U = AV \Sigma^+\\
+    & u_i = \frac{Av_i}{\sigma_i}
+  \end{aligned}
+\]
+
+## 14.
+
+True. Negative-definite matrices of even dimension have positive determinants, as the first subdeterminant (in $R$) must be negative, the
+next positive.
+
+## 15.
+
+True. Symmetric matrices have orthogonal eigenvectors, so if $v$ and $W$ are eigenvectors
+$Av \cdot Aw=0$.
+
+## 16.
+
+False, negative semidefinite. Subdeterminants are -2, 2, and
+\[
+  \begin{aligned}
+    & -2[-2(-2) - 1(1)] - 1[1(-2) - 1(1)] + 1[-2(2) - 1(1)]\\
+    & -2(3) - 1(-3) +1(-3)\\
+    & 6  -3 - 3\\
+    & 0
+  \end{aligned}
+\]
+## 17.
+
+False, they are diagonalizable over $C$.
+## 18.
+True. Symmetric matrices always have distinct eigenvectors and are therefore
+diagonalizable.
+
+## 19.
+
+True,a s they must have a positive determinant, which guarantees it.
+
+## 20.
+
+True, as it is symmetric.
+
+## 21.
+
+An invertible symmetric has no nonzero eigenvalues, so the eigenvalues of $A^2$ are their squares,
+always positive.
+
+## 22.
+
+True. This constraint implies 
+\[A^TA = \begin{bmatrix}
+  ||v||^2 & 0\\
+  0 & ||w||^2
+\end{bmatrix}\]
+So the singualr values are the square roots - the lengths.
+
+## 23.
+
+False. The relation is
+$B = S^{-1}AS$
+
+## 24.
+
+
+## 25.
+
+True. Similar matrices have identical eigenvalues, and $A$ is positive definite, so $B$ must also have all positive eigenvalues and be psoitive definite.
+
+## 26.
+
+True.
+
+\[
+  \begin{aligned}
+    & A = Q \Lambda Q^T\\
+    & \Lambda = Q^T A Q\\
+    & S = Q^T
+  \end{aligned}
+\]
+
+## 27.
+
+True. Symmetric matrices always have orthogonal eigenvectors.
+
+## 28.
+
+True.
+
+\[
+  \begin{aligned}
+    & AV = U \Sigma\\
+    & V = A^+U\Sigma
+  \end{aligned}
+\]
+
+## 29.
+
+False. Squares of nonzero
+symmetric matrices never become zero because the nonzero terms are multiplied each iteration. $A^N=0$ only for the symmetric zero matrix. But if there are
+no eiegnvalues above 1 the matrix approaches zero.
+
+## 30.
+
+False.
+\[
+  \begin{aligned}
+    & q(x) = x_1^2 +x_2^2\\
+    & -q(x) = -(x_1^2 + x_2^2)
+  \end{aligned}
+\]
+
+## 31.
+
+True.
+
+## 32.
+
+True. Such a matrix must be symmetric and therefore diagonalizable:
+
+\[
+  \begin{aligned}
+    & Q +Q^{-1} = Q+Q^T\\
+    & (Q+Q^T)^T = Q^T +Q = Q +Q^T
+  \end{aligned}
+\]
+
+## 33.
+
+True.
+
+\[
+  \begin{aligned}
+    & C = x^TAxx^TBx\\
+    & = x^TADB
+  \end{aligned}
+\]
+
+The cetral term $D$ is a symmetric matrix.
+
+## 34.
+False. This matrix is not symmetric.
+
+## 35.
+
+False. A matrix is negative definite only if its eigenvalues are all negative, but if they are then the even-numbered subdeterminants must be positive (as the products of eigenvalues). 
+## 36.
+
+True. The quadratic form is $x^TAx + x^TBx$. Since both terms are separately positive, so is their sum.
+
+\[
+  \begin{aligned}
+    & x^T(A+B)x\\
+    & x^T(Ax +Bx)\\
+    & x^TAx +x^TBx
+  \end{aligned}
+\]
+## 37.
+
+True. No component of $x$ may change sign for the quadratic form to be positive definite, so that means 
+any shearing applied to $x$ msut be less than $\pi/2$ radians.
+
+Reflection matrices violate $ac > b^2$.
+
+## 38.
+
+True. Even if both matrices are sigaonal with those signualr values, the highest singular value of $AB$ is 15. Theya re probably less, as implied by 
+
+\[AB = U_1\Sigma_1V_1^T U_2 \Sigma_2 V_2^T\]
+
+## 39.
+False, obviously. 
+
+## 40.
+
+True. $k$ is any number greater than $-a$ (if $A$ is negative) or
+$\frac{b^2}{c} -a$ if not. (That's also the second pivot and the second part of the square completion).
+
+## 41.
+
+true. The overall determinant is
+\[
+  \begin{aligned}
+    & \det A a(df - e^2) -b(bf-ec) + c(be-cd)\\
+    & =adf - ae^2 -b^2f +2bce -c^2d\\
+    & = d(af - c^2) + b(2ce -bf) - ae^2
+  \end{aligned}
+\]
+If $af < c^2$, then none of the terms are positive definite, and neither is
+the overall matrix
+
+## 42.
+
+False.
+
+\[A = \begin{bmatrix}
+  1 & -1\\
+  -1 & 3
+\end{bmatrix}\]
+
+## 43.
+
+False. Consider
+
+\[A = \begin{bmatrix}
+  1 & -1\\
+  -1 & 1
+\end{bmatrix}\]
+
+## 44.
+False. No souch vector is guaranteed to exist.
+
+## 45.
+
+True. Then the interaction term is negative semidefinite.
+
+## 46.
+
+False. Consider
+
+\[A = \begin{bmatrix}
+  1 & 0\\
+  0 & -1
+\end{bmatrix}\]
+with singualr values 1 and 1 and determinant $1(-1)=-1$.
+
+## 47.
+
+True. They are the eigenvectors matrix $S$ with the vectors in either order, and those
+two matrices'
+transposes.
+
+## 48.
+
+True.
+## 49.
+False. They are equal to the absolute values of the eigenvalues.
+Consider 
+
+\[A = \begin{bmatrix}
+  2 & 0\\
+  0 & -2
+\end{bmatrix}\]
+
+## 50.
+True. they have the same eigenvalues, and the singular values given a set of eigenvalues are always the same.
+
+## 51.
+
+## 52.
+
+True. Entry $ij$ of $A$ is
+
+\[\sigma_i v_i^T u_j\]
+
+The dot product of two normal vectors is at most 1, and no $\sigma_i$ is equal to or greater than 5, so all entries of $A$ are less than 5
+## 53.
+
+True. $ac > b^2$ and $a > 0$ implies at least $a > |b|$ or $c > |b|$ 
+
+## 54.
+
+True. If $A^3=B^3$, then from the eigenvalues of $A^3$ $A = B= Q  \Lambda ^{1/3} Q^T$. Since cube roots are unique, $A$ and $B$ have the same eigenvalues and eigenvectors and are therefore one and the same.

@@ -1,0 +1,544 @@
+---
+title: "Linear Algebra Chapter 1 Problems"
+author: "Ryan Heslin"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(matador)
+```
+
+# 1.1
+Pre-multiplying by a permutation matrix switches rows, post-multiplying switches columns. Each 1 in the permutation "slices" every element of a row (in the first case, since the 1 cuts across the row margin), or a column (the second).
+Each column receives its own scalar because each column represents a variable - a mutable quantity that can take on just one value, but is assigned a scalar for each dimension (the numbers of the matrix, reading downward.)
+
+So as a transformation a vector serves as a collection of scalars for variables, but itself contains only one variable able to be transformed.
+
+
+\newcommand{\di}[2]{#1\times{#2}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+$\di{4}{2}$
+
+Say we are asked to find a system with the solutions:
+
+\[x=6+5t\\
+y=4+3t\\
+z=2+t\]
+Simply set up a matrix with the unknowns on the RHS and row reduce to eliminate the $t$ terms:
+
+\[\begin{bmatrix}
+t&2&z\\
+3t&4&y\\
+5t&6&x\end{bmatrix}\]
+
+Row reduce:
+
+\[\begin{bmatrix}
+t&2&z\\
+0&-2&y-3z\\
+0&-4&x-5z\end{bmatrix}\]
+Then zero out the last row as usual to get the last equation (the nullspace basis, as it happens:)
+
+\[y-3z=-2\\
+x-5z=-4\\
+x-2y+z=0\]
+
+## 21.
+
+The three numbers whose sums in combinations of 2 are:
+
+```{r}
+A <- matrix(rep(1, 9), nrow =3)
+diag(A) <- 0
+
+solve(A, c(24, 28, 30))
+```
+## 24.
+
+There are four possible leading one configurations for a $ 3\times 2$ RREF: none, $1, 1$, $(1, 1)$ and $(2, 2)$, $(1, 1)$ and $(2, 3$)
+# System of  a Line
+
+The system's solutions pass through (1,1,1) and (3,5,0). Since it is a line, one variable is free. The coefficients on $z$ are those that satisfy both points on the line setting $z$ at 1.
+\[z\begin{bmatrix}3-2z\\5-4z\\z\end{bmatrix}\]
+
+## 34.
+
+Each output is the sum of the demand on each industry by each other industry plus the consumer demand. the system is:
+
+\[\begin{align}
+&x_1=.2x_2+.3x_3+320\\
+&x_2=.1x_1+.4x_3+90\\
+&x_3=.2x_1+.5x_2+150
+\end{align}\]
+
+```{r}
+solve(a = matrix(c(1, -.2, -.3, 
+                   -.1,1, -.4,
+                   -.2, -.5, 1), byrow = TRUE, nrow = 3),
+      b = matrix(c(320, 90, 150)))
+```
+## 35.
+
+Polynomials of the form $8 + t -8t^2$
+
+```{r}
+
+solve(a = square(1, 1, 1, 1, 3, 9, 1, 1, 2),
+      b = c(1, 3, 1))
+```
+## 37.
+
+```{r}
+solve(a = square(1, 1, 3, 2), b = c(1, 4))
+```
+
+## 45. 
+
+A system in three unknowns with solutions $(6+5t, 4 + 3t, 2 +t)$
+
+\[
+  \begin{aligned}
+    & 2x + y -z = 18 + 14 t\\
+    & x +y + z = 12 + 9t\\
+    & 3x -y + 2z = 16+ 14t
+  \end{aligned}
+\]
+# 1.2
+
+## 19.
+
+All $4 \times 1$ RREFS are either $\m{1\\0\\0\\0}$ or $\m{0\\0\\0\\0}$.
+## 20. 
+
+Given the RREF of 
+
+\[
+  \begin{bmatrix}
+  0 & a & 2 &1 & b\\
+  0 & 0 &0 & c &d\\
+  0 & 0 & e & 0 &0
+  \end{bmatrix}
+\]
+$a$ must be nonzero, $b$ is arbitrary, $c$ is 0, $e$ must be 0.
+$d$ is either 1 or 0; in the latter case so is $b$.
+
+## 21.
+
+Given the RREF of
+
+\[
+  \begin{bmatrix}
+  1 & a& b & 3 & 0  & -2\\
+  0 & 0 & c & 1 & d & 3\\
+  0 & e & 0 & 0 & 1 & 1
+  \end{bmatrix}
+\]
+
+$e$ must be 0, $a$ and $b$ are arbitrary, though $b$ is 0 if $c$, also arbitrary, and $d$ must be 0.
+
+## 32.
+
+Finding a cubic: It turns out to be $a +2t -t^2 -2t^3$.
+
+```{r}
+A <- cbind(rep(1, 4),
+           matrix(c(0, 0, 0, 1, 1, 1, -1, 1, -1, 2, 4, 8), nrow = 4, byrow = TRUE))
+b <- c(1, 0, 0, -15)
+solve(A, b)
+```
+## 35.
+
+Now for a derivative example. $f`(t) = b + 2ct +3dt^2$
+
+It turns out to be $.625a - 1.0625bt + 1.25ct^2 + .1875dt^3$.
+
+```{r}
+A <- cbind(c(1, 1, 0, 0), 
+           matrix(c(1, 1, 1, 2, 4, 8, 1, 2, 3, 1, 4, 27), nrow = 4, byrow = TRUE))
+b <- c(1, 5, 2, 9)
+solve(A, b)
+```
+
+## 45.
+We plug the given values into the formula for $t$ and use $S(t$ as the solution vector $b$. Then just solve the system:
+
+```{r}
+library(tidyverse)
+t <- c(47, 74, 273)
+s_t <- matrix(c(11.5, 12, 12))
+mat <- cbind(c(1,1,1), 
+             cos(((2*pi) * t ) / 365),
+             sin(((2*pi) * t ) / 365))
+
+coefs <- solve(a = mat, b= s_t)
+
+
+days <- tibble( day = 1:365, len = coefs[1]+ (coefs[2] * cos((2*pi*1:365)/ 365)) + (coefs[3] * sin((2*pi*1:365)/ 365)))
+
+ggplot(days, aes(day, len)) +
+  geom_line() +
+  geom_vline(aes(xintercept = day[which.max(len)]))
+                
+max(days$len)               
+```
+The longest day is about 13 hours long.
+## 47.
+
+Infintie: $k=2$
+Inconsistent: $k= 1$
+Otherwise: unique
+
+## 48.
+
+By row reducing the system to:
+
+\[\m{1&2&3&4\\
+0&k-2&1&2\\
+0&0&k-1&2}\]
+
+we see that it inconsistent if $k=1$, infinitely many solutions if $k=3$, and a unique solution otherwise.
+
+## 66.
+
+There were 120 liberals and 140 conservatives at the start, 140 and 120 respectively at the end.
+```{r}
+solve(matador::square(1, 1, 0, 0, -.3, -.6, 0, 1, -.7, -.4, 1, 0, 1, 0, 0, -1, byrow = TRUE), b = c(260, 0, 0, 0))
+```
+
+## 74.
+
+```{r}
+((1500/19) -(15/19) *1:100)
+
+(400/19) - 1:100
+```
+
+15 sparrows, 6 ducks, 79 roosters.
+
+
+
+## 50.
+
+By row elimination and induction, we find the solution (where $k=n-1$) is $x_k =(1+n-k)x_n-x_{n+1}$
+
+
+## 79.
+
+They have 16, 12, and 8 coins, respectively.
+```{r}
+A <- matador::square(1, -2, -2,
+                     -3, 1, -3,
+                     -5, -5, 1)
+
+solve(A, b = setNames(rep(-60, 3), 1:3))
+```
+
+## 80.
+
+```{r}
+A <- matador::square(-1, 2, -3,
+                     -4, 4, -7,
+                     -2, 5, -3)
+solve(A)
+```
+
+# 1.3
+
+## 29-32.
+
+Let $x=\begin{bmatrix}5\\3\\-9\end{bmatrix}$ and $b=\begin{bmatrix}2\\0\\1\end{bmatrix}$. To find $A$ from these vectors, we just solve the system of equations
+\[5a_1+3a_2-9a_3=b_n\\
+a_1=\frac{b_2-3a_2-9a_3}{5}\]
+substituting each element of $A$ for the corresponding row of $A$. The rank 1 $A$:
+
+\[\m{2/5&0&0\\
+0&0&0\\
+1/5&0&0}\]
+
+All-nonzero $A$, by solving the equation above for each $b_n$ and subbing 1 for free variables,
+
+\[A=\m{5&1&1\\
+6/5&1&1\\
+7/5&1&1}\]
+
+## 46.
+
+The rank of
+
+\[A=\m{1&b&c\\
+0&d&e\\
+0&0&f}\]
+where the diagonals are nonzero, the others arbitrary. This matrix has rank 
+
+## 49.
+Ranks given some information about matrices:
+
+3x4 augment rank 2: rank 1 or 2. Partial row and column rank, so either no o infinitely many solutions.
+
+c. $4\times{3}$, augment rank 4: no solution, since $b$ increases rank.
+$4\times{3}$ rank 3 has augment rank 3 or 4,d depending on whether $Ax=b$ has a solution. Partial row rank and full column rank, so either one or zero solutions.
+
+
+3 x4, rank 3: augment rank 3, since full row rank guarantees a solution, so $AX=b$ for all $b$
+Infinitely many solutions.
+## Costs and Units
+
+A system where the total number of items and their individual values and total value are known. Solutions are constrained to be integers (no fractional items). 
+
+For example, 32 \$1, \$5, and \$10 bills worth \$100 total.
+The system is:
+\[x+y+z=32\\
+x+5y+10z=100\]
+Row reduce to get
+\[x = 5/4z+15\\
+y=17-9/4z\]
+
+since the variables must be integers and $10z<=100$, $z$ can only be 4 or 8. substituting we see it is 8:
+
+\[20/4+15+17-9/4+4=32\\
+32=32\]
+
+If the $\4\times{4}$ $Ax=b$ has a unique solution, then $Ax=c$ has either one or none, since the matrix has full row rank (for a unique solution) and therefor full column rank.
+
+If $Ax=b$ is consistent, both column and row rank are partial, and $Ax=c$ has either one or infinite solutions.
+
+if $A$ is $4\times{3}$ and $Ax=b$ has a unique solution, $Ax=c$ has either a unique solution or none. Rank is 3 (unique solution for 3 columns), but partial row rank does not guarantee solutions.
+
+For rows, full rank means the guarantee of a solution; for columns, of a _unique_ solution.
+
+If $rank(A)=n$ and $m>n$, $m-n$ rows are zeroed. If $rank(A) = m$ and $n>m$, then $n-m$ free variables remain.
+
+
+27. A rank-4 $4\times{4}$ has the identity as RREf.
+
+28. A $\di{5}{3}$ matrix is 3, its RREF has two zeroed bottom rows.
+44. Prove a tall matrix is always inconsistent for some $b$.  
+Since any $k>n$ vectors in $R^n$ are linearly dependent, an $m >n$ matrix has linearly dependent rows. Therefore each row can be expressed $r_i=c_1r_j+c_2r_k+\dotsc_nr_l$ Let $b_i$ be a  linear combination of $b$ with different scalars such that $b_i\neq{c_1}b_j+c_2b_k+\dots{c_n}b_l$. Since $b$ and $A$ are independently determined, this is always possible.
+
+45. Prove $A(kx) = k(Ax)$. Very easy. Referring to column vectors:
+
+\[A(kx) = \m{kv_1+kv_2+\dots kv_n}\]
+\[k(Ax) = k\m{kv_1+kv_2+\dots kv_n}=
+\m{kv_1+kv_2+\dots kv_n}\]
+
+
+## 46. 
+
+Find the rank of
+\[\m{a&b&c\\
+0&d&e\\
+0&0&f}\]
+assuming nonzero diagonal. 
+
+Rank is 3. Every row is a pivot row, so $b$, $c$, and $e$ can be eliminated, whatever they are, and the rows scaled to yield the identity.
+47. If a system is homogeneous:
+
+1. It is never inconsistent because $c_1r_1+c_2r_2+c_nr_n=0c_1+0c_2+0c_n$. No matter what LC reduces rows to 0, all LCs of the zero vector are 0.
+
+b. A consistent partial column rank matrix always has solutions. Since homogeneous systems are always consistent.
+
+c. $x_1+x_2=0+0$. If the equation has nullspace (and therefore infinitely many solutions), any LC of a given $x$ is a solution.
+
+d. True also of $Ax=0\rightarrow{Akx=0}$
+
+48. a. In general, if $x_a$ and $x_b$ lie in the nullspace, then $x_a+x_b$ does as well, since the nullspace contains all LC's of the basis vectors.
+b. Also, if $x_b=x_a$, then we have $A0=0$
+
+c. $\m{x_1-x_2//0}$. The dependent row is zeroed.
+35. $A_e_i$. The identity matrix copies each input at its position
+50. $A$ 4x3, augment has rank 4. There are is a unique solution because adding $b$ increases the rank, so no linear dependency is created.
+
+51. For $m\times{n}$ A and $r\times{s}$, and $x$ in $R^p$, $A(Bx)$ is defined if $s =p$ and $n=r$, since $Bx$ has $B's rows$
+
+54. If two $R^3$ vectors are nonparallel, they span $c_1v_1+c_2v_2$ for all real $c$. They always span the zero vector, and span either  a line or plane, depending on linear dependency.
+
+
+## 52. 
+Just multiply them together.
+
+## 54.
+
+
+Two nonparallel vectors in $R^3$ describe a plane.
+
+
+## 57.
+
+To get a vector as an LC of two lines, pick vectors on the lines and solve:
+
+```{r}
+solve(a = matrix(c(1, 3, 2, 1), nrow = 2), b = matrix(c(7,11)))
+```
+
+
+## 59.
+
+The system has a solution at $c=9, d= 11$
+
+```{r}
+matrix(c(rep(1, 4), 1:4), nrow = 4) %*% matrix(c(3, 2))
+```
+
+## 63.
+
+All vectors of the form $v +cw$ are shears - distortions that add some scalar of one vector to another, such that the origianl vector remaisn at the center. Assuming this order, vertical shears.
+
+## 65.
+
+Transformations of the form $av+ bw$ are dual shears, both horizontal and vertical.
+
+## 66.
+
+Transformations of this form where $a +b =1$ are projections of positive  portions of $v$ and $w$ onto one another.
+
+## 67.
+
+If we add the constraint $a +b=$, we have rotations.
+
+## 68. 
+$u \cdot v =u \cdot w$ for all vectors $u$ that bisect $v$ and $w$ and have half the length(I think)
+\[u_1(v_1 - w_2) = u_2(v_2 - w_2)\]
+
+# True or False?
+
+1. True; $Ax$ is a linear combination of the columns and $x$.
+
+2. True also for vectors.
+
+3. True; no more rows can be eliminated.
+
+4 False; a $4\times{3}$ system is consistent for $x=0$ at least. 
+
+5. False; no $3\times{4}$ matrix can have rank above 3.
+
+6. True; the the product has dimension of the LHS.
+
+7. False; many square matrices are not one-to-one.
+
+8. False; a system only ever has zero, one, or infinite solutions.
+
+9. False; a $rank <m$ matrix always has null space beyond the zero vector because it has at least one free variables.
+
+10. False; columns of free variables are not reduced to ones.
+
+11. True; a row of zeroes equal to anything besides 0 always means inconsistency.
+
+12. True; in general, a diagonal matrix can be found for any $b$ given any $x$ that just scales each element appropriately.
+
+13. True, assuming $a\neq{b}$
+
+14. True; these vectors are linearly independent.
+
+15. False. It could be something like:
+
+\[\begin{bmatrix}
+0&0&0\\
+0&0&0\\
+0&0&0\\
+0&0&1\end{bmatrix}\]
+
+and \[x=\m{0\\0\\1\]
+
+16. False. $kAx=A(kx)$, so if $Ax=\m{1\\2}$, then $A(2x)$ should be $\m{2\\4}$, not $\m{2\\1}$.
+
+26. False. All linear combinations of linearly dependent vectors are themselves linearly dependent.
+
+17. False; a matrix consisting only of one value only ever has rank one.
+
+18. False. The product has two dimensions.
+
+```{r}
+matrix(c(11, 17,13,19, 15, 21), nrow = 2) %*% matrix(c(-1, 3, -1))
+```
+
+20. True; $x_1=2$ and $x_2=1$.
+
+19. True. One such matrix is:
+
+\[\m{-1&1\\
+-3&1\\
+-5&1}\]
+
+20. True; $x=\m{2\\-1}$
+21. False; a tall matrix has unique solutions for some $b$, though it is not consistent for all.
+
+21. False. A tall matrix with full column but partial row rank will have unique solutions for some $b$ (and none for others). 
+
+22. True; a tall matrix is always inconsistent for some $b$ if $b$ is not the same linear combination of the basis vectors as the rows. Since a matrix of partial row rank, which a $4\times{3}$ is, does not span its column space, such a vector always exists.
+
+23. False. Since the unknowns in the upper and lower triangles just have opposite signs, the system would be linearly dependent. 
+24. False; if $x$ and $w$ are $R_4$ vectors, $v$ is only an LC of $w$ if they are coplanar or collinear and therefore in each others' span.
+
+25. If $u$, $v$, and $w$ are nonzero $R^2$ vectors, $W$ is only an LC of the others if all three are collinear or $u$ and $v$ are linearly independent, since collinear vectors have the same span.
+
+26. True; the zero vector is a linear combination of any and all vectors.
+
+27. True. Normally row operations can't handle column permutations, but in a matrix with partial row rank every row is a linear combination of the others, so you can convert between any rank-2 matrices by row ops alone. 
+
+28. If $c_1v+c_2w=u$ and $c_1p+c_2q+c_3r=v$, then $c_1()
+
+29. False; it must have either one or none.
+
+30. True; every pivot column gets a nonzero entry. 
+
+31. False. If the 4x3 has full column rank, it has only unique solutions and therefore no null space and therefore no nontrivial solutions to $Ax=0$.
+
+32. True, obviously.
+
+33. True. This matrix has full column rank, so every $b$ has a unique $x$. 
+
+34. True. If $A$ is square and has a unique solution for any $b$, it must have full rank, meaning $Ax=0$ has only the trivial solution.
+
+35. True. 
+
+\[c_1v+c_2w=u\\
+c_2w = u-c_1v\\
+w = \frac{u-c_1v}{c_2}\]
+
+
+36. True. The values in a free variable's column represent that column as a linear combination of the other column vectors.
+
+37. Obviously false. Adding two rank-3 $3\times{3}$s will not give you a rank 6!
+
+38. False. Row ops can do anything except create leading entries, so as long as rank is the same, any two full-rank square matrices can be so converted. But a permutation of columns (e.g., ones) would make this impossible.
+
+39. True. By linearity:
+
+\[v=c_1u+c_2w\\
+A(v)=A(c_1u+c_2w)=c_1Au+c_2Aw\]
+
+40. False. If we drop a row from an the RREF of a 1-row matrix, there _is_ no remaining matrix. Otherwise true, since we will not lose any free variables
+
+41. True. Systems are only consistent if $b$ introduces linear dependency; that is, the augmented rank equals the rank of the original matrix. If not, the $b$ is not a linear combination of $A$'s columns and the system is inconsistent.
+
+42. True. Full row rank guarantees consistency, and partial column rank guarantees free variables.
+
+43. True. If two matrices have the same RREF, they are linear combinations of each other. Since all linear combinations of the zero vector are just the zero vector, they will have exactly the same null space. This is _not_ true for a particular $b$; in that case the solutions will be the same multiples of each other as are the matrices.
+
+44. False. Dropping the RREF column of a fixed variable in a system of partial column rank may make it possible to eliminate the previously free variable's column. So the new $R$ is now longer RREF. This makes sense, as each column represents a variable.
+
+45. True. If two matrices share the same null space, they must have the same RREF.
+
+46. True. Any zeroes on the diagonals mean partial rank. 
+
+47. True, by the determinant definition. All nonsingular matrices have full rank.
+
+48. If $c_1U+c_2v=w$, then $u+v+w=u+v+c_1u+c_2v=u+v+c(u+v)$, since the sum is itself a linear combination.
+
+49. True. If a system is unique for one solution, it is unique for all, so if $Ax=c$ is consistent it must have  a unique solution. If $x$ is a linear combination of $b$ and $c$, then $A(b+c)= Ax + Ay$
+
+50. False. Most such matrices will have these two choices of value overlap in such a way that they have partial rank.
+
+It seems about a third of such matrices have inverses.
+
+```{r}
+tests <- replicate(n = 500, matrix(sample(0:1, 9, replace = TRUE), nrow = 3), simplify = FALSE) %>% 
+  suppressWarnings(map(~try(solve(.x)))) %>% 
+  map_lgl(is.matrix) %>% 
+  sum()
+tests
+```
+
