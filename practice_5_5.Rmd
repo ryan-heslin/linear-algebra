@@ -1,0 +1,281 @@
+---
+title: "Section 5.5 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+    includes:
+      in_header: "notes_text_preamble"
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  tidy = TRUE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+library(rlang)
+```
+
+An inner product in a linear space assigns a scalar result to
+the interaction of elements $f$ and $v$, obeying the usual
+rules of the dot product. It is always a linear transformation
+and positive definite (i.e, $\langle f, f \rangle  > 0$ for all
+nonzero $f$).
+
+For example
+\[
+  \langle f, v \rangle = \int_a^b f(t)g(t)dt
+
+\]
+This is a continuous generalization of the dot product,
+multiplying and summing the infinitely many values of the
+functions over their interval.
+
+The _norm_ generalizes the length:
+
+\[
+  ||f|| = \sqrt{\langle f, f \rangle}
+\]
+
+Two elements are orthogonal if $\langle f, v \rangle = 0$.
+
+Distance is defined similarly:
+
+\[
+  \text{dist} = ||f - v||
+\]
+As usual, the projection of a vector into a subspace is
+the least distant vector from that subsapce such that
+
+\[
+  proj_Wf = \langle g1, f \rangle g_1 + \dots + \langle g_m, f \rangle g_m
+\]
+
+where the $g$s are an orthonormal basis for $W$. This is
+the continuous analog the least-squares criterion:
+the distance is assessed along _every point_ of each
+function, not just several data points.
+
+
+## 1.
+
+\[
+\begin{aligned}
+ & \langle f, f \rangle  = \int_a^b f(t)f(t) = \int_a^b (f(t))^2
+ \end{aligned}
+ \]
+and squares are always positive.
+
+## 2.
+
+\[
+\begin{aligned}
+ & \langle f, g + h \rangle \\
+ & \langle g +h, f \rangle = \langle  g, f \rangle + \langle h, f \rangle\\
+ & = \langle f, g \rangle + \langle f, h \rangle
+ \end{aligned}
+ \]
+
+## 3.
+
+a. Yes. $(Sx)^TSy = x^T S^T Sy = (Sx) \cdot (Sy)$, and the
+dot product is an inner product.
+
+b. Yes.
+
+## 4.
+
+a. $A \cdot B$.
+
+b. $AB^T$
+
+## 5.
+
+Yes. $tr((A+C)B^T) = tr(AB^T) + tr(AC^T)$, and we know from below $tr(AB^T) = tr(B^TA)$.
+
+## 6.
+
+\[
+  \sum_{i=1}^n \sum_{j = 1}^m P_{ij}Q_{ji} = \sum_{i=1}^m  \sum_ {j = 1}^n Q_{ij} P_{ji}
+\]
+They are identical.
+
+## 7.
+
+$k > 0$.
+
+
+## 8.
+
+Yes.
+
+\[
+\begin{aligned}
+ & T(v) + T(u) = \langle u, w \rangle + \langle v,w \rangle\\
+ & T(u +v) = \langle u+v, w \rangle = \langle u, w \rangle + \langle v,w \rangle\\
+ kT(v) = k \langle v, w \rangle  = \langle kv, w \rangle = T(kv)
+ \end{aligned}
+ \]
+
+ The kernel is all functions orthogonal
+ to $w$.
+
+
+## 9.
+
+
+
+## 10.
+
+
+
+## 11.
+
+I hate integration.
+
+
+The integral is
+\[
+
+\]
+\[
+\begin{aligned}
+ & \int_-1^1 f(t)g(t)\\
+ & f(1)g(1) - f(-1)g(-1)\\
+ & -f(1)g(-1) +f(1)g(-1) =0
+ \end{aligned}
+ \]
+
+## 12.
+
+
+
+## 13.
+
+
+
+## 14.
+
+Neither, because the inner product of a single function will be zero for nonzero $f$ if those
+values lie in the kernel of the function.
+
+## 15.
+
+
+## 16.
+
+
+
+## 17.
+
+
+Those for which $T(v) \neq 0$ for nonzero $v$
+
+## 18.
+
+They are the same.
+
+## 19.
+
+This is just the definition of positive definite matrices: $a>0$, $b=c$, and
+$ad - b^2 > 0$. Otherwise the inner product fails positive definiteness.
+
+## 20.
+
+
+
+## 21.
+
+Symmetry and positive definiteness are obvious. The scalar proprty follows from $||cv||^2 = \langle cv, cv \rangle = c^2||v||^2$.
+For addition:
+
+\[
+\begin{aligned}
+& ||u +v + w||^2 - ||u+v||^2 - ||w||^2 = ||v+w||^2 - ||v||^2 - ||w||^2 +||u+w||^2 -||v||^2 - ||w||^2\\
+& u \cdot u + v \cdot v + w \cdot w  + 2(u \cdot v + v \cdot w + u \cdot w) - u \cdot u - 2 u \cdot v - v \cdot v - w\ cdot w = v \cdot v + 2 v \cdot w + w \cdot w - v \cdot v - w \cdot w + u \cdot u + 2 u \cdot w + w \cdot w - u \cdot u - w \cdot w\\
+& 2 (w \cdot v  + w \cdot u) = 2 (w \cdot v  + w \cdot u)
+\end{aligned}
+\]
+
+## 22.
+
+Simple extension of Cauchy-Swarz.
+
+\[
+ \int_0^1 (f(t))^2 \leq \Bigg (\int_0^1 f(t)\Bigg)^2
+\]
+
+## 23.
+
+
+
+## 24.
+
+a. $\langle f, g +h \rangle = \langle f, g \rangle + \langle f, h \rangle = 0 + 8 = 8
+
+b.
+
+\[
+\begin{aligned}
+& ||g + h|| = \sqrt {\langle g +h, g + h \rangle}\\
+& = \sqrt{ \langle g, g \rangle + 2 \langle g, h \rangle + \langle h, h \rangle}\\
+& = \sqrt{ 1 + 2(3) + 50}\\
+& = \sqrt {57}
+\end{aligned}
+\]
+
+c. $\text{proj}_Eh = \langle h, f/2 \rangle + \langle h, g \rangle h = 4h + 3h = 7h$
+
+d. $f/2, g, \frac{h-7h} ||h-7h|| =\frac{-3h}{5 \sqrt 3}
+
+## 25.
+
+Some research shows $1, 1/4, 1/9,...1/n^2$ converges on $\pi^2/6$m hence $||x|| = pi/ \sqrt 6$
+
+## 26.
+
+
+
+## 27.
+
+
+
+## 28.
+
+
+
+## 29.
+
+
+
+## 30.
+
+
+
+## 31.
+
+
+
+## 32.
+
+
+
+## 33.
+
+
+
+## 34.
+
+
+
+## 35.

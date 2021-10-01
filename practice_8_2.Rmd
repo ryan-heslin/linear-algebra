@@ -1,0 +1,413 @@
+---
+title: "Section 8.2 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+    includes:
+      in_header: "notes_text_preamble"
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  warning = FALSE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+```
+
+## 1.
+
+\[
+  \begin{bmatrix}
+   6 & - 7/2\\
+   -7/2 & 8
+  \end{bmatrix}
+\]
+
+
+## 3.
+
+\[
+  \begin{bmatrix}
+    3 & 0 & 3\\
+    0 & 4 & 7/2\\
+    3 & 7/2 & 7
+  \end{bmatrix}
+\]
+
+
+## 4.
+
+Positive definite.
+
+## 5.
+
+Negative definite.
+
+
+## 7.
+
+Indefinite.
+
+## 8.
+
+$A^2$ is positive semidefinite because all its eigenvalues are 0 or positive. IF $A$ is positive definite, so is $A^2$ by that same token.
+
+## 9.
+
+### a.
+
+Symmetric. $(A^T)^2 = (-A)^2 = A^2$.
+
+### b.
+
+It is negative semi-definite because the eigenvalues of $A$ are either
+0 or purely imaginary:
+
+\[\begin{aligned}
+  AX  = \lambda x\\
+  &x^HA^H = \bar \lambda x^H\\
+  & -x^HA = \bar \lambda x^H\\
+  & - \bar \lambda x^H = \bar \lambda x^H\\
+  & - \bar \lambda = \bar \lambda
+  \end{aligned}
+\]
+so the eigenvalues of $A^2$ are either 0 or real positive.
+
+### c.
+
+None, since there are imaginary eigenvalues.
+
+## 10.
+
+\[ \begin{aligned}
+  & T(X) = (x^TA + v^TA)(x+v) - x^TAx - v^Tv\\
+  & = x^tAx + v^Tax + x^TAv + v^TAv - x^TAx - v^TAv\\
+  & = v^TAx + x^TAv\\
+  & = 2 x^TAv
+  \end{aligned}
+\]
+
+## 11.
+
+  The same - the eigenvalues don't change sign.
+
+## 12.
+
+
+$\det A <0$ if and only if
+the eigenvalues have opposite signs. Thus $\lambda_1c_1^2 + \lambda_2c_2^2$ is indefinite
+because of the differing signs.
+
+## 13.
+
+Let $d$ be a a diagonal emenet less than or equal to zero. Then
+the term $dx_i^2$ is zero or negative definite, and so the matrix
+cannot be positive definite.
+
+## 14.
+
+Since $\det A >0$ and $a >0$, then
+if $c \leq 0$ $ac \leq b^2$, which
+violates the constraint. And if $\det A > 0$ then all eigenvalues are positive, so $A$ is positive definite.
+
+
+## 23.
+
+No, since $M$ is not symmetric.
+
+## 24.
+
+$a$.
+
+## 25.
+
+$\lambda$, since the unit eigenvectors eigenbasis coordiantes are 1.
+
+## 26.
+
+True. Such a vector satisifeis $Ax = \lambda x$ for $\lambda = 0$. Then$A$ has zero determinant and is
+therefore not invertible.
+
+## 27.
+
+A hyperellipse whose axes are the
+unit eigenvectors.
+
+## 30.
+
+$A =  (Q \sqrt \Lambda Q^T)^2$
+
+If  amatrix is positive definite, so is its square root, since the eigenvalues remain positive.
+
+
+## 32.
+
+for the $2 \times 2$
+
+Solving the system gets su
+
+
+\[
+\begin{aligned}
+& x  = \sqrt a\\
+& y = b /\sqrt a\\
+& z = \sqrt {c - b^2/a}
+\end{aligned}
+\]
+
+## 33.
+
+\[
+  L = \begin{bmatrix}
+  \sqrt 8 & -2/ \sqrt 8\\
+  & -2 / \sqrt 8 & \sqrt 5 + 1/2
+  \end{bmatrix}
+\]
+
+## 34.
+
+
+If $A$ is positive definite, then it sfull quadratic form is
+positive definie. For a $3 \times 3$, the form of the first submatrix is $ax_1^2$. This must be positive definite, because if not then the
+form of the second leading submatrix $ax_1^2 + bx_1x_2 +cx_2^2$ would
+not be positive definite, and so forth.
+
+And if all the elading submatrices have psoitive definite, then
+they have all positive eigenvalues, meaning they have positive determinant.
+
+
+Then for the final decomposition, to find $x$ we ahve to solve the system:
+
+\[
+\begin{aligned}
+& a_n1 = x_1 b_{11}\\
+& a_n{2} = x_1b_{12} +x_2 b_{22}\\
+\vdots
+& a_{n{n-1}} = x^T b{n-1}
+\end{aligned}
+\]
+
+which can clearly be solved in sequence,
+with the last element of $x$ ignored because $B$ is triangular with dimension $n-1$. The final equation is
+
+\[
+  a_{nn} = x^Tx +t
+\]
+and $t$ must be positive to split it into $\sqrt t$ across $L$ and $L^T$.
+
+
+## 36.
+
+
+```{r}
+to_solve <- cholesky <- matrix(0, nrow = 3, ncol = 3)
+A <- matrix(c(4, -4, 8, -4, 13, 1, 8, 1, 26), nrow = 3)
+u <- sqrt(A[1, 1])
+v <- A[1, 2] / u
+w <- sqrt(A[2, 2] - v^2)
+x <- A[3, 1] / u
+y <- (A[2, 3] - x * v) / w
+z <- sqrt(A[3, 3] - x^2 - y^2)
+to_solve[lower.tri(to_solve, diag = TRUE)] <- letters[seq(length(letters) - 6), lenght(letters)]
+cholesky[lower.tri(cholesky, diag = TRUE)] <- c(u, v, x, w, y, z)
+print_eqn(mat2latex(to_solve), mat2latex(t(to_solve)), " = ", mat2latex(A))
+print_eqn(mat2latex(L), " = ", mat2latex(cholesky))
+```
+
+## 36.
+
+\[
+    A = LL^T = QR \implies L = QRL^T{-1}
+\]
+
+## 37. 
+
+These two criteria are another way of saying that the derivative matrix is positive definite. In that case, the 
+product of the separate derivatives is greater than the derivative of the products, which is a condition of the test for a global minimum
+
+## 38.
+
+$p-q > 0$.
+
+
+## 40.
+
+If $\lambda_k$ has the greatest absolute value of the negative-signed eigenvalues, $k > \lambda_k$ does the job.
+
+## 41.
+
+3.
+
+## 42.
+
+$\frac{n(n+1)}{n}$
+
+## 43.
+
+Yes. Image is degree-0 polynomials, kernel all matrices with $a=0$,
+rank 1, nullity 3.
+
+## 44.
+
+Yes, isomorphic since it preserves all three coordiantes.
+
+\[
+    \begin{bmatrix}
+    a & b & c\\
+    b & d & e\\
+    c & e & f
+    \end{bmatrix}
+\]
+
+## 45.
+
+$T(x) = (a+2c+ +2e +f)x_1^2 + (b + d+ e)x_2^2$
+Image: all degree-1 polynomials
+Kernel: quadratic forms where only $x_3^2$ has a nonzero coefficient
+Rank 2, nullity 4.
+
+
+
+
+## 46.
+
+$T(x) = 4ax_1^2 +x_2^2 + 4x_1x_2$.
+Image: al qaudratic forms 
+
+
+## 52.
+
+Consider a $3\times 3$.
+
+\[
+    a = e_1^t a_1 e = 1(1)a = a
+\]
+and
+
+\[
+\begin{align}
+    b = 1/2((e_1 + e_2)^TA(e_1 +e_2)^T  - e_1^TAe_1 - e_2^TAe_2\)\
+    & = 1/2(e_1^TAe_1 + e_2^TAe_2 + e_1^TAe_2 + e_2^TAe_1 - e_1^TAe_1 - e_2^TAe_2)\\
+    & = 1/2(e_1^T Ae_2 + e_2^TAe_1)\\
+    & = 1/2(b + b)\\
+    & = b
+\end{align}
+\]
+
+## 51.
+
+Alternating odd, even.
+
+
+## 53.
+
+### a.
+
+$p(x) = x^2 a_{ii} + 2xy a_{ij} +y^2 a_{jj}$
+
+### b.
+
+If so, then $a_{ii}$ and $a_{jj}$ are positive and 
+$a_{ii}a_{jj} > a_{ij}^2$, which mean the matrix of
+$p$ ahs positive eigenvalues and is positive definite.
+
+### c.
+
+Then $2_{aji}=a_{jj}a_{ii}$, which translates to a zeroeigenvalue and an indeterminate matrix.
+
+
+## 54.
+
+They must be 0; otherwise the final determinant is negative, so
+some eigenvalues are negative and the matrix is not positive semidefinite.
+
+## 55.
+
+If this were not true the determinant would be negative, preventing he matrix from being positive definite.
+
+## 56.
+
+A symmetric $A$ may be factorized $A = Q \Lambda Q^T$, where $Q$ is the orthogonal eigenvectors matrix. Then $a_11  = \lambda_1 x_{11}^2 + \dots + \lambda_n x_{1n^2$. $x_i^2 \leq 1$ since the se are unit vectors. If so, then $a_11 = 1 \lambda_i = \lambda_i$. This is a quadratic form with the eigenvalues as the cosntants. So $a$ is maximally $\lambda_{max}$. Since $a= \Lambda q^T_1 \codt q^T_1$, by Cauchy-Swarz
+
+\[\begin{align}
+    &| \Lambda q^T_1 \cdot q^T_1| \leq ||\Lambda 1^T_1 \cdot q^T_1|| \cdot ||q^T_1||
+    & \leq ||\Lambda 1^T_1 \cdot q^T_1||\\
+    & \leq \lambda_{max}
+\end{align}
+\]
+so $a$ cannot be greater than the greatest $\lambda_i$
+
+
+## 58.
+
+A spheroid around the origin.
+
+## 58.
+
+An ellipse around the origin
+
+## 59.
+
+A line.
+
+## 60.
+
+Convcave surfaces oreitned positively.
+
+## 61.
+
+Concave surfaces oriented negatively.
+
+## 63.
+
+The expression is eigenbasis coordinates divided by the appropriate lambdas, which cancel.
+\[
+    q(c_1w_1 + \dots + c_nw_n) = \lambda_1 c_1^2/\lambda_1 + \dots + \lambda_n c_n^2 / \lambda_n = c_1^2 + \dots + c_n^2 
+\]
+
+## 64.
+
+```{r}
+eigens <- eigen(matrix(c(8, -2, -2, 5), nrow = 2))
+eigens$vectors / sqrt(eigens$values)
+```
+
+## 65.
+
+For the negative-signed $\lambda$
+
+\[
+    c_i^2 \frac{v_i}{\sqrt {|\lambda_i}}^2 = \lambda_i c_i^2 / |lambda_i| = - c_i^2
+\]
+
+## 66.
+
+
+```{r}
+eigens <- eigen(matrix(c(3, -5, -5, 3), nrow = 2))
+eigens$vectors[, order(eigens$values, decreasing = TRUE)] * 1 / sqrt(abs(sort(eigens$values, decreasing = TRUE)))
+```
+
+## 67. 
+
+By the above logic, if we scale the eigenvectors with negative-signed eigenvalues by $1/ \sqrt{|\lambda_i}$, $c_i^2$ is opposite-signed.
+
+
+## 68.
+
+
+$R^TAR$.
+
+## 69.
+
+$R$ has rank $m$.
