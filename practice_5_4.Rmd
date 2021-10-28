@@ -45,6 +45,13 @@ library(matador)
 
 ```
 
+## 1.
+
+\begin{\bmatrix}
+1\\
+-2
+\end{\bmatrix}
+
 ## 3.
 
 Say we have bases of $V$ and $V^{\perp}$. Then the union of the bases forms a basis for $R^n$, because all vectors in $R^n$ are either linear combinations of $V$ or are orthogonal to, except for 0, which is both.
@@ -101,6 +108,28 @@ e.
   1 & 0 & 0\\
   0 & 1 & 0
 \end{bmatrix}\]
+
+## 9.
+
+### b.
+
+They are orthogonal complements.
+
+### c.
+
+It is a absis for  $im(A^T)$.
+
+### d.
+\[
+\begin{\bmatrix}
+1\\
+2
+\end{\bmatrix}
+\]
+
+### e.
+
+Being the minimal solution, it is the shortest.
 
 ## 10.
 
@@ -187,11 +216,38 @@ Yes. We proved above $A^TA$ and $A$ have equal rank. $\ker(A^T)$ is the
 orthogonal complement of the image of $A^T$, so any $x$ for which $Ax=0$
 cannot come from a linear combination of $A^T$ (except for $0_m$). So the kernel does not expand, and rank remains the same.
 
+
+## 19.
+
+\[
+        \begin{\bmatrix}
+        1\\
+        1
+        \end{\bmatrix}
+\]
+
+
 ## 28.
 
 For an orthonormal basis, the least squares solution is $b$, since
 $A(A^TA)^{-1}A^T=I$.
 
+
+## 34.
+
+
+```{r}
+x <- b <- c(0, 0.5, 1, 1.5, 2, 2.5, 3)
+X <- cbind(1, sin(x), cos(x), sin(2 *x), cos(2 *x))
+
+solve(t(X) %*% X) %*% t(X) %*% b
+```
+
+
+
+```{r}
+
+```
 ## 36.
 
 I fit a model predicting day length by time of year. The error vector is surprisingly small.
@@ -212,6 +268,7 @@ b - A %*% betas
 ```
 
 ## 39.
+
 Another exponential fit problem.
 
 a.
@@ -224,7 +281,6 @@ A <- cbind(rep(1, 5), log(c(600000,
 z <- c(5, 12, 25, 60, 250)
 
 betas <- fit(A) %*% log(z)
-
 ```
 
 c.
