@@ -70,7 +70,7 @@ library(matador)
   \end{aligned}
 \]
 
-$M$ and $N$ are both invertible, so their product is as well. Only $I$ itself is similar
+$M$ and $N$ are both invertible, so their product is as well. Only $I$ itself is similar.
 to $I$:
 
 \[
@@ -302,7 +302,7 @@ we can see the products all come to 0.
  
 ## 24.
 
-Demonstrating Cayley-Hamilton
+Demonstrating Cayley-Hamilton:
 
 \[
   \begin{aligned}
