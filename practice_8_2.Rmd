@@ -210,6 +210,7 @@ and $t$ must be positive to split it into $\sqrt t$ across $L$ and $L^T$.
 
 
 ```{r}
+library(matador)
 to_solve <- cholesky <- matrix(0, nrow = 3, ncol = 3)
 A <- matrix(c(4, -4, 8, -4, 13, 1, 8, 1, 26), nrow = 3)
 u <- sqrt(A[1, 1])
@@ -218,10 +219,10 @@ w <- sqrt(A[2, 2] - v^2)
 x <- A[3, 1] / u
 y <- (A[2, 3] - x * v) / w
 z <- sqrt(A[3, 3] - x^2 - y^2)
-to_solve[lower.tri(to_solve, diag = TRUE)] <- letters[seq(length(letters) - 6), lenght(letters)]
+to_solve[lower.tri(to_solve, diag = TRUE)] <- letters[seq(length(letters) - 5, length(letters))]
 cholesky[lower.tri(cholesky, diag = TRUE)] <- c(u, v, x, w, y, z)
-print_eqn(mat2latex(to_solve), mat2latex(t(to_solve)), " = ", mat2latex(A))
-print_eqn(mat2latex(L), " = ", mat2latex(cholesky))
+cholesky %*% t(cholesky)
+A
 ```
 
 ## 36.
@@ -259,7 +260,7 @@ rank 1, nullity 3.
 
 ## 44.
 
-Yes, isomorphic since it preserves all three coordiantes.
+Yes, isomorphic since it preserves all three coordinates.
 
 \[
     \begin{bmatrix}
@@ -295,13 +296,13 @@ Consider a $3\times 3$.
 and
 
 \[
-\begin{align}
-    b = 1/2((e_1 + e_2)^TA(e_1 +e_2)^T  - e_1^TAe_1 - e_2^TAe_2\)\
+\begin{aligned}
+    b = 1/2((e_1 + e_2)^TA(e_1 +e_2)^T  - e_1^TAe_1 - e_2^TAe_2)\\
     & = 1/2(e_1^TAe_1 + e_2^TAe_2 + e_1^TAe_2 + e_2^TAe_1 - e_1^TAe_1 - e_2^TAe_2)\\
     & = 1/2(e_1^T Ae_2 + e_2^TAe_1)\\
     & = 1/2(b + b)\\
     & = b
-\end{align}
+\end{aligned}
 \]
 
 ## 51.
@@ -337,16 +338,15 @@ If this were not true the determinant would be negative, preventing he matrix fr
 
 ## 56.
 
-A symmetric $A$ may be factorized $A = Q \Lambda Q^T$, where $Q$ is the orthogonal eigenvectors matrix. Then $a_11  = \lambda_1 x_{11}^2 + \dots + \lambda_n x_{1n^2$. $x_i^2 \leq 1$ since the se are unit vectors. If so, then $a_11 = 1 \lambda_i = \lambda_i$. This is a quadratic form with the eigenvalues as the cosntants. So $a$ is maximally $\lambda_{max}$. Since $a= \Lambda q^T_1 \codt q^T_1$, by Cauchy-Swarz
+A symmetric $A$ may be factorized $A = Q \Lambda Q^T$, where $Q$ is the orthogonal eigenvectors matrix. Then $a_11  = \lambda_1 x_{1}^2 + \dots + \lambda_n z_{1}$. $x_i^2 \leq 1$., (where $x, \dots z$  are the eigenvectors). Since these are unit vectors., this quantity is maximized if the first column of $Q^T$  is a unit vector. If so, then $a_11 = 1 \lambda_i = \lambda_i$. This is a quadratic form with the eigenvalues as the contants. So $a$ is maximally $\lambda_{max}$. Since $a= \Lambda q^T_1 \cdot q^T_1$, by Cauchy-Swarz
 
-\[\begin{align}
-    &| \Lambda q^T_1 \cdot q^T_1| \leq ||\Lambda 1^T_1 \cdot q^T_1|| \cdot ||q^T_1||
+\[\begin{aligned}
+    &| \Lambda q^T_1 \cdot q^T_1| \leq ||\Lambda 1^T_1 \cdot q^T_1|| \cdot ||q^T_1|| \\
     & \leq ||\Lambda 1^T_1 \cdot q^T_1||\\
     & \leq \lambda_{max}
-\end{align}
+\end{aligned}
 \]
-so $a$ cannot be greater than the greatest $\lambda_i$
-
+so $a$ cannot be greater than the greatest $\lambda_i$.
 
 ## 58.
 
@@ -362,7 +362,7 @@ A line.
 
 ## 60.
 
-Convcave surfaces oreitned positively.
+Concave surfaces oriented positively.
 
 ## 61.
 
@@ -391,7 +391,6 @@ For the negative-signed $\lambda$
 \]
 
 ## 66.
-
 
 ```{r}
 eigens <- eigen(matrix(c(3, -5, -5, 3), nrow = 2))

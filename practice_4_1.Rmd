@@ -31,8 +31,10 @@ c&d\end{bmatrix}}
 \newcommand{\dotsn}[5]{#1_2#3_1#5#1_2#3_2#5#1_{#2}#3_{#4}}
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
-                      tidy = TRUE, fig.align = "center")
+knitr::opts_chunk$set(
+  echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+  tidy = TRUE, fig.align = "center"
+)
 
 library(tidyverse)
 library(rlang)
@@ -63,7 +65,7 @@ Nice and closed.
 \[\begin{aligned}& (f(x)+g(x))'=f'(x)+g'(x)\\
 & 1 + 1 = f(x) + g(x)\end{aligned}\]
 
-\[\begin{aligned}4a + 2b +c + 4d + 2e +f\\
+\[\begin{aligned} & 4a + 2b +c + 4d + 2e +f\\
 &4(a+d)+2(b + e) +(f+ c)\end{aligned}\]
 
 # 4.
@@ -89,7 +91,7 @@ addition:
 
 ```{r}
 library(matador, quietly = TRUE)
-try(solve(diag(nrow =3) + square(0, 1, 1, 1, 0, 1, 1, 1, 0)))
+try(solve(diag(nrow = 3) + square(0, 1, 1, 1, 0, 1, 1, 1, 0)))
 ```
 
 # 7.
@@ -226,11 +228,18 @@ of the final matrix: keep it one hot.
 
 # 29.
 
-All matrices such that $A\m{1 & 1\\ 1& 1} = \m{0 & 0\\ & 0 & 0}$: dimension 2, since the kernel is a single vector, requiring only 2 unique elements,w with one having the opposite sign of the other.
+\[
+   a \begin{\bmatrix}
+    1 & -1 \\
+    0  & 0
+    \end{\bmatrix} +
+    b \begin{\bmatrix}
+    0 & 0\\
+    1 & -1
+    \end{\bmatrix}          
+\]
 
-This is wrong.
 
-\[\m{1&0\\0 & 0},\m{0 & 0\\  1 &0}\]
 
 # 30.
 
@@ -250,21 +259,25 @@ dimension 2.
 
 # 32.
 
-The basis is $\m{1&-2\\1&1}$, from the
-implied system $a=c$ and $b=-d$.
+\[
+    a  \begin{\bmatrix}
+    1 & 0\\
+    1 & 0
+    \end{\bmatrix} + b 
+    \begin{\bmatrix}
+    0 & 1\\
+    0 & -1
+    \end{\bmatrix}
+\]
 
-```{r}
-S <- matrix(c(1, 1, -1, 1), nrow = 2)
+# 33.
 
-matrix(rep(1, 4), nrow = 2) %*% S
-
-S %*% matrix(c(2, rep(0, 3)), nrow = 2)
-```
+Just the zero matrix (disclosure: initially wrong).
 
 # 34.
 
 ```{r}
-solve(matrix(c(3, 4, 2,5), nrow = 2))
+solve(matrix(c(3, 4, 2, 5), nrow = 2))
 ```
 
 Find $S$ for $\m{3&2\\4&5}S=S$.
@@ -287,42 +300,25 @@ So a basis is $\m{1&0\\0&1},\m{0&1\\0&0}$
 
 # 35.
 
-We want to find the basis for matrices commuting with $`r mat2latex(diag(x= c(2, 3, 4), nrow = 3), sink = TRUE)`$. Obviously we need three for the diagonal elements, since all diagonal matrices commute. But we need an additional three for the upper and lower triangles, since $A$ would still commute if it were symmetric. So adding the bases together,one possibility is:
-
-\[\m{1&1&1\\
-0&1&1\\
-0&0&1}\]
+Diagonal matrices
 
 # 36.
 
-Our matrix is $`r mat2latex(diag(x = c(2, 3, 3), nrow = 3))`$ The space of 
-matrices that commute with this matrix has dimension 5. We need three values to
-account for each element of the diagonal, but since 3 is repeated  we gain two
-degrees of freedom, for the $(2,3), (3, 2)$ interactions, since those values
-in the commuting matrix ar arbitrary. because the row-column interaction is the same for either side.
+Again, diagonals.
 
 # 37.
 
-The possibilities for an $3\times{3}$ matrix are
-3 (all unique values), 5 (two distinct values), 9, (the same value). In general,
-each repeated value adds $n-1$ to the basis, except for the last.
+Diagonal matrices, so [0, 3]
 
 # 38.
 
-For a $4\times{4}$ diagonal, the possibilities for the basis dimension are 4, 
-6, 10, and 16. It looks like the pattern is $\dim(A) + 2(\dim(A)-N)$, where $n$
-is the distinct values on the diagonal.
-
-```{r}
-LHS <- paste0(letters[1:16], rep(letters[23:26], 4)) %>% matrix(nrow = 4, byrow = TRUE)
-
-RHS <- paste0(letters[1:16], rep(letters[23:26], each = 4)) %>% matrix(nrow = 4, byrow = TRUE)
-```
+[0, 4].
 
 # 39.
 
 The dimension of the space of all upper triangular is $\sum^n_{i=1}$. For a
-$3\times{3}$ it is 6.
+$3\times{3}$ it is 6. Better, $n \choose 2$.
+
 # 40.
 
 $n^2-n,n^2-2n,\dots,0$. Each increment of rank
@@ -336,28 +332,17 @@ $dim(\ker(B))*3$
 
 # 42.
 
-\[n(n-rank(B))\]
+
+$n \times dim(\ker(B))$
 
 # 43.
 
-$A$ is a reflection matrix about $L$. We are given:
+By the description, $S  \begin{\bmatrix}1 & 0\\0 & -1\end{\bmatrix} = \begin{bmatrix} v & -w \end{bmatrix}$.
+So $Av = v$  and $Aw = -w$. Since $A$  is a reflection about a line, that means 
+$v$  lies entirely on the line and $w$  is perpendicular to it. Since  $v^{\parallel}$ 
+and  $v^{\perp$  both have dimension 1, $A$  has dimension 2.
 
-\[AS=S\m{1&0\\0&-1}\]
-
-$A$ is involutory, so $A=A^{-1}$ Therefore:
-
-\[\begin{aligned}&S=\m{v\\w}\\
-&A\m{v\\w}=\m{v\\-w}
-\end{aligned}\]
-
-So $A$ has to reverse the signs of $S$'s second column while being a reflection.
-This is guaranteed only if $v$ is parallel to $L$ and $w$ orthogonal. But in that
-case the vectors must be orthogonal to each other as well, so a dimension of 2
-is sufficient
-
-\[\begin{aligned}&v=x^{\parallel}\\
-&w=x^{\perp}\\
-&v\cdot{w}=0 \end{aligned}\]
+\
 
 # 44.
 
@@ -411,7 +396,7 @@ of $V$ are linearly independent, such that
 $c_1v_1+\dots+c_{n+1}v_{n+1}=0$ has only the solution $c_1,\dots,c_{n+1}=0$. But a set of
 vectors in $R^n$ can contain at most $n$ linearly independent vectors, so 
 $v_{n+1}$ must be redundant. Because it is not linearly independent, $V$ cannot
-form coordinates for a a basis of $C$. But the basis would be valid if its 
+form coordinates for a basis of $C$. But the basis would be valid if its 
 coordinates were $n$ linearly independent vectors. So a linear space of $n$
 dimensions admits at most $n$ linearly independent elements.
 

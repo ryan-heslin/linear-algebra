@@ -1,6 +1,14 @@
-
-Affine transformations aren't linear because THEY ARE NONVECTORIZED
-
+---
+title: "Chapter 1 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+    includes:
+      in_header: "notes_text_preamble"
+---
 
 Note on transposes: a matrix can be seen either as a collection of linear combination of scalars to apply to other matrices, or as bases for such a transformation. Plotting the column vectors takes the second perspective (as linear combinations of the identity). Plotting a system of equations shows every possible linear combination of each row that equals the corresponding element of $b$; intersections between the row subspaces are points of solutions. Transposing converts from one form to another
 
