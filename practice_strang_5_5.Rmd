@@ -54,7 +54,7 @@ library(matador)
 ```
 
 ```{r}
-inner_c <- function(v1, v2){
+inner_c <- function(v1, v2) {
   t(Conj(v1)) %*% v2
 }
 ```
@@ -130,12 +130,13 @@ $$
 
 ```{r}
 i <- complex(1, 0, 1)
-e <- 2.71828 
-theta <- pi /c(6, 3, 2)
+e <- 2.71828
+theta <- pi / c(6, 3, 2)
 
-tab <- e^(i * theta) %>% {
-  tibble(a = Re(.), b = Im(.) )
-}
+tab <- e^(i * theta) %>%
+  {
+    tibble(a = Re(.), b = Im(.))
+  }
 tab
 ```
 

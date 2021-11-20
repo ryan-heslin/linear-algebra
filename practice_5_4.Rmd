@@ -34,24 +34,24 @@ c&d\end{bmatrix}}
 \newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
-                      tidy = TRUE, fig.align = "center")
+knitr::opts_chunk$set(
+  echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+  tidy = TRUE, fig.align = "center"
+)
 
 library(tidyverse)
 library(rlang)
 library(matador)
-
-
-
 ```
 
 ## 1.
 
-\begin{\bmatrix}
+\[
+\begin{bmatrix}
 1\\
 -2
-\end{\bmatrix}
-
+\end{bmatrix}
+\]
 ## 3.
 
 Say we have bases of $V$ and $V^{\perp}$. Then the union of the bases forms a basis for $R^n$, because all vectors in $R^n$ are either linear combinations of $V$ or are orthogonal to, except for 0, which is both.
@@ -117,14 +117,15 @@ They are orthogonal complements.
 
 ### c.
 
-It is a absis for  $im(A^T)$.
+It is a basis for  $im(A^T)$.
 
 ### d.
+
 \[
-\begin{\bmatrix}
+\begin{bmatrix}
 1\\
 2
-\end{\bmatrix}
+\end{bmatrix}
 \]
 
 ### e.
@@ -220,10 +221,10 @@ cannot come from a linear combination of $A^T$ (except for $0_m$). So the kernel
 ## 19.
 
 \[
-        \begin{\bmatrix}
+        \begin{bmatrix}
         1\\
         1
-        \end{\bmatrix}
+        \end{bmatrix}
 \]
 
 
@@ -238,7 +239,7 @@ $A(A^TA)^{-1}A^T=I$.
 
 ```{r}
 x <- b <- c(0, 0.5, 1, 1.5, 2, 2.5, 3)
-X <- cbind(1, sin(x), cos(x), sin(2 *x), cos(2 *x))
+X <- cbind(1, sin(x), cos(x), sin(2 * x), cos(2 * x))
 
 solve(t(X) %*% X) %*% t(X) %*% b
 ```
@@ -254,7 +255,7 @@ I fit a model predicting day length by time of year. The error vector is surpris
 
 ```{r, results = 'asis'}
 
-fit <- function(A){
+fit <- function(A) {
   solve(t(A) %*% A) %*% t(A)
 }
 days <- c(32, 77, 121, 152)
@@ -272,15 +273,19 @@ b - A %*% betas
 Another exponential fit problem.
 
 a.
+
 ```{r, results="asis"}
-A <- cbind(rep(1, 5), log(c(600000,
-                            200000,
-                            60000, 
-                            10000,
-                            2500)))
+A <- cbind(rep(1, 5), log(c(
+  600000,
+  200000,
+  60000,
+  10000,
+  2500
+)))
 z <- c(5, 12, 25, 60, 250)
 
 betas <- fit(A) %*% log(z)
+betas
 ```
 
 c.
@@ -299,21 +304,22 @@ sprintf("k = %.2f, g = %.2f", k, g)
 Let's predict the US national debt!
 
 ```{r, results='asis'}
-A <- cbind(rep(1, 4), seq(0, 30, by =10))
+A <- cbind(rep(1, 4), seq(0, 30, by = 10))
 
 b <- log(c(533, 1823, 4974, 7933))
 betas <- fit(A) %*% b
 
-cbind(A[,2], exp(b)) %*% betas
+cbind(A[, 2], exp(b)) %*% betas
 
-#exp(betas[1] +betas[2] * c(A[,2], 40))
-
+# exp(betas[1] +betas[2] * c(A[,2], 40))
 ```
 
-For 2015, the model predicts a debt of more than $24 trillion.
+For 2015, the model predicts a debt of more than \$24 trillion.
 
 ## 42.
+
 Since $(A^T)^T=A$:
+
 \[
   \begin{aligned}
     & L(x) = Ax\\

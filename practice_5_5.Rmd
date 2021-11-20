@@ -29,13 +29,12 @@ library(rlang)
 An inner product in a linear space assigns a scalar result to
 the interaction of elements $f$ and $v$, obeying the usual
 rules of the dot product. It is always a linear transformation
-and positive definite (i.e, $\langle f, f \rangle  > 0$ for all
+and positive definite (i.e, $\langle f, f \rangle  >0$ for all
 nonzero $f$).
 
 For example
 \[
-  \langle f, v \rangle = \int_a^b f(t)g(t)dt
-
+  \langle f, v \rangle = \int_a^{b} f(t)g(t)dt
 \]
 This is a continuous generalization of the dot product,
 multiplying and summing the infinitely many values of the
@@ -113,7 +112,6 @@ They are identical.
 ## 7.
 
 $k > 0$.
-
 
 ## 8.
 
@@ -221,7 +219,7 @@ Simple extension of Cauchy-Swarz.
 
 ## 24.
 
-a. $\langle f, g +h \rangle = \langle f, g \rangle + \langle f, h \rangle = 0 + 8 = 8
+a. $\langle f, g +h \rangle = \langle f, g \rangle + \langle f, h \rangle = 0 + 8 = 8$
 
 b.
 
@@ -236,7 +234,7 @@ b.
 
 c. $\text{proj}_Eh = \langle h, f/2 \rangle + \langle h, g \rangle h = 4h + 3h = 7h$
 
-d. $f/2, g, \frac{h-7h} ||h-7h|| =\frac{-3h}{5 \sqrt 3}
+d. $f/2, g, \frac{h-7h} ||h-7h|| =\frac{-3h}{5 \sqrt 3}$
 
 ## 25.
 

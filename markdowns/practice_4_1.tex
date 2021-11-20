@@ -1,0 +1,626 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Section 4.1 Problems},
+            pdfauthor={Ryan Heslin},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Section 4.1 Problems}
+\author{Ryan Heslin}
+\date{2021-11-17}
+
+\begin{document}
+\maketitle
+
+\% Standard custom LaTeX commands
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\%
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\% 1: term 1 \% 2: subscript 1 \% 3: term 2 \% 4: subscript 2 \% 5.
+operation
+
+\newcommand{\dotsn}[5]{#1_2#3_1#5#1_2#3_2#5#1_{#2}#3_{#4}}
+
+Check some subspaces
+
+\hypertarget{section}{%
+\section{1.}\label{section}}
+
+\[p(0)=2\]
+
+Not closed under addition:
+
+\[
+ap(0)+bp(0)=2a+2b \neq 2
+\]
+
+\hypertarget{section-1}{%
+\section{2.}\label{section-1}}
+
+\[p(2)=0\]
+
+Nice and closed. \[ap(2) +bp(2) = 0a + 0a = 0\]
+
+\[k(p2)=0k=0\]
+
+\hypertarget{section-2}{%
+\section{3.}\label{section-2}}
+
+\[\begin{aligned}& (f(x)+g(x))'=f'(x)+g'(x)\\
+& 1 + 1 = f(x) + g(x)\end{aligned}\]
+
+\[\begin{aligned} & 4a + 2b +c + 4d + 2e +f\\
+&4(a+d)+2(b + e) +(f+ c)\end{aligned}\]
+
+\hypertarget{section-3}{%
+\section{4.}\label{section-3}}
+
+Valid subspace \[
+  \begin{aligned}
+    & \int_0^1(p(t)dt + \int_0^1g(h)dh=0 + 0 = 0\\
+    & k\int_0^1p(t)dt =k0 =0
+  \end{aligned}
+\]
+
+Basis: \((1, t, t^2)\)
+
+\hypertarget{section-4}{%
+\section{5.}\label{section-4}}
+
+\(p(-t)=-p(t)\). This satisfies the scalar axiom by definition.
+
+\hypertarget{section-5}{%
+\section{6.}\label{section-5}}
+
+\(3\times{3}\) invertibles are not a subspace because not closed under
+addition:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(matador, }\DataTypeTok{quietly =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{try}\NormalTok{(}\KeywordTok{solve}\NormalTok{(}\KeywordTok{diag}\NormalTok{(}\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{square}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{,}
+    \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Error in solve.default(diag(nrow = 3) + square(0, 1, 1, 1, 0, 1, 1, 1,  : 
+  Lapack routine dgesv: system is exactly singular: U[2,2] = 0
+\end{verbatim}
+
+\hypertarget{section-6}{%
+\section{7.}\label{section-6}}
+
+Diagonals are obviously a subspace.
+
+\hypertarget{section-7}{%
+\section{8.}\label{section-7}}
+
+Ditto upper triangular; the zero elements never become nonzero.
+
+\hypertarget{section-8}{%
+\section{9.}\label{section-8}}
+
+\(3\times{3}\) with positive nonzero entries: yes.
+
+\hypertarget{section-9}{%
+\section{10}\label{section-9}}
+
+Matrices whose kernel is \(v=\begin{bmatrix}1\\2\\3\end{bmatrix}\): yes.
+We can use the properties since all matrix transformations are linear.
+
+\[\begin{aligned}&Av=0&Bv=0\\
+&Av+Bv = (A+B)v=0\\
+&kAv=0\\
+&A(kv)=0\end{aligned}\]
+
+\hypertarget{section-10}{%
+\section{11.}\label{section-10}}
+
+\(3\times{3}\) RREFS: not closed under scalar multiplication or
+addition, since scaling converts to non-RREF form.
+
+The following concern the space of infinite sequences.
+
+\hypertarget{section-11}{%
+\section{12.}\label{section-11}}
+
+\((a, a+k, a+2k,\dots)\) is a subspace.
+
+\[\begin{aligned}&A =(a, a+k, a+2k,\dots)\\
+& B= (b, b+c, b+2c,\dots)\\
+&A+B=(a+b)+(a+b+k+c) +(a+b+2k+2c)\\
+&cA=(ca+(ca+ck)+ca+2kc)=(ca+(ca+ck)+ca+2kc)\end{aligned}\]
+
+\hypertarget{section-12}{%
+\section{13.}\label{section-12}}
+
+Geometric sequences \((a, ar, ar^2, ar^3,\dots)\) are not a subspace.
+
+Not closed under addition:
+
+\[\begin{aligned}
+&(a,ar,ar^2)+(b, bq, bq^2)=((a+b), (a+b)(r+q), (a+b)(r^2+q^2)\\
+&(a+b, ar+bq, ar^2+bq^2) \neq((a+b), ar+br+aq+bq, ar^2+br^2+aq^2+bq^2
+\end{aligned}\]
+
+Scalar multiplication
+
+\[\begin{aligned}&k(a, ar, ar^2)=(ka, kar, kar^2)\\
+&(ka, kar, kar^2)=(ka, kar, kar^2)\end{aligned}\]
+
+\hypertarget{section-13}{%
+\section{14.}\label{section-13}}
+
+Sequences that converge on 0 are a subspace, because limits obey the
+adding and scalar multiplication axioms.
+
+\[\begin{aligned} &A+B=0\\
+& k(A)=0=A(k)=0\end{aligned}\]
+
+\hypertarget{section-14}{%
+\section{15.}\label{section-14}}
+
+Square-summable (converge on \(\sum^{\infty}_{i=0}x^2_i\) are not a
+subspace. The squares of the summed sequence are not the same as those
+of the separate sequences.
+
+\[\begin{aligned}
+&X +Y = (x_1+y_1), (x_2+y_2),\dots,(x_n+y_n)\\
+&\sum^{\infty}_{i=0} = (x^2+y^2+2xy,\dots,x_n^2+y_n^2+2x_ny_n)\end{aligned}\]
+
+Now we find bases.
+
+\hypertarget{section-15}{%
+\section{16.}\label{section-15}}
+
+\(R^{3\times{2}}\): one-hot matrices with a 1 in each of the six
+elements, dimension 6.
+
+\hypertarget{section-16}{%
+\section{17.}\label{section-16}}
+
+\(R^{n \times {m}}\): \(mn\) one-hot matrices, dimension \(mn\).
+
+\hypertarget{section-17}{%
+\section{18.}\label{section-17}}
+
+All \(2\times{2}\) with trace that sums to 0:
+
+\[\begin{bmatrix}1&0\\
+0&0\end{bmatrix},
+\begin{bmatrix}0&b\\
+0&0\end{bmatrix},
+\begin{bmatrix}0&0\\
+c&0\end{bmatrix}\]
+
+We don't need a basis for \(d\) because it's the opposite sign of \(a\).
+So we've lost one degree of freedom.
+
+\hypertarget{section-18}{%
+\section{19.}\label{section-18}}
+
+\(C^2\): \((1, i)\)
+
+\hypertarget{section-19}{%
+\section{20.}\label{section-19}}
+
+All diagonal matrices: \(n\) one-hot matrices, one with 1 in each
+diagonal position
+
+\hypertarget{section-20}{%
+\section{24.}\label{section-20}}
+
+Lower and upper triangular matrices: standard one-hots, with dimension
+\(\sum_{i=1}^n\).
+
+\hypertarget{section-21}{%
+\section{25.}\label{section-21}}
+
+All polynomials \(P_2\) such that \(f(1)=0\): dimension is 2, since
+\(a +1b + 1c=0\). A basis could be \(1, t\).
+
+Not at all right!
+
+\hypertarget{section-22}{%
+\section{26.}\label{section-22}}
+
+\hypertarget{section-23}{%
+\section{27.}\label{section-23}}
+
+Such a matrix implies the system:
+
+\[\begin{aligned}&a^2+bc=1\\
+&ab+dc=0\\
+&ac+bd=0\\
+&bc+d^2=2\end{aligned}\]
+
+which requires the off-diagonal to be 0. So the components matrix itself
+are the basis
+
+\[\begin{bmatrix}1&0\\0&1\end{bmatrix}\]
+
+Note the basis doesn't have the ratio of components to each other of the
+final matrix: keep it one hot.
+
+\hypertarget{section-24}{%
+\section{28.}\label{section-24}}
+
+\hypertarget{section-25}{%
+\section{29.}\label{section-25}}
+
+\[
+   a \begin{\bmatrix}
+    1 & -1 \\
+    0  & 0
+    \end{\bmatrix} +
+    b \begin{\bmatrix}
+    0 & 0\\
+    1 & -1
+    \end{\bmatrix}          
+\]
+
+\hypertarget{section-26}{%
+\section{30.}\label{section-26}}
+
+\[\begin{bmatrix}1&2\\3&6\end{bmatrix}A=\begin{bmatrix}0&0\\
+0&0\end{bmatrix}\]
+
+Dimension 2. Rows have to be multiples of \((1, -3)\)
+
+\[\begin{bmatrix}1&0\\
+1&0\end{bmatrix}\]
+
+\hypertarget{section-27}{%
+\section{31.}\label{section-27}}
+
+\[\begin{bmatrix}0&0\\1&0\end{bmatrix},\begin{bmatrix}0&-1\\0&0\end{bmatrix}\]
+
+dimension 2.
+
+\hypertarget{section-28}{%
+\section{32.}\label{section-28}}
+
+\[
+    a  \begin{\bmatrix}
+    1 & 0\\
+    1 & 0
+    \end{\bmatrix} + b 
+    \begin{\bmatrix}
+    0 & 1\\
+    0 & -1
+    \end{\bmatrix}
+\]
+
+\hypertarget{section-29}{%
+\section{33.}\label{section-29}}
+
+Just the zero matrix (disclosure: initially wrong).
+
+\hypertarget{section-30}{%
+\section{34.}\label{section-30}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{solve}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+           [,1]       [,2]
+[1,]  0.7142857 -0.2857143
+[2,] -0.5714286  0.4285714
+\end{verbatim}
+
+Find \(S\) for \(\begin{bmatrix}3&2\\4&5\end{bmatrix}S=S\).
+
+The implied system:
+
+\[\begin{aligned}&a=3a+2c\\
+&b=3b+2d\\
+&c = 4a+5c\\
+&d=4b+5d
+\end{aligned}\]
+
+Thus:
+
+\[\begin{aligned}& a=-c\\
+& b=-d
+\end{aligned}\]
+
+So a basis is
+\(\begin{bmatrix}1&0\\0&1\end{bmatrix},\begin{bmatrix}0&1\\0&0\end{bmatrix}\)
+
+\hypertarget{section-31}{%
+\section{35.}\label{section-31}}
+
+Diagonal matrices
+
+\hypertarget{section-32}{%
+\section{36.}\label{section-32}}
+
+Again, diagonals.
+
+\hypertarget{section-33}{%
+\section{37.}\label{section-33}}
+
+Diagonal matrices, so {[}0, 3{]}
+
+\hypertarget{section-34}{%
+\section{38.}\label{section-34}}
+
+{[}0, 4{]}.
+
+\hypertarget{section-35}{%
+\section{39.}\label{section-35}}
+
+The dimension of the space of all upper triangular is \(\sum^n_{i=1}\).
+For a \(3\times{3}\) it is 6. Better, \(n \choose 2\).
+
+\hypertarget{section-36}{%
+\section{40.}\label{section-36}}
+
+\(n^2-n,n^2-2n,\dots,0\). Each increment of rank adds \(n\) elements to
+the basis for the matrix. If \(c\) is the zero vector, the dimension
+could b3 \(n^2\), since full-rank matrices have only the zero kernel.
+
+\hypertarget{section-37}{%
+\section{41.}\label{section-37}}
+
+If \(B\) is the zero matrix, any dimension. If \(B\) has full rank, 0.
+Otherwise \(dim(\ker(B))*3\)
+
+\hypertarget{section-38}{%
+\section{42.}\label{section-38}}
+
+\(n \times dim(\ker(B))\)
+
+\hypertarget{section-39}{%
+\section{43.}\label{section-39}}
+
+By the description,
+\(S \begin{\bmatrix}1 & 0\\0 & -1\end{\bmatrix} = \begin{bmatrix} v & -w \end{bmatrix}\).
+So \(Av = v\) and \(Aw = -w\). Since \(A\) is a reflection about a line,
+that means \(v\) lies entirely on the line and \(w\) is perpendicular to
+it. Since \(v^{\parallel}\) and \(v^{\perp\) both have dimension 1,
+\(A\) has dimension 2.
+
+\hypertarget{section-40}{%
+\section{44.}\label{section-40}}
+
+3: 2 scalars for any basis of the plane \(A\) projects onto, a third for
+the third column a scalar for the component orthogonal to the plane.
+
+\hypertarget{section-41}{%
+\section{45.}\label{section-41}}
+
+I think
+
+\[
+\begin{bmatrix}
+a & 0 & 0\\
+0 & a & 0\\
+0 & 0 & a
+\end{bmatrix} ,
+\begin{bmatrix}
+0 & b & 0\\
+0 & 0 & b\\
+0 & 0 & 0
+\end{bmatrix}
+\]
+
+\hypertarget{section-42}{%
+\section{46}\label{section-42}}
+
+Simply \((a, k)\), so dimension 2.
+
+\hypertarget{section-43}{%
+\section{47.}\label{section-43}}
+
+Even functions satisfy the scalar property:
+
+\[
+  \begin{aligned}
+    & f(-t) = f(t)\\
+    &kf(-t) =kf(t)
+  \end{aligned}
+\]
+
+\[
+  \begin{aligned}
+    & f(-t) +g(-h) = f(t) + g(h)  
+  \end{aligned}
+\]
+
+They are. The scalar multiples remain part of the subspace because the
+evenness condition does not apply to them. The same is true of odd
+functions.
+
+\hypertarget{section-44}{%
+\section{48.}\label{section-44}}
+
+\hypertarget{section-45}{%
+\section{49.}\label{section-45}}
+
+Yes. By linearityl, \(L(A +B) = L(A) + L(B)\), satisfying closure under
+addition. And \(k(LA) = L(kA)\) So any linear transformation of a member
+of \(L\) remains in \(L\), satisying the conditions for a subspace.
+
+\hypertarget{section-46}{%
+\section{50.}\label{section-46}}
+
+\hypertarget{section-47}{%
+\section{51.}\label{section-47}}
+
+\hypertarget{section-48}{%
+\section{52.}\label{section-48}}
+
+\hypertarget{section-49}{%
+\section{53.}\label{section-49}}
+
+Say a space \(C\) of dimension \(n\) has a basis with \(n+1\) elements.
+By definition, a unique linear combination of this basis describes every
+member of the space. These coordinates may be mapped to vectors in
+\(R^n\) using the coordinate transformation. (The standard coordinate
+transformation could not be used for \(R^{n+1}\) because \(C\) has
+dimension \(n\). ). Let \(V\) designate the subspace containing the
+coordinate vector for every member of \(C\)'s basis. If the basis is
+valid, then the members of \(V\) are linearly independent, such that
+\(c_1v_1+\dots+c_{n+1}v_{n+1}=0\) has only the solution
+\(c_1,\dots,c_{n+1}=0\). But a set of vectors in \(R^n\) can contain at
+most \(n\) linearly independent vectors, so \(v_{n+1}\) must be
+redundant. Because it is not linearly independent, \(V\) cannot form
+coordinates for a basis of \(C\). But the basis would be valid if its
+coordinates were \(n\) linearly independent vectors. So a linear space
+of \(n\) dimensions admits at most \(n\) linearly independent elements.
+
+\hypertarget{section-50}{%
+\section{54.}\label{section-50}}
+
+Assume \(\dim(W) = n + 1\). Then a basis for \(W\) has \(n+1\) elements.
+But a basis for the containing space has only \(n\) elements, so some
+members of \(W\) are not spanned by the containing space, which
+contradicts its being a subspace.
+
+\hypertarget{section-51}{%
+\section{55.}\label{section-51}}
+
+\hypertarget{section-52}{%
+\section{56.}\label{section-52}}
+
+Because the sequence is infinite, a basis with \(n\) elements cannot
+acommodate a member with rank \(n+1\), so an infinite basis is needed.
+
+\hypertarget{section-53}{%
+\section{57.}\label{section-53}}
+
+If a spanning set of \(V\) contains \(n\) elements, then a basis for
+\(V\) contains \(\leq n\) elements (in the case of linear dependence).
+Because a finite basis exists, \(V\) is not infinite dimensional.
+
+\hypertarget{section-54}{%
+\section{58.}\label{section-54}}
+
+\hypertarget{section-55}{%
+\section{59.}\label{section-55}}
+
+If this is not true, then for 0 is not a neutral element for all members
+of the space, which violates that axiom of linear spaces.
+
+\hypertarget{section-56}{%
+\section{60.}\label{section-56}}
+
+\end{document}

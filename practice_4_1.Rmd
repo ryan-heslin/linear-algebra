@@ -346,7 +346,25 @@ and  $v^{\perp$  both have dimension 1, $A$  has dimension 2.
 
 # 44.
 
+3: 2 scalars for any basis of the plane $A$ projects onto, a third for the third column a scalar for the component orthogonal to the plane.
+
 # 45.
+
+I think 
+
+\[
+\begin{bmatrix}
+a & 0 & 0\\
+0 & a & 0\\
+0 & 0 & a
+\end{bmatrix} ,
+\begin{bmatrix}
+0 & b & 0\\
+0 & 0 & b\\
+0 & 0 & 0
+\end{bmatrix}
+\]
+
 
 # 46
 
@@ -369,11 +387,14 @@ Even functions satisfy the scalar property:
   \end{aligned}
 \]
 
-They are. The scalar multiples remain part of the subspace because the evenness condition does not apply to them. The same is true of odd functions
+They are. The scalar multiples remain part of the subspace because the evenness condition does not apply to them. The same is true of odd functions.
 
 # 48.
 
 # 49.
+
+Yes. By linearityl, $L(A +B) = L(A) + L(B)$, satisfying closure 
+under addition. And $k(LA) = L(kA)$ So any linear transformation of a member of $L$ remains in $L$, satisying the conditions for a subspace.
 
 # 50.
 
@@ -403,14 +424,28 @@ dimensions admits at most $n$ linearly independent elements.
 
 # 54.
 
+Assume $\dim(W) = n + 1$. Then a basis for $W$ has $n+1$ elements.
+But a basis for the containing space has only $n$ elements, so 
+some members of $W$ are not spanned by the containing space, which contradicts its being a subspace.
+
 # 55.
 
 # 56.
 
+Because the sequence is infinite, a basis with $n$ elements 
+cannot acommodate a member with rank $n+1$, so an infinite 
+basis is needed.
+
 # 57.
+
+If a spanning set of $V$ contains $n$ elements, then a basis for 
+$V$ contains $\leq n$ elements (in the case of linear dependence). Because a finite basis exists, $V$ is not infinite dimensional.
 
 # 58.
 
 # 59.
+
+If this is not true, then for 0 is not a neutral element for all 
+members of the space, which violates that axiom of linear spaces. 
 
 # 60.

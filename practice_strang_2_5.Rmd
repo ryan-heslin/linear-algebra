@@ -1,0 +1,240 @@
+---
+title: "Section 2.5 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %e, %Y')`"
+output:
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "",
+  fig.pos = "",
+  message = FALSE,
+  tidy = "styler",
+  warning = FALSE,
+  fig.align = "center",
+  highlight = TRUE
+)
+
+library(tidyverse)
+```
+
+An incidence matrix has a row for every edge. For each row, 
+there is -1 in the column indexed by the "from" node, and 1
+in the column corresponding to the "to" node.
+
+the dimensions are edges $\times$  nodes.
+
+The vector $1$ is always in the kernel because an arbitrary constant can always be added to the solution. The graph only expresses relative relationships, not absolute ones. So rank is at most $m - 1$. 
+
+A solution to $Ax = 0$ represents a distribution for which it is impossible to find the actual potentials. A solution to  $A^Ty = 0$  represents a distribution that circulates endlessly (a cycle). A basis for the row space thus contains those edges for which cycles are impossible. 
+
+For an incidence, the dimensions are: 
+
+\begin{tabular}{c|c}
+Subspace & Dimension \\
+Kernel & $1; 1 $ \\ 
+Row & $m-1$\\
+Image & $m-1$\\
+Transpose kernel & $n - m + 1$
+\end{tabular}
+
+Euler's formula states that in a directed graph, the numbers of 
+edges, nodes, and loops sum to 1, apparent from the dimensions above.
+
+A network is a graph where each edge is assigned a weight by the 
+diagonal $n \times n$  matrix $C$. 
+
+Kirchoff's law states that the inflows to any node (the potentials) sum to 0. From Ohm's law, there are implicit equations for equilibrium: 
+
+\[
+    \begin{aligned}
+    & y = C(b - Ax) \text{or} C^{-1}y + Ax = b\\ 
+    & A^Ty = f
+    \end{aligned}
+\]
+
+The first says any edge distribution is obtained by scaling the kernel component of a potentials vector by $C$. The second says any potentials vector can be recovered. By some rearrangement: 
+
+\[
+    A^TCAx = A^TCb - f
+\]
+This holds only if the last element of the potentials vector $x_m$ = 0, ignoring the last column of $A$. The reduced graph has rank $m$, so it is a tree - no loops are possible.
+
+The least squares problem $Ax -b$  is a special case of this.
+
+## 1.
+
+The graph is 
+\[
+    \begin{bmatrix}
+    1 & -1 & 0\\
+    0 & 1 & -1\\
+    1 & 0 & -1
+    \end{bmatrix}
+\]
+and its kernel is $1$. The kernel of 
+$A^T$  is $\begin{bmatrix}-1\\-1\\1\end{bmatrix}$
+
+## 2.
+
+From the rows and columns, it is obvious summing the first two gives the third.
+
+## 3.
+
+Again, immediate from attempting to sum the rows. It means the last difference 
+has to cancel the previous ones.
+
+## 4.
+
+\[
+\begin{bmatrix}
+2 & -1 & -1\\
+-1 & 2 & -1\\
+-1 & -1 & 2
+\end{bmatrix}
+\]
+A few elimination steps gives a zero row. 
+The submatrix has inverse 
+
+\[
+    \frac {1}{5} \begin{bmatrix}
+    2 & 1\\
+    1 & 2
+    \end{bmatrix}
+\]
+
+## 5.
+
+Now it's 
+
+\[
+    \frac {1}{5(c_1 + c_2)}\begin{bmatrix}
+    2c_1 & 1c_2\\
+    1c_1 & 2c_2
+    \end{bmatrix}
+\]
+
+
+## 6.
+
+```{r}
+A <- matrix(c(
+  -1, 1, 0, 0,
+  -1, 0, 1, 0,
+  0, -1, 1, 0,
+  0, -1, 0, 1,
+  -1, 0, 0, 1,
+  0, 0, -1, 1
+), nrow = 6, byrow = TRUE)
+```
+
+## 7.
+
+Probably screwed up, but the kernel is 
+\[
+ \begin{bmatrix}
+ -1 & 1 & 1\\
+ -1 & 0 & 1\\
+ 1 & 0 & 0\\
+ 0 & -1 & -1\\
+ 0 & 1 & 0\\
+ 0 & 0 & 1
+ \end{bmatrix}
+\]
+
+
+## 8.
+
+Row and column are both $m-1 = 3$. Kernel is 1, making transpose kernel $6 - (4-1) = 3$. 
+
+## 9.
+
+```{r}
+C <- diag(x = complex(6, 0, 1:6))
+t(A) %*% C %*% A
+```
+I believe it's the sum of the constat associated with all nodes that eventually reach that node.
+
+## 10.
+
+Remove one row and the matrix has full rank, so the remaining rows are a basis 
+for the potentials.
+
+## 11.
+
+The big ugly system: 
+
+\[
+    \begin{aligned}
+    & y_1 = -x_1 + x_2 \\ 
+    & 1/2y_2 = -x_1 + x_3 \\ 
+    & 1/2 y_3 = x_2 \\ 
+    & y_4 = -x_3 \\ 
+    & -y_1 - y_2 = f_1 \\ 
+    & y_1 + y_3 = f_2 \\ 
+    & y_2 - y_4 = f_4
+    \end{aligned}
+\]
+
+I tried by hand but decided it wasn't worth it.
+```{r}
+A <- matrix(c(-1, 1, 0, -1, 0, 1, 0, 1, 0, 0, 0, -1), nrow = 4, byrow = TRUE)
+C <- diag(x = c(1, 2, 2, 1))
+f <- c(1, 1, 6)
+solution <- solve(t(A) %*% C %*% A, -f)
+solution
+A %*% solution
+```
+
+Converting back to $f$:
+```{r}
+y <- C %*% A %*% solution
+t(A) %*% y
+```
+
+## 12.
+
+Rank is 6. $\ker(A)$ has dimension 1, $\ker(A^T)$ dimension 6. We'd need to lop off $12-6 = 6$ edges.
+
+## 13.
+
+
+## 14.
+
+Princeton beats Harvard by 1, MIT beats Yale by 35, MIT beats Princeton by 34
+
+## 15.
+
+It's accounted for by the potential differences. 
+
+## 16.
+
+$n \choose 2$
+
+## 17.
+
+
+## 18.
+
+Other nodes, connected.
+
+## 19.
+
+A constant can be added to any initial potential 
+without distrubing the solution. The kernel has 
+dimension $n-1$. 
+
+## 20.
+
+That is $6 \choose 2$.
+
+## 21.
+
+I won't write the matrix, but $A_i \cdot A_j$ adds 
+1 for every overlapping pair of nodes, and subsequent 
+multiplications compound.

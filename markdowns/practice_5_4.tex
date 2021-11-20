@@ -1,0 +1,526 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Section 5.4 Problems},
+            pdfauthor={Ryan Heslin},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Section 5.4 Problems}
+\author{Ryan Heslin}
+\date{2021-11-17}
+
+\begin{document}
+\maketitle
+
+\newcommand{\abcd}{\begin{bmatrix}a&b\\
+c&d\end{bmatrix}}
+
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+
+\newcommand{\vect}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\meq}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\bym}[1]{#1\times{m}}
+
+\newcommand{\nby}[1]{n\times{#1}}
+
+\newcommand{\subsp}[2]{\Bigg\{\begin{bmatrix}#1\end{bmatrix}:#2\Bigg\}}
+
+\newcommand{\proj}[2]{\text{proj}_#1(#2)}
+
+\newcommand{\refl}[2]{\text{refl}_#1(#2)}
+
+\newcommand{\sumn}{\sum_{i=1}^n}
+
+\newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
+
+\hypertarget{section}{%
+\subsection{1.}\label{section}}
+
+\begin{\bmatrix}
+1\\
+-2
+\end{\bmatrix}
+
+\hypertarget{section-1}{%
+\subsection{3.}\label{section-1}}
+
+Say we have bases of \(V\) and \(V^{\perp}\). Then the union of the
+bases forms a basis for \(R^n\), because all vectors in \(R^n\) are
+either linear combinations of \(V\) or are orthogonal to, except for 0,
+which is both.
+
+\hypertarget{section-2}{%
+\subsection{4.}\label{section-2}}
+
+Yes. The image of \(A^T\) is all vectors in \(R^m\) obtained by
+\(A^Tx\). \(\ker(A)^{\perp}\) is all vectors in \(R^m\) for which
+\(Ax \neq 0\).
+
+\hypertarget{section-3}{%
+\subsection{5.}\label{section-3}}
+
+The solution space \(V\) of
+
+\[
+  \begin{aligned}
+    & x_1 + x_2 +x_3 +x_4 = 0\\
+    & x_1 +2x_2 +5x_3 +4x_4 =0
+  \end{aligned}
+\] is the kernel of the matrix. So \(V^{\perp} = \text{im}A^T\):
+
+\[ \begin{bmatrix}
+  1 & 1\\
+  1 & 2\\
+  1 & 5\\
+  1 & 4\\
+\end{bmatrix}\]
+
+\hypertarget{section-4}{%
+\subsection{6.}\label{section-4}}
+
+If \(A\) is \(n \times m\), then \(im(A) =(AA^T\) is true. \$
+\text{im}A\^{}T\$ is the orthogonal complement of the kernel, so it
+contains all nonzero \(x\) for which \(Ax \neq 0\) - in other words, all
+vectors in \((A^ {\perp})^{\perp}\)
+
+\hypertarget{section-5}{%
+\subsection{7.}\label{section-5}}
+
+If a matrix is symmetric, the image and kernel are orthogonal
+complements, because \(A^T=A\), so \(\ker(A^T) = \ker(A)\). Likewise,
+the row space and \(\ker(A)\) are orthogonal complements.
+
+\hypertarget{section-6}{%
+\subsection{8.}\label{section-6}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  \(A^+ = (A^TA)^{-1}A^T\)
+\item
+  \[
+    \begin{aligned}
+   & A^+ = (A^TA)^{-1}A^T\\
+   & = A^{-1}(A^T)^{-1}A^T\\
+   & = A^{-1}
+    \end{aligned}
+  \]
+\item
+  \((A^TA)^{-1}A^TAx = x\)
+\item
+  \(A(A^TA)^{-1}A^Ty= y^{\parallel}\)
+\item
+  \[L^+ = \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0
+  \end{bmatrix}\]
+\end{enumerate}
+
+\hypertarget{section-7}{%
+\subsection{9.}\label{section-7}}
+
+\hypertarget{b.}{%
+\subsubsection{b.}\label{b.}}
+
+They are orthogonal complements.
+
+\hypertarget{c.}{%
+\subsubsection{c.}\label{c.}}
+
+It is a absis for \(im(A^T)\).
+
+\hypertarget{d.}{%
+\subsubsection{d.}\label{d.}}
+
+\[
+\begin{\bmatrix}
+1\\
+2
+\end{\bmatrix}
+\]
+
+\hypertarget{e.}{%
+\subsubsection{e.}\label{e.}}
+
+Being the minimal solution, it is the shortest.
+
+\hypertarget{section-8}{%
+\subsection{10.}\label{section-8}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  If \(x_0\) is in \(\ker A^{\perp}\), then it lies in the image of the
+  transpose, the orthogonal complement. Then since \(x = x_h + x_0\), if
+  we set \(x_h=0\) (the portion in the kernel), then \(x_0\) lies
+  entirely in the image of the transpose. all vectors for which that
+  lead to nonzero \(b\), as well as \(0_m\)
+\item
+  \(0_m\) is the only vector shared among \((\ker(A^{\perp}))\) and
+  \(\ker(A)\), so \(x_0\) lies entirely in the image of the transpose
+  only if \(x_h=0\).
+\item
+  For all linear combinations \(x_0\) of \(\ker(A)\), \(Ax_0=0\) by
+  definition. So combinations of \(\ker(A)\) can be freely added to
+  \(x_h\) without impacting the solution, since
+  \(A(x_0 +x_h)=Ax_0 + Ax_h=0+Ax_h\). Since all nonzero vectors have
+  nonzero length, this makes \(Ax_h\) the shortest solution.
+\end{enumerate}
+
+\hypertarget{section-9}{%
+\subsection{11.}\label{section-9}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Given the definition of the minimal solution, the minimal
+  least-squares solution is the next best thing: the one solution to
+  \((A^TA)^{-1}A^Tx\) lying in \(\ker(A)^{\perp})\). That is the image
+  of the transpose, so this unique solution is purely a linear
+  combination of \(A^T\), without any vectors from \(\ker(A)\).
+\end{enumerate}
+
+Had these backwards initially.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \((A^TA)^{-1}A^TA=I\)
+\item
+  \(A(A^TA)^{-1}A^T\)
+\item
+  The image is \(R^n\), the kernel is \(\ker(A)\)
+\end{enumerate}
+
+e.The first two elements of \(y\).
+
+\hypertarget{section-10}{%
+\subsection{12.}\label{section-10}}
+
+The minimal least-squares solution of a system is the shortest solution
+\(x^+\) that yields an \(Ax^+\) the shortest distance from \(b\). It
+always lies in \((\ker A)^{\perp}\) because it is the one and only
+\(x^+\) that lies entirely in \(A\)'s row space.
+
+\hypertarget{section-11}{%
+\section{13.}\label{section-11}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  \(L(x) = y\) is linear, so \(L(y_1 + y_2)\) is the minimal
+  least-squares solution of \(L(x) = y_1 +y_2\), which is the sum of the
+  separate least-squares solutions for \(y_1\) and \(y_2\). For the
+  second property:
+\end{enumerate}
+
+\[
+  \begin{aligned}
+    & L(kx) = kL(x)\\
+    & L^+(L(kx)) = L^+(k(L(x))) = kL^+(L(x))
+  \end{aligned}
+\]
+
+(I was initially not quite right on these before looking up the
+answers). b. \(L^+(L(X))\) is the minimum least-squares solution of
+\(L(x) = L(X)\) - that is, \(x\). More correctly, the projection of
+\(x\) onto the image of \(A^T\).
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\item
+  The projection of \(y\) onto the image of the row space.
+\item
+  The image and kernel of \(L^+\) are the same as those of \(A^T\).
+\item
+  If \[ L(x) = \begin{bmatrix}
+  2 & 0 & 0\\
+  0 & 0 & 0
+  \end{bmatrix}x\], then the pseudoinverse is just
+  \(\begin{bmatrix}1/2 & 0\\0&0\\0&0\end{bmatrix}\)
+\end{enumerate}
+
+\hypertarget{section-12}{%
+\subsection{15.}\label{section-12}}
+
+It is the pseudoinverse, \((A^TA)^{-1}A^T\). We have:
+
+\[
+  \begin{aligned}
+    & (A^TA)^{-1}A^TA =I
+  \end{aligned}
+\]
+
+\hypertarget{section-13}{%
+\subsection{17.}\label{section-13}}
+
+Yes. If this were not true, then \(\dim(\ker(A^T)) \geq \dim(\ker(A))\).
+This is impossible, because the orthogonal complement of \(A\)'s image
+is \(\ker(A^T)\) So no \(x\) solving \(A^Tx=0\) may be produced by a
+linear combination of \(A\). Therefore, \(\ker(A^TA) = \ker(A)\), and
+both matrices have \(m\) columns, so ranks are equal as well.
+
+\hypertarget{section-14}{%
+\subsection{18.}\label{section-14}}
+
+Yes. We proved above \(A^TA\) and \(A\) have equal rank. \(\ker(A^T)\)
+is the orthogonal complement of the image of \(A^T\), so any \(x\) for
+which \(Ax=0\) cannot come from a linear combination of \(A^T\) (except
+for \(0_m\)). So the kernel does not expand, and rank remains the same.
+
+\hypertarget{section-15}{%
+\subsection{19.}\label{section-15}}
+
+\[
+        \begin{\bmatrix}
+        1\\
+        1
+        \end{\bmatrix}
+\]
+
+\hypertarget{section-16}{%
+\subsection{28.}\label{section-16}}
+
+For an orthonormal basis, the least squares solution is \(b\), since
+\(A(A^TA)^{-1}A^T=I\).
+
+\hypertarget{section-17}{%
+\subsection{34.}\label{section-17}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{2.5}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{X <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{sin}\NormalTok{(x), }\KeywordTok{cos}\NormalTok{(x), }\KeywordTok{sin}\NormalTok{(}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{x), }\KeywordTok{cos}\NormalTok{(}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{x))}
+
+\KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(X) }\OperatorTok{%*%}\StringTok{ }\NormalTok{X) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(X) }\OperatorTok{%*%}\StringTok{ }\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+            [,1]
+[1,]  1.50000000
+[2,]  0.10897422
+[3,] -1.53669122
+[4,]  0.30269197
+[5,]  0.04314769
+\end{verbatim}
+
+\hypertarget{section-18}{%
+\subsection{36.}\label{section-18}}
+
+I fit a model predicting day length by time of year. The error vector is
+surprisingly small.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(A) \{}
+    \KeywordTok{solve}\NormalTok{(}\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(A)}
+\NormalTok{\}}
+\NormalTok{days <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{32}\NormalTok{, }\DecValTok{77}\NormalTok{, }\DecValTok{121}\NormalTok{, }\DecValTok{152}\NormalTok{)}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+
+\NormalTok{A <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{), }\KeywordTok{sin}\NormalTok{(((}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi)}\OperatorTok{/}\DecValTok{366}\NormalTok{) }\OperatorTok{*}\StringTok{ }\NormalTok{days), }\KeywordTok{cos}\NormalTok{(((}\DecValTok{2} \OperatorTok{*}
+\StringTok{    }\NormalTok{pi)}\OperatorTok{/}\DecValTok{366}\NormalTok{) }\OperatorTok{*}\StringTok{ }\NormalTok{days))}
+
+\NormalTok{betas <-}\StringTok{ }\KeywordTok{fit}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{b}
+
+\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{betas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        [,1]
+\end{verbatim}
+
+{[}1,{]} -0.01328337 {[}2,{]} 0.03559242 {[}3,{]} -0.04424210 {[}4,{]}
+0.02193305
+
+\hypertarget{section-19}{%
+\subsection{39.}\label{section-19}}
+
+Another exponential fit problem.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{), }\KeywordTok{log}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\FloatTok{6e+05}\NormalTok{, }\FloatTok{2e+05}\NormalTok{, }\DecValTok{60000}\NormalTok{, }\DecValTok{10000}\NormalTok{,}
+    \DecValTok{2500}\NormalTok{)))}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{250}\NormalTok{)}
+
+\NormalTok{betas <-}\StringTok{ }\KeywordTok{fit}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{log}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\item
+\end{enumerate}
+
+The exponential base of the fitted function is about 0.5, very close to
+the theoretical \(a = k \sqrt g\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{k <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(betas[}\DecValTok{1}\NormalTok{])}
+\NormalTok{g <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(betas[}\DecValTok{2}\NormalTok{])}
+\KeywordTok{sprintf}\NormalTok{(}\StringTok{"k = %.2f, g = %.2f"}\NormalTok{, k, g)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "k = 40263.28, g = 0.51"
+\end{verbatim}
+
+\hypertarget{section-20}{%
+\subsection{41.}\label{section-20}}
+
+Let's predict the US national debt!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{), }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DataTypeTok{by =} \DecValTok{10}\NormalTok{))}
+
+\NormalTok{b <-}\StringTok{ }\KeywordTok{log}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{533}\NormalTok{, }\DecValTok{1823}\NormalTok{, }\DecValTok{4974}\NormalTok{, }\DecValTok{7933}\NormalTok{))}
+\NormalTok{betas <-}\StringTok{ }\KeywordTok{fit}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{b}
+
+\KeywordTok{cbind}\NormalTok{(A[, }\DecValTok{2}\NormalTok{], }\KeywordTok{exp}\NormalTok{(b)) }\OperatorTok{%*%}\StringTok{ }\NormalTok{betas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      [,1]
+\end{verbatim}
+
+{[}1,{]} 48.52718 {[}2,{]} 230.51271 {[}3,{]} 581.93366 {[}4,{]}
+915.87389
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# exp(betas[1] +betas[2] * c(A[,2], 40))}
+\end{Highlighting}
+\end{Shaded}
+
+For 2015, the model predicts a debt of more than \$24 trillion.
+
+\hypertarget{section-21}{%
+\subsection{42.}\label{section-21}}
+
+Since \((A^T)^T=A\): \[
+  \begin{aligned}
+    & L(x) = Ax\\
+    & L(A^Tx) = Ax\\
+    & L^{-1}(Ax) = A^Tx
+  \end{aligned}
+\]
+
+\end{document}

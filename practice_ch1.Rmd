@@ -42,53 +42,63 @@ t&2&z\\
 0&-4&x-5z\end{bmatrix}\]
 Then zero out the last row as usual to get the last equation (the nullspace basis, as it happens:)
 
-\[y-3z=-2\\
-x-5z=-4\\
-x-2y+z=0\]
+\[
+\begin{aligned}
+& y-3z=-2\\
+& x-5z=-4\\
+& x-2y+z=0
+\end{aligned\]
 
 ## 21.
 
 The three numbers whose sums in combinations of 2 are:
 
 ```{r}
-A <- matrix(rep(1, 9), nrow =3)
+A <- matrix(rep(1, 9), nrow = 3)
 diag(A) <- 0
-
 solve(A, c(24, 28, 30))
 ```
-## 24.
 
-There are four possible leading one configurations for a $ 3\times 2$ RREF: none, $1, 1$, $(1, 1)$ and $(2, 2)$, $(1, 1)$ and $(2, 3$)
+## 24.
+configurations for a $3\times 2$ RREF: none,  $(1, 1)$ and $(2, 2)$, $(1, 1)$ and $(2, 3$)
 # System of  a Line
 
 The system's solutions pass through (1,1,1) and (3,5,0). Since it is a line, one variable is free. The coefficients on $z$ are those that satisfy both points on the line setting $z$ at 1.
-\[z\begin{bmatrix}3-2z\\5-4z\\z\end{bmatrix}\]
+\[z \begin{bmatrix}3-2z\\5-4z\\z\end{bmatrix}\]
 
 ## 34.
 
 Each output is the sum of the demand on each industry by each other industry plus the consumer demand. the system is:
 
-\[\begin{align}
+\[\begin{aligned}
 &x_1=.2x_2+.3x_3+320\\
 &x_2=.1x_1+.4x_3+90\\
 &x_3=.2x_1+.5x_2+150
-\end{align}\]
+\end{aligned}\]
 
 ```{r}
-solve(a = matrix(c(1, -.2, -.3, 
-                   -.1,1, -.4,
-                   -.2, -.5, 1), byrow = TRUE, nrow = 3),
-      b = matrix(c(320, 90, 150)))
+solve(
+  a = matrix(c(
+    1, -.2, -.3,
+    -.1, 1, -.4,
+    -.2, -.5, 1
+  ), byrow = TRUE, nrow = 3),
+  b = matrix(c(320, 90, 150))
+)
 ```
+
 ## 35.
 
 Polynomials of the form $8 + t -8t^2$
 
 ```{r}
 
-solve(a = square(1, 1, 1, 1, 3, 9, 1, 1, 2),
-      b = c(1, 3, 1))
+solve(
+  a = square(1, 1, 1, 1, 3, 9, 1, 1, 2),
+  b = c(1, 3, 1)
+)
 ```
+
 ## 37.
 
 ```{r}
@@ -106,6 +116,7 @@ A system in three unknowns with solutions $(6+5t, 4 + 3t, 2 +t)$
     & 3x -y + 2z = 16+ 14t
   \end{aligned}
 \]
+
 # 1.2
 
 ## 19.
@@ -144,11 +155,14 @@ $e$ must be 0, $a$ and $b$ are arbitrary, though $b$ is 0 if $c$, also arbitrary
 Finding a cubic: It turns out to be $a +2t -t^2 -2t^3$.
 
 ```{r}
-A <- cbind(rep(1, 4),
-           matrix(c(0, 0, 0, 1, 1, 1, -1, 1, -1, 2, 4, 8), nrow = 4, byrow = TRUE))
+A <- cbind(
+  rep(1, 4),
+  matrix(c(0, 0, 0, 1, 1, 1, -1, 1, -1, 2, 4, 8), nrow = 4, byrow = TRUE)
+)
 b <- c(1, 0, 0, -15)
 solve(A, b)
 ```
+
 ## 35.
 
 Now for a derivative example. $f`(t) = b + 2ct +3dt^2$
@@ -156,38 +170,44 @@ Now for a derivative example. $f`(t) = b + 2ct +3dt^2$
 It turns out to be $.625a - 1.0625bt + 1.25ct^2 + .1875dt^3$.
 
 ```{r}
-A <- cbind(c(1, 1, 0, 0), 
-           matrix(c(1, 1, 1, 2, 4, 8, 1, 2, 3, 1, 4, 27), nrow = 4, byrow = TRUE))
+A <- cbind(
+  c(1, 1, 0, 0),
+  matrix(c(1, 1, 1, 2, 4, 8, 1, 2, 3, 1, 4, 27), nrow = 4, byrow = TRUE)
+)
 b <- c(1, 5, 2, 9)
 solve(A, b)
 ```
 
 ## 45.
+
 We plug the given values into the formula for $t$ and use $S(t$ as the solution vector $b$. Then just solve the system:
 
 ```{r}
 library(tidyverse)
 t <- c(47, 74, 273)
 s_t <- matrix(c(11.5, 12, 12))
-mat <- cbind(c(1,1,1), 
-             cos(((2*pi) * t ) / 365),
-             sin(((2*pi) * t ) / 365))
+mat <- cbind(
+  c(1, 1, 1),
+  cos(((2 * pi) * t) / 365),
+  sin(((2 * pi) * t) / 365)
+)
 
-coefs <- solve(a = mat, b= s_t)
+coefs <- solve(a = mat, b = s_t)
 
-
-days <- tibble( day = 1:365, len = coefs[1]+ (coefs[2] * cos((2*pi*1:365)/ 365)) + (coefs[3] * sin((2*pi*1:365)/ 365)))
+days <- tibble(day = 1:365, len = coefs[1] + (coefs[2] * cos((2 * pi * 1:365) / 365)) + (coefs[3] * sin((2 * pi * 1:365) / 365)))
 
 ggplot(days, aes(day, len)) +
   geom_line() +
   geom_vline(aes(xintercept = day[which.max(len)]))
-                
-max(days$len)               
+
+max(days$len)
 ```
+
 The longest day is about 13 hours long.
+
 ## 47.
 
-Infintie: $k=2$
+Infinite: $k=2$
 Inconsistent: $k= 1$
 Otherwise: unique
 
@@ -211,9 +231,9 @@ solve(matador::square(1, 1, 0, 0, -.3, -.6, 0, 1, -.7, -.4, 1, 0, 1, 0, 0, -1, b
 ## 74.
 
 ```{r}
-((1500/19) -(15/19) *1:100)
+((1500 / 19) - (15 / 19) * 1:100)
 
-(400/19) - 1:100
+(400 / 19) - 1:100
 ```
 
 15 sparrows, 6 ducks, 79 roosters.
@@ -229,9 +249,11 @@ By row elimination and induction, we find the solution (where $k=n-1$) is $x_k =
 
 They have 16, 12, and 8 coins, respectively.
 ```{r}
-A <- matador::square(1, -2, -2,
-                     -3, 1, -3,
-                     -5, -5, 1)
+A <- matador::square(
+  1, -2, -2,
+  -3, 1, -3,
+  -5, -5, 1
+)
 
 solve(A, b = setNames(rep(-60, 3), 1:3))
 ```
@@ -239,9 +261,11 @@ solve(A, b = setNames(rep(-60, 3), 1:3))
 ## 80.
 
 ```{r}
-A <- matador::square(-1, 2, -3,
-                     -4, 4, -7,
-                     -2, 5, -3)
+A <- matador::square(
+  -1, 2, -3,
+  -4, 4, -7,
+  -2, 5, -3
+)
 solve(A)
 ```
 
@@ -250,8 +274,10 @@ solve(A)
 ## 29-32.
 
 Let $x=\begin{bmatrix}5\\3\\-9\end{bmatrix}$ and $b=\begin{bmatrix}2\\0\\1\end{bmatrix}$. To find $A$ from these vectors, we just solve the system of equations
-\[5a_1+3a_2-9a_3=b_n\\
-a_1=\frac{b_2-3a_2-9a_3}{5}\]
+\[ \begin{aligned}
+&5a_1+3a_2-9a_3=b_n\\
+&a_1=\frac{b_2-3a_2-9a_3}{5}
+\end{aligned}\]
 substituting each element of $A$ for the corresponding row of $A$. The rank 1 $A$:
 
 \[\m{2/5&0&0\\
@@ -282,7 +308,7 @@ c. $4\times{3}$, augment rank 4: no solution, since $b$ increases rank.
 $4\times{3}$ rank 3 has augment rank 3 or 4,d depending on whether $Ax=b$ has a solution. Partial row rank and full column rank, so either one or zero solutions.
 
 
-3 x4, rank 3: augment rank 3, since full row rank guarantees a solution, so $AX=b$ for all $b$
+$3 \times 4$ rank 3: augment rank 3, since full row rank guarantees a solution, so $AX=b$ for all $b$
 Infinitely many solutions.
 ## Costs and Units
 
@@ -290,16 +316,22 @@ A system where the total number of items and their individual values and total v
 
 For example, 32 \$1, \$5, and \$10 bills worth \$100 total.
 The system is:
-\[x+y+z=32\\
-x+5y+10z=100\]
+\[\begin{aligned}
+& x+y+z=32\\
+& x+5y+10z=100 \end{aligned}\]
 Row reduce to get
-\[x = 5/4z+15\\
-y=17-9/4z\]
+\[ \begin{aligned}
+& x = 5/4z+15\\
+& y=17-9/4z
+\end{aligned}\]
 
 since the variables must be integers and $10z<=100$, $z$ can only be 4 or 8. substituting we see it is 8:
 
-\[20/4+15+17-9/4+4=32\\
-32=32\]
+\[\begin{aligned}
+&20/4+15+17-9/4+4=32\\
+&20/4+15+17-9/4+4=32\\
+& 32=32
+\end{aligned}\]
 
 If the $\4\times{4}$ $Ax=b$ has a unique solution, then $Ax=c$ has either one or none, since the matrix has full row rank (for a unique solution) and therefor full column rank.
 
@@ -314,14 +346,14 @@ If $rank(A)=n$ and $m>n$, $m-n$ rows are zeroed. If $rank(A) = m$ and $n>m$, the
 
 27. A rank-4 $4\times{4}$ has the identity as RREf.
 
-28. A $\di{5}{3}$ matrix is 3, its RREF has two zeroed bottom rows.
+28. A $5 \times 3$ matrix is 3, its RREF has two zeroed bottom rows.
 44. Prove a tall matrix is always inconsistent for some $b$.  
-Since any $k>n$ vectors in $R^n$ are linearly dependent, an $m >n$ matrix has linearly dependent rows. Therefore each row can be expressed $r_i=c_1r_j+c_2r_k+\dotsc_nr_l$ Let $b_i$ be a  linear combination of $b$ with different scalars such that $b_i\neq{c_1}b_j+c_2b_k+\dots{c_n}b_l$. Since $b$ and $A$ are independently determined, this is always possible.
+Since any $k>n$ vectors in $R^n$ are linearly dependent, an $m >n$ matrix has linearly dependent rows. Therefore each row can be expressed $r_i=c_1r_j+c_2r_k$ Let $b_i$ be a  linear combination of $b$ with different scalars such that $b_i\neq{c_1}b_j+c_2b_k+\dots{c_n}b_l$. Since $b$ and $A$ are independently determined, this is always possible.
 
 45. Prove $A(kx) = k(Ax)$. Very easy. Referring to column vectors:
 
 \[A(kx) = \m{kv_1+kv_2+\dots kv_n}\]
-\[k(Ax) = k\m{kv_1+kv_2+\dots kv_n}=
+\[k(Ax) = k \m{kv_1+kv_2+\dots kv_n}=
 \m{kv_1+kv_2+\dots kv_n}\]
 
 
@@ -355,22 +387,20 @@ c. $\m{x_1-x_2//0}$. The dependent row is zeroed.
 
 54. If two $R^3$ vectors are nonparallel, they span $c_1v_1+c_2v_2$ for all real $c$. They always span the zero vector, and span either  a line or plane, depending on linear dependency.
 
-
 ## 52. 
+
 Just multiply them together.
 
 ## 54.
 
-
 Two nonparallel vectors in $R^3$ describe a plane.
-
 
 ## 57.
 
 To get a vector as an LC of two lines, pick vectors on the lines and solve:
 
 ```{r}
-solve(a = matrix(c(1, 3, 2, 1), nrow = 2), b = matrix(c(7,11)))
+solve(a = matrix(c(1, 3, 2, 1), nrow = 2), b = matrix(c(7, 11)))
 ```
 
 
@@ -384,7 +414,7 @@ matrix(c(rep(1, 4), 1:4), nrow = 4) %*% matrix(c(3, 2))
 
 ## 63.
 
-All vectors of the form $v +cw$ are shears - distortions that add some scalar of one vector to another, such that the origianl vector remaisn at the center. Assuming this order, vertical shears.
+All vectors of the form $v +cw$ are shears - distortions that add some scalar of one vector to another, such that the origianl vector remains at the center. Assuming this order, vertical shears.
 
 ## 65.
 
@@ -399,6 +429,7 @@ Transformations of this form where $a +b =1$ are projections of positive  portio
 If we add the constraint $a +b=$, we have rotations.
 
 ## 68. 
+
 $u \cdot v =u \cdot w$ for all vectors $u$ that bisect $v$ and $w$ and have half the length(I think)
 \[u_1(v_1 - w_2) = u_2(v_2 - w_2)\]
 
@@ -414,7 +445,7 @@ $u \cdot v =u \cdot w$ for all vectors $u$ that bisect $v$ and $w$ and have half
 
 5. False; no $3\times{4}$ matrix can have rank above 3.
 
-6. True; the the product has dimension of the LHS.
+6. True; the product has dimension of the LHS.
 
 7. False; many square matrices are not one-to-one.
 
@@ -451,7 +482,7 @@ and \[x=\m{0\\0\\1\]
 18. False. The product has two dimensions.
 
 ```{r}
-matrix(c(11, 17,13,19, 15, 21), nrow = 2) %*% matrix(c(-1, 3, -1))
+matrix(c(11, 17, 13, 19, 15, 21), nrow = 2) %*% matrix(c(-1, 3, -1))
 ```
 
 20. True; $x_1=2$ and $x_2=1$.
@@ -478,8 +509,6 @@ matrix(c(11, 17,13,19, 15, 21), nrow = 2) %*% matrix(c(-1, 3, -1))
 
 27. True. Normally row operations can't handle column permutations, but in a matrix with partial row rank every row is a linear combination of the others, so you can convert between any rank-2 matrices by row ops alone. 
 
-28. If $c_1v+c_2w=u$ and $c_1p+c_2q+c_3r=v$, then $c_1()
-
 29. False; it must have either one or none.
 
 30. True; every pivot column gets a nonzero entry. 
@@ -494,9 +523,11 @@ matrix(c(11, 17,13,19, 15, 21), nrow = 2) %*% matrix(c(-1, 3, -1))
 
 35. True. 
 
-\[c_1v+c_2w=u\\
-c_2w = u-c_1v\\
-w = \frac{u-c_1v}{c_2}\]
+\[ \begin{aligned}
+& c_1v+c_2w=u\\
+& c_2w = u-c_1v\\
+& w = \frac{u-c_1v}{c_2}
+\end{aligned}\]
 
 
 36. True. The values in a free variable's column represent that column as a linear combination of the other column vectors.
@@ -507,10 +538,12 @@ w = \frac{u-c_1v}{c_2}\]
 
 39. True. By linearity:
 
-\[v=c_1u+c_2w\\
-A(v)=A(c_1u+c_2w)=c_1Au+c_2Aw\]
+\[\begin{aligned}
+& v=c_1u+c_2w\\
+& A(v)=A(c_1u+c_2w)=c_1Au+c_2Aw
+\end{aligned}\]
 
-40. False. If we drop a row from an the RREF of a 1-row matrix, there _is_ no remaining matrix. Otherwise true, since we will not lose any free variables
+40. False. I we drop a row from the RREF of a 1-row matrix, there _is_ no remaining matrix. Otherwise true, since we will not lose any free variables
 
 41. True. Systems are only consistent if $b$ introduces linear dependency; that is, the augmented rank equals the rank of the original matrix. If not, the $b$ is not a linear combination of $A$'s columns and the system is inconsistent.
 
@@ -535,10 +568,9 @@ A(v)=A(c_1u+c_2w)=c_1Au+c_2Aw\]
 It seems about a third of such matrices have inverses.
 
 ```{r}
-tests <- replicate(n = 500, matrix(sample(0:1, 9, replace = TRUE), nrow = 3), simplify = FALSE) %>% 
-  suppressWarnings(map(~try(solve(.x)))) %>% 
-  map_lgl(is.matrix) %>% 
+tests <- replicate(n = 500, matrix(sample(0:1, 9, replace = TRUE), nrow = 3), simplify = FALSE) %>%
+  suppressWarnings(purrr::map(~ try(solve(.x)))) %>%
+  purrr::map_lgl(is.matrix) %>%
   sum()
 tests
 ```
-
