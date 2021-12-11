@@ -110,7 +110,7 @@ because of the differing signs.
 
 ## 13.
 
-Let $d$ be a a diagonal emenet less than or equal to zero. Then
+Let $d$ be a diagonal element less than or equal to zero. Then
 the term $dx_i^2$ is zero or negative definite, and so the matrix
 cannot be positive definite.
 
@@ -131,11 +131,11 @@ $a$.
 
 ## 25.
 
-$\lambda$, since the unit eigenvectors eigenbasis coordiantes are 1.
+$\lambda$, since the unit eigenvectors eigenbasis coordinates are 1.
 
 ## 26.
 
-True. Such a vector satisifeis $Ax = \lambda x$ for $\lambda = 0$. Then$A$ has zero determinant and is
+True. Such a vector satisifies $Ax = \lambda x$ for $\lambda = 0$. Then$A$ has zero determinant and is
 therefore not invertible.
 
 ## 27.
@@ -147,15 +147,20 @@ unit eigenvectors.
 
 $A =  (Q \sqrt \Lambda Q^T)^2$
 
-If  amatrix is positive definite, so is its square root, since the eigenvalues remain positive.
+If  a matrix is positive definite, so is its square root, since the eigenvalues remain positive.
 
+## 31.
+
+\[
+\begin{bmatrix}
+2/\sqrt 5 & 1/\sqrt 5\\
+-1/\sqrt 5 & -1/\sqrt 5
+\end{bmatrix}
+\]
 
 ## 32.
 
-for the $2 \times 2$
-
-Solving the system gets su
-
+for the $2 \times 2$:
 
 \[
 \begin{aligned}
@@ -177,16 +182,16 @@ Solving the system gets su
 ## 34.
 
 
-If $A$ is positive definite, then it sfull quadratic form is
-positive definie. For a $3 \times 3$, the form of the first submatrix is $ax_1^2$. This must be positive definite, because if not then the
+If $A$ is positive definite, then its full quadratic form is
+positive definite. For a $3 \times 3$, the form of the first submatrix is $ax_1^2$. This must be positive definite, because if not then the
 form of the second leading submatrix $ax_1^2 + bx_1x_2 +cx_2^2$ would
 not be positive definite, and so forth.
 
-And if all the elading submatrices have psoitive definite, then
+And if all the leading submatrices have positive definite, then
 they have all positive eigenvalues, meaning they have positive determinant.
 
 
-Then for the final decomposition, to find $x$ we ahve to solve the system:
+Then for the final decomposition, to find $x$ we have to solve the system:
 
 \[
 \begin{aligned}
@@ -283,7 +288,7 @@ Rank 2, nullity 4.
 ## 46.
 
 $T(x) = 4ax_1^2 +x_2^2 + 4x_1x_2$.
-Image: al qaudratic forms 
+Image: all quadratic forms 
 
 
 ## 52.
@@ -320,11 +325,11 @@ $p(x) = x^2 a_{ii} + 2xy a_{ij} +y^2 a_{jj}$
 
 If so, then $a_{ii}$ and $a_{jj}$ are positive and 
 $a_{ii}a_{jj} > a_{ij}^2$, which mean the matrix of
-$p$ ahs positive eigenvalues and is positive definite.
+$p$ has positive eigenvalues and is positive definite.
 
 ### c.
 
-Then $2_{aji}=a_{jj}a_{ii}$, which translates to a zeroeigenvalue and an indeterminate matrix.
+Then $2_{aji}=a_{jj}a_{ii}$, which translates to a zero eigenvalue and an indeterminate matrix.
 
 
 ## 54.
@@ -338,7 +343,8 @@ If this were not true the determinant would be negative, preventing he matrix fr
 
 ## 56.
 
-A symmetric $A$ may be factorized $A = Q \Lambda Q^T$, where $Q$ is the orthogonal eigenvectors matrix. Then $a_11  = \lambda_1 x_{1}^2 + \dots + \lambda_n z_{1}$. $x_i^2 \leq 1$., (where $x, \dots z$  are the eigenvectors). Since these are unit vectors., this quantity is maximized if the first column of $Q^T$  is a unit vector. If so, then $a_11 = 1 \lambda_i = \lambda_i$. This is a quadratic form with the eigenvalues as the contants. So $a$ is maximally $\lambda_{max}$. Since $a= \Lambda q^T_1 \cdot q^T_1$, by Cauchy-Swarz
+A symmetric $A$ may be factorized $A = Q \Lambda Q^T$, where $Q$ is the orthogonal eigenvectors matrix. Then $a_11  = \lambda_1 x_{1}^2 + \dots + \lambda_n z_{1}$. $x_i^2 \leq 1$., (where $x, \dots z$  are the eigenvectors). Since these are unit vectors., this quantity is maximized if the first element of $Q^T$'s first column is 1. If so, then $a_11 = 1 \lambda_i = \lambda_i$. This is a quadratic form with the eigenvalues as the constants.
+The greatest eigenvalue maximizes the quantity $x^TAx$ for a unit vector $x$ for a symmetric matrix, because if not then the vector that did maximize $x^T Ax$ would be an eigenvector with a greater eigenvalue, contradicting the premise, and the quadratic form for an eigenvector, which lies entirely on one vector of the eigenbasis, is just $\lambda$. This vector has eigenbasis coordinates $1 \lambda_{max} = \lambda_{max}$, By Cauchy-Swarz, the inner product of the vector of lambdas with any unit vector (here the first column of $Q^T$) is at most the norm of the lambdas vector. The inner product of any unit vector with the lambdas vector is then its eigenbasis coordinates, and we have shown that is maximally $\lambda_{max}$, proving the claim.
 
 \[\begin{aligned}
     &| \Lambda q^T_1 \cdot q^T_1| \leq ||\Lambda 1^T_1 \cdot q^T_1|| \cdot ||q^T_1|| \\
