@@ -33,6 +33,7 @@ $$
 c_1v+c_2w=x\\
 c_1T(v) + c_2T(w) = T(x)
 $$
+
 so $x$ still lies on the line. A linear transformation of a line maps it onto another line.
 
 ## 40. 
@@ -40,8 +41,8 @@ A transformation may be expressed
 
 $$
 \begin{aligned}
-T(x) = x_1T(e_1)+x_2(e_2)+\dots+x_m(Te_m)\\
-=T(x_1e_1)+T(x_2e_2)+\dots+T(x_me_m)
+&T(x) = x_1T(e_1)+x_2(e_2)+\dots+x_m(Te_m)\\
+&=T(x_1e_1)+T(x_2e_2)+\dots+T(x_me_m)
 \end{aligned}
 $$ 
 
@@ -92,7 +93,7 @@ x_1\\.5x_1\\.5x_1
 $$
 
 
-##43.
+## 43.
 The dot product can be represented as $v_1^Tv_2$, so it is linear.
 
 For a $R^3\rightarrow{R}$ transformation, the matrix is a $3\times{1}$ projection. If we define this as $v$, the dot product of $v$ and any $x$ gives the projection.
@@ -104,20 +105,10 @@ We need a $3\times{3}$ matrix here
 The definition can be expanded:
 
 $$
-a\times{b} =
-\begin{bmatrix}
-0a_1b_1-a_3b_2+a_2b_3\\
-a_3b_1+0b_2+a_1b_3\\
--a_2b_1+a_1b_2+0b_3
-\end{bmatrix}
-$$
-
-Using the signed elements of $v$ as coefficients, we have:
-
-$$
 \begin{bmatrix}0&-v_3&v_2\\
 v_3&0&-v_1\\
--v_2&v_1&0\end{bmatrix}
+-v_2&v_1&0
+\end{bmatrix}
 $$
 
 What an interesting pattern - the diagonals (the distance in the same dimension the vectors point in the same direction) get zeroed out, and the signs of the off-diagonals, (distance moved in opposite directions) are opposites. If we multiplied by -1 we could reverse the right-hand rule.
@@ -129,10 +120,10 @@ $$
 \begin{aligned}
 T(x + h) = T(x) + T(h)
 kT(x) = T(kx)
-
 S(T(x) + S(T(h)) = S
 \end{aligned}
 $$
+
 ## 50. 
 Only the trivial solution to the transition matrix exists, so there is no distribution vector. 
 
@@ -143,20 +134,21 @@ Then note we are trying to solve for an equilibrium where each $x_i=0$. Set the 
 For instance:
 
 $$
-\begin{aligned}
-&A = \begin{bmatrix}
+A = \begin{bmatrix}
 0&1&0&0\\
 1/2&0&1/2&1\\
 1/2&0&0&0\\
 0&0&1/2&0
 \end{bmatrix}\\
+$$
 
-&A = \begin{bmatrix}
+$$
+A = \begin{bmatrix}
 -1&1&0&0\\
 1/2&-1&1/2&1\\
 1/2&0&-1&0\\
-0&0&1/2&-1\end{bmatrix}
-\end{aligned}
+0&0&1/2&-1
+\end{bmatrix}
 $$
 
 Then solve the homogeneous system. With the solution, find the value of $t$ that results in the elements summing to 1. Then solve for each component in terms of that value of $t$.  If any elements are negative, it is not a distribution vector, and no even distribution is possible.
@@ -186,6 +178,7 @@ mat2latex(rref(dist))
 ```
 
 ## 55.
+
 Solve a nasty distribution matrix.
 ```{r, results="asis"}
 
@@ -199,7 +192,9 @@ mat <- matrix(c(
 
 mat2latex(rref(mat))
 ```
+
 ## 57. 
+
 We solve the system to get 14 5-franc and 37 2-franc coins. The matrix to get the value and number of coins from the number of each is the inverse of the transformation matrix. I'll let R handle this:
 
 ```{r, results = "asis"}
@@ -225,7 +220,7 @@ We solve the system to find the masses of platinum and silver to be 2400 and 260
 solve(matrix(c(1, .05, 1, .1), nrow = 2)) %*% as.matrix(c(5000, 370))
 ```
 
-##59. 
+## 59. 
 The Fahrenheit-Celsius matrix is invertible. The matrix is:
 \[\m{-5/9&32\\
 0&1}\]
@@ -248,7 +243,7 @@ The shearing here compresses one dimension into the other, since the off-diagona
 b. Because both within-dimension and cross-dimension are exactly the same, , the determinant is 0 and the column vectors are just each others' inverses with order swapped. It will only be consistent for multiples of $(1,8)$ becasue that is the ratio of the vectors to each other.
 
 
-##62. 
+## 62. 
 For exchange matrices in general:
 
 a. Diagonals are 1s: each currency in itself. 
@@ -259,7 +254,8 @@ The table comes out to:
 \[\begin{bmatrix}1&4/5&4/25&5/4\\
 5/4&1&4/25&1\\
 25/4&25/4&1&10\\
-4/5&1&1/10&1\end{bmatrix}\]
+4/5&1&1/10&1
+\end{bmatrix}\]
 
 c. $a_ik$ is i in units, of k, $a_kj$ k in units of j, and $a_ij$ their product: $i$ in units of $k$. Each elements may be expressed as a chain of linear combinations this way. 
 
@@ -318,16 +314,16 @@ $cos(x)=.8sin(x)=.6$, so take the inverse to get in radians: `r asin(.6)/(2*pi)`
 
 ## 6,7.
 
-If the line is $\v{2\\1\\2}$ and the line $\v{1\\1\\1}$, then the orthogonal projection is $\frac{5}{9} \v{2\\1\\2}$. The reflection over this line is the vector minus twice its component orthogonal to the line, which is the vector minus its _parallel_ component. This rearranges to twice $x^{\perp}$ minus $x$.
-\[refl=\v{2\\1\\2} - 2(\v{2\\1\\2}-\frac{5}{9} \v{2\\1\\2})\]
-\[refl= 2(-\frac{5}{9} \v{2\\1\\2}))- \v{2\\1\\1}\]
+If the line is $\m{2\\1\\2}$ and the line $\m{1\\1\\1}$, then the orthogonal projection is $\frac{5}{9} \m{2\\1\\2}$. The reflection over this line is the vector minus twice its component orthogonal to the line, which is the vector minus its _parallel_ component. This rearranges to twice $x^{\perp}- x$.
+\[refl=\m{2\\1\\2} - 2(\m{2\\1\\2}-\frac{5}{9} \m{2\\1\\2})\]
+\[refl= 2(-\frac{5}{9} \m{2\\1\\2}))- \m{2\\1\\1}\]
 
 
-8. \[\m{0&-1\\-1&0}\] is a dual shear.
+8. \[\m{0 &-1\\-1 & 0}\] is a dual shear.
 
 9. \[\m{ 1&0\\1&1 }\] is a vertical shear with no scaling.
 
-10. By the formulas, the matrix of the projection onto $\v{4\\3}$ is 
+10. By the formulas, the matrix of the projection onto $\m{4\\3}$ is 
 \[\frac{1}{25}\m{16&12\\
 16&9}\]
 
@@ -335,7 +331,7 @@ The squares on the diagonals come from dotting $x$ with $w$ twice
 
 ## 11.
 
-The reflection is $2P-I$. The unit vector on this line is $\v{4/5\\3/5$}, so we compute the projection onto that vector:
+The reflection is $2P-I$. The unit vector on this line is $\m{4/5\\3/5}$, so we compute the projection onto that vector:
 
 \[\m{.64&.48\\
 .48&.36}\]
@@ -354,7 +350,7 @@ There is no need to scale the orthogonal matrix because this is a unit vector.
 
 \[\m{u_1^2&u_1u_1&u_1u_3\\
 u_1u_2&u_2^2&u_2u_3\\
-u_1u_3&u_2_u_3&u_3^2}\]
+u_1u_3&u_2u_3&u_3^2}\]
 
 the sum of the diagonal is obviously $u$'s sum of squares.
 
@@ -366,12 +362,12 @@ The reflection is obvious $2P-I$.
 
 The reflection about a line $L$ defined by the angle $\theta$ is just the transformations composed in either order. So we just smush the matrices
 
-\[\m{(\cos{\theta}-sin{\theta})(u_1^2 +u_1_u_2)&
-(\cos{\theta}-sin{\theta})(u_2^2 +u_1_u_2)\\
-(\sin{\theta}+cos{\theta})(u_1^2 +u_1_u_2)
+\[\m{(\cos{\theta}-sin{\theta})(u_1^2 +u_1u_2)&
+(\cos{\theta}-sin{\theta})(u_2^2 +u_1u_2)\\
+(\sin{\theta}+cos{\theta})(u_1^2 +u_1u_2)
 (sin{\theta}+\cos(\theta)(u_2^2u_1+u_1u_2)}\]
 
-A vector for which $Av=v$ lies on the line of reflection and is a multiple f$\v{b-1//b}$
+A vector for which $Av=v$ lies on the line of reflection and is a multiple f$\m{b-1//b}$
 
 ## 18.
 
@@ -449,7 +445,8 @@ e.
 ## 37. 
 The trace is:
 
-a. Projection: $u1_^2+u_2^2$: squared magnitude
+a. Projection:
+$u_1^2+u_2^2$ squared magnitude
 
 b. reflection: 0
 
@@ -488,7 +485,8 @@ If the point lies on the line of reflection, then:
 
 by the unit-length constraint, an identity, and also:
 
-\[\begin{aligned}&u_1^3u_2+u_1u_2^3\\
+\[\begin{aligned}
+&u_1^3u_2+u_1u_2^3\\
 &u_1u_2(u_1^2+u_2^2)\\
 &u_1u_2u_1u_2\end{aligned}\]
 
@@ -523,7 +521,7 @@ the original matrix.
 ## 48.
 
 The next few problems build on the fact that for every linear transformation 
-$R^2\rightarrow{R^2}$, there exist a pair of unit vectors that remain orthogonal before
+$R^2\rightarrow {R^2}$, there exist a pair of unit vectors that remain orthogonal before
 and after the transformation. For  a rotation, these are the standard vectors.
 
 For this transformation, only the standard vectors and their opposite
@@ -624,14 +622,14 @@ comm %*% m
 Prove matrix distributivity. Easy from the properties of linearity.
 
 \[\begin{aligned}T(x)=A\\
-A(C+D)=AC+AD\\
-T(C+D)=T(C)+T(D)==AC+AD
+&A(C+D)=AC+AD\\
+&T(C+D)=T(C)+T(D)==AC+AD
 \end{aligned}\]
 
 \[ \begin{aligned}
  &T(x) = A\\
  &T(y)=B \\
-(T(x) + T(y)) =T(x+y)\\
+& (T(x) + T(y)) =T(x+y)\\
 &T(x+y)(C)\\
 &T(x)C+T(y)C\\
 &AC + BC
@@ -656,7 +654,7 @@ $AX=XA$ for $A^{-1}$, $I$, the zero matrix, and probably others.
 
 # 43.
 
-the 90-degree rotation matrix squares to the identity
+The 90-degree rotation matrix squares to the identity
 
 $A^1001=A$
 
@@ -712,7 +710,6 @@ $A^n=A$ for all projection matrices. An example:
 (matrix(c(9, 12, 12, 16), nrow = 2) * 1 / 25) %^% 2
 ```
 
-
 ## 47.
 
 Answered above.
@@ -742,7 +739,7 @@ Trying to "find" the inverse $X$ results in an inconsistent systems:
 
 \[x_1+2x_2=0\]
 \[x_1+2x_2=1\]
-Because a dimension is collapsed $(ad=bc)$, you can't distinguish between diagonals and off-diagonals tog et the identity.
+Because a dimension is collapsed $(ad=bc)$, you can't distinguish between diagonals and off-diagonals to get the identity.
 
 ## 60.
 
@@ -764,9 +761,11 @@ A %*% l_inv
 ##. 66.
 
 Any lower triangular matrices where the nonzero elements do not share any row-column indices, e.g.:
-\[m{0&0&0\\
+
+\[
+\m{0&0&0\\
 0&0&0\\
-c&0d&0}\] or
+c&d&0}\] or
 
 ## 67. 
 The product \[\m{1&1&1&1&\dots&1}A\] for any transition matrix is just \[\m{1&1&1&1&\dots&1}\], because this matrix sums the columns, and $A$ is only a transition matrix if all columns sum to 1.
@@ -774,12 +773,11 @@ The product \[\m{1&1&1&1&\dots&1}A\] for any transition matrix is just \[\m{1&1&
 ## 68.
 
 \[e = \m{1&1&1&\dots&1}\]
+
 \[\begin{aligned}
 & T(A)=T(B) =e\\
 & T(A(B))=T(A)B=eB=e
 \end{aligned}\]
-
-
 
 ## 74.
 
@@ -822,8 +820,8 @@ A transition matrix has no limit if it involves column permutations, for example
 
 If $Av=5v$, then $v$ is an eigenvector of $A$, so the eigenvalue gets squared as $A$ is raised to higher powers.
 
-\[A^2v=25v\\
-A^mv=5^m\]
+\[A^2v=25v\]
+\[A^mv=5^m\]
 
 ## 82.
 
@@ -872,7 +870,7 @@ This just finds an alternate basis for $x$.
 
 $Ax=x$ for a distribution vector with a zero if and only if, for the zero element
 $x_m$, every element of row $i$. This is so because that component of $Ax$ must
-be zero, so the sum of each $A_{ij]$ scaled by $x$'s nonzero components must be 
+be zero, so the sum of each $A_{ij}$ scaled by $x$'s nonzero components must be 
 0 as well, and the term corresponding to $x$'s zero component must also be 0,
 since otherwise the matrix's row sums after scaling by $x$ would not sum to 1,
 meaning $Ax$ would not be a distribution vector.
@@ -936,7 +934,7 @@ If $A$ is invertible, then $cA$ is invertible with matrix $cA^{-1}$
 
 ## 30.
 
-If we have \[/m{0&a&b\\
+If we have \[\m{0&a&b\\
 -a&0&c\\
 -b&-c&0}\]
 
@@ -945,7 +943,8 @@ none of the variables can be 0.
 ## 31.
 
 The values have to satisfy
-\[\begin{aligned}&c_2a\neq{b}\\
+\[\begin{aligned}
+&c_2a\neq{b}\\
 &-c_1a\neq{c}\\
 &-c_1b\neq{c_2c}
 \end{aligned}\]
@@ -1041,7 +1040,7 @@ fails to be invertible.
 Inverses of:
 
 a. Rotation: 
-\[/m{\cos\theta&s\sin\theta\\
+\[\m{\cos\theta&s\sin\theta\\
 -\sin\theta&\cos \theta}\]
 
 Counterclockwise subtracts $y$ from $x$, clockwise $x$ from $y$.
@@ -1072,7 +1071,7 @@ x =B^{-1}A^{-1}y
 
 44. The inverse of the rotation-scaling
 
-\[m{a&-b\\
+\[\m{a&-b\\
 b&a}\]
 is
 \[\frac{1}{a^2+b^2} \m{a&b\\
@@ -1131,19 +1130,23 @@ $3^x$ has a unique value for every $x$ but is
 noninvertible because undefined for $\infty,0$.
 
 ## 48.
-\[\begin{aligned}B=A^{-1}\\
-BA=I_n}\]
+\[\begin{aligned}
+&B=A^{-1}\\
+&BA=I_n
+\end{aligned}\]
 so $B$ has $n$ rows. If it has $m$ columns, $I$ has
 $m rows$. But.
 
-\[\begin{aligned}AB=I_m}\]
+\[AB=I_m\]
 so $A$ has $m$ rows and $n$ columns so multiplication with $B$ is defined. $B$ has
 $m$ columns, so $m=n$.
 
 ## 49.
 
-\[\begin{aligned}I_n-A)x=b\\
-&x=(I_N-A)^{-1}}\]
+\[\begin{aligned}
+&I_n-Ax=b\\
+&x=(I_N-A)^{-1}
+\end{aligned}\]
 
 For the Israeli economy, the tech matrix and its
 inverse. This ignores the consumer demand vector,
@@ -1196,8 +1199,6 @@ B <- matrix(sample(1:100, 4), nrow = 2)
 (A %^% 2) + (2 * (A %*% B)) + (B %^% 2)
 ```
 
-
-
 ## 51.
 
 If $A$ lacks full row rank, at least one row is
@@ -1240,10 +1241,10 @@ x <- c(1, -1)
 A %*% x
 diag(nrow = 2) %*% x * lambda
 ```
+
 ## 54.
 
 $\lambda=6$.
-
 
 We are asked to interpret some inverses.
 
@@ -1262,6 +1263,7 @@ Clockwise rotation 45 degrees.
 ```{r}
 plot_transform(trans = square(1, -1, 1, 1))
 ```
+
 ## 65.
 
 Horizontal shear.
@@ -1269,11 +1271,14 @@ Horizontal shear.
 ```{r}
 plot_transform(trans = square(1, 1, 0, 1))
 ```
+
 ## 66.
 If two matrices are invertible, so is the
 product.
 \[\begin{aligned}(AB)(BA)^{-1}=I\\
-&AB = BA}\]
+&AB = BA
+\end{aligned}
+\]
 The equation only holds if both $A$ and $B$ are
 invertible.
 
@@ -1284,7 +1289,8 @@ invertible.
 &CC\\
 &C(A+B)\\
 &CA+CB\\
-&(A+B)A + (A+B)B}\]
+&(A+B)A + (A+B)B
+\end{aligned}\]
 
 False for the same reasons
 
@@ -1296,21 +1302,23 @@ False. Am invertible sum of matrices does not mean the components are invertible
 
 \[\begin{aligned}&(A^2)^{-1}=(A^{-1})^2\\
 &(AA)^{-1} = 5A^{-1}A^{-1}\\
-&A^{-1}A^{-1}=A^{-1}A^{-1}}\]
+&A^{-1}A^{-1}=A^{-1}A^{-1}\end{aligned}\]
 
 # 72.
 
 \[\begin{aligned}&ABA^{-1}=B\\
-&BA^{-1}\neq{A^{-1}B}}\]
+&BA^{-1}\neq{A^{-1}B}
+\end{aligned}\]
 
 ## 73.
 
 True.
 
-\[\begin{aligned}(ABA^{-1})^3=AB^3A^{-1}}\\
-ABABABA^{-1}=AB^3A^{-1}\\
-AB^3=AB^3\]
-
+\[\begin{aligned}
+&(ABA^{-1})^3=AB^3A^{-1}\\
+&ABABABA^{-1}=AB^3A^{-1}\\
+&AB^3=AB^3
+\end{aligned}\]
 
 ## 74.
 
@@ -1325,8 +1333,6 @@ A <- matrix(sample(-100:100, 4), nrow = 2)
 
 2 * I + A + solve(A)
 ```
-
-
 
 For any invertible $S$ in $R^m$,t here exists a unique transformation to $R^n$ that may be expressed:
 
@@ -1359,7 +1365,6 @@ res <- matrix(c(6, 2, 3, 6), nrow = 2) %*% A_inv
 
 res %*% solve(A_inv)
 ```
-
 
 ## 81.
 
@@ -1421,9 +1426,11 @@ E %*% A
 
 The inverse of the elimination matrix is the original matrix. This works for any invertible matrix because:
 
-\[\begin{aligned}&EA=I\\
+\[\begin{aligned}
+&EA=I\\
 &A=E^{-1}I\\
-&A=E^{-1}}\]
+&A=E^{-1}
+\end{aligned}\]
 
 so since $E$ exactly reverses the transformation $A$ applied to $I$, its inverse _is_ $A$.
 
@@ -1431,20 +1438,21 @@ so since $E$ exactly reverses the transformation $A$ applied to $I$, its inverse
 solve(E)
 ```
 
-
 ## 88.
 
 Say we have an invertible $A$ and noninvertible $B$. Applying $A$'s elimination matrix to $AB$ reverts it to $B$
 
 \[\begin{aligned}&EA=I\\
 &(EA)B=IB\\
-E(AB)=B}\]
+&E(AB)=B
+\end{aligned}\]
 
 If we apply it to $I$, we get the square of the elimination applied to $A$:
 
 \[\begin{aligned}&EA=I\\
 &A=E^{-1}I\\
-&E^2A=EI}\]
+&E^2A=EI
+\end{aligned}\]
 
 ## 89.
 
@@ -1471,16 +1479,15 @@ L %*% U
 L %*% D %*% U_scaled
 ```
 \[A = `r A_l`\]
-\[A = `r mat2latex(L, sink=TRUE)``r mat2latex(U, sink = TRUE)`\]
-\[\[A = `r mat2latex(L, sink=TRUE)``r mat2latex(D, sink = TRUE)``r mat2latex(U_scaled, sink = TRUE)`\]
+\[A = `r mat2latex(L, sink=TRUE)` `r mat2latex(U, sink = TRUE)`\]
+\[A = `r mat2latex(L, sink=TRUE)` `r mat2latex(D, sink = TRUE)` `r mat2latex(U_scaled, sink = TRUE)`\]
 
 ## 92.
 
 The matrix \[\m{0&1\\1&0}\] can't be factorized because the diagonal is zeroes; the on-dimension elements would zero out in the multiplication
 
-\[L=\m{}]
-# True or False?
 
+# True or False?
 
 ## 2.
 
@@ -1489,14 +1496,18 @@ True, inverses commute.
 ## 6.
 
 True.
-\[(A^2)^{-1}=(A^{-1})^2\\
-(AA)^{-1}=A^{-1}A^{-1}\\
-A^{-1}A^{-1}=A^{-1}A^{-1}\]
+\[
+\begin{aligned}
+ &(A^2)^{-1}=(A^{-1})^2\\
+ &(AA)^{-1}=A^{-1}A^{-1}\\
+ &A^{-1}A^{-1}=A^{-1}A^{-1}
+\end{aligned}\]
 
 
 ## 99.
 
-\[\begin{aligned}&A^2=A\\
+\[\begin{aligned}
+&A^2=A\\
 &A^2A^{-1}=AA^{-1}\\
 &A=I
 \end{aligned}\]
@@ -1518,7 +1529,7 @@ a. If all column sums of $A$ are less than 1 and all entries positive or nonzero
 
 Assume entry $ii$ of $A$ is $r$, such that all other entries of column $i$ are 0. Then $A^2_{ii}=r^2$, etc. More generally, this dot product is the sum of squares, which is at most $r^2$:
 
-\[\begin{aligned}&A_{kk}=A_1^A_2+\dots+A_nA_n\\
+\[\begin{aligned}&A_{kk}=A_1 A_2+\dots+A_n A_n\\
 &=\sum_{i=1}^{n}A_i^2\\
 &=r^2
 \end{aligned}\]
@@ -1529,7 +1540,7 @@ d.
 
 \[\begin{aligned}&(I_n-A)(I_n+A+A^2+\dots+A^m)\\
 &I-A+A-A^2+A^2-A^3+\dots+A^m-A^{m+1}\\
-&I-^#+A^m-A^{m-1}
+&I+A^m-A^{m-1}
 \end{aligned}\]
 
 So in other words,
@@ -1656,9 +1667,6 @@ False.
 plot_mat(square(1, 1, 1, -1), fix_coords = TRUE)
 ```
 
-
-
-
 True.
 
 \[\det(2A) = 2ad-2bc=2(ad-bc)\]
@@ -1691,10 +1699,9 @@ True for an upper triangular matrix with a zero diagonal:
 square(0, 0, 1, 0) %^% 2
 ```
 
-
 ## 29.
 
-True; \[\m{0&-1\\1&0}^4=I\] because it is a 90-degree rotation. Were the rotation not a multiple of $2\pi$ this would not be so.
+True; \[\m{0 &-1\\1&0}^4=I\] because it is a 90-degree rotation. Were the rotation not a multiple of $2\pi$ this would not be so.
 
 ## 30.
 
@@ -1707,10 +1714,9 @@ because that would require _this_ matrix to have an inverse, which it cannot.
 
 False. If a transition matrix is regular, its zeroes eventually become nonzero, so at the very least$A^2\neq{A}$.
 
-
 ## 25.
 
-If $A^17=I_2$, this matrix could be the rotation about $2\pi/17$ radians.
+If $A^17=I_2$, this matrix could be the rotation about $2 \pi/17$ radians.
 
 ## 33.
 
@@ -1732,17 +1738,20 @@ False. If $A^17=I$, $A$ could be a rotation $2\pi/17$ radians
 theta <- (2 * pi) / 17
 square(cos(theta), sin(theta), -sin(theta), cos(theta)) %^% 17
 ```
+
 ## 36.
 
 False for the same reasons; it could be any
 involutory matrix.
 
-
 Matrix commutativity doesn't chain
-\[AB=BA\\
-BC=CB\\
-BCA=CBA=CAB\\
-ABC=ACB=BAC\]
+
+\[\begin{aligned}
+ &AB=BA\\
+ &BC=CB\\
+ &BCA=CBA=CAB\\
+ &ABC=ACB=BAC
+\end{aligned}\]
 
 
 ```{r}
@@ -1766,11 +1775,12 @@ False. If $A^2=I_2$, it could be a reflection, not just $I$ or $-I$.
 ## 39.
 
 True.
-\[AB=BA\\
-AAB=ABA\\
-AAB=BAA\\
-A^2=BA^2
-\]
+\[\begin{aligned}
+ &AB=BA\\
+ &AAB=ABA\\
+ &AAB=BAA\\
+ &A^2=BA^2
+\end{aligned}\]
 
 ## 40.
 
@@ -1783,20 +1793,23 @@ True; once it becomes positive, a transition matrix never loses that property be
 # 42.
 
 False; an invertible transition matrix would most likely have negative entries for its inverse, making it not a transition matrix.
+
 ## 43.
 
 False; the sum of invertible matrices is not necessarily invertible
-
 
 # 45. 
 
 True; all reflections are their own inverses:
 
-\[\frac{1}{-a^2-b^2}\m{-a&-b\\-b&a}\\
+\[
+\begin{aligned}
+\frac{1}{-a^2-b^2}\m{-a&-b\\-b&a}\\
 -1\m{-a&-b\\
 -b&a}
 \m{1&b\\
-1&-b}\]
+1&-b}
+\end{aligned}\]
 
 # 46.
 
@@ -1805,36 +1818,43 @@ True, I think...
 
 Let $Av=c$ and $Aw=b$
 
-\[c\cdot{b}=v\cdot{w}\\
-Av=c\\
-v=A^{-1}c\\
-AA^{-1}c\cdot{AA^{-1}b}=v\cdot{w}\\
-v\cdot{w}=v\cdot{w}\]
-
+\[
+\begin{aligned}
+& c \cdot{b}=v \cdot{w}\\
+& Av=c\\
+& v=A^{-1}c\\
+& AA^{-1}c\cdot{AA^{-1}b}=v\cdot{w}\\
+& v\cdot{w}=v\cdot{w}
+\end{aligned}
+\]
 
 ## 47, 48.
 
 These questions are about left and right inverses, which exist for some matrices. 
 
-
 ## 49.
 
 True if $A$ is the opposite sign of its inverse?
 
-\[A^2+3A+4I=0\\
-AA+3A=-4I\\
-A(A+3A)=-4I\\
-A+3A=A^{-1}4I\\
-4A=-4A^{-1}\\
-A=-A^{-1}\]
-
+\[
+\begin{aligned}
+ &A^2+3A+4I=0\\
+ &AA+3A=-4I\\
+ &A(A+3A)=-4I\\
+ &A+3A=A^{-1}4I\\
+ &4A=-4A^{-1}\\
+ &A=-A^{-1}
+\end{aligned}\]
 
 ## 50.
 
-True. $A$ must be the zero matrix
-\[(A^2=0\\
-AA=0\\
-A=A^{-1}0\]
+False. $A$ could be 
+\[
+\begin{bmatrix}
+0 & 1\\
+0 & 0
+\end{bmatrix}
+\]
 
 ## 52.
 
@@ -1869,7 +1889,7 @@ False unless $b$ is the zero vector and/or $A$ the identity.
 ## 57.
 
 False. Proof by contradiction.
-\[ \begin{aligned}
+\[\begin{aligned}
  & A^{-1}A=I\\
  & -(A)A=I\\
  & -A^2=I
