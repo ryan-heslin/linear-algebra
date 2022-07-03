@@ -100,17 +100,26 @@ None real, but $\lambda = 1 \pm i$
 
 $\lambda = (0, 0, 1, 1)$. Diagonalizable.
 
+## 18. 
+
+Not diagonalizable; the only two eigenspace vectors are $\begin{bmatrix}0\\1\\0\\0\end{bmatrix}$ 
+and $\begin{bmatrix}0\\1\\0\\1\end{bmatrix}$
+
+
+
 ## 21.
 
 ```{r, results = "asis"}
-S <- matador::square(1, 2, 2, 3)
+S <- matrix(c(1, 2, 2, 3), nrow = 2)
 Lambda <- diag(x = c(1, 2), nrow = 2)
 A <- S %*% Lambda %*% solve(S)
 A
 ```
+
 ## 22.
 
 Just $\m{7 & 0\\ 0 & 7}$
+
 ## 23.
 
 For $\m{1 & 1\\0 &1}$, $\lambda =1$, but since that yields $\m{0&1 \\0 &1}$, the only eigenvector is $e_1$. That makes sense, since $Ae_1$ just selects the first column, which contains only  single scalar.
@@ -118,6 +127,7 @@ For $\m{1 & 1\\0 &1}$, $\lambda =1$, but since that yields $\m{0&1 \\0 &1}$, the
 ## 25.
 
 If $c$ only is 0, then  $A$ has distinct eigenvectors. If all three are 0, then $A$ has just one eigenvector for the repeat eigenvalue 0. 
+
 ## 26. 
 
 Since $\det A = \prod^n_{i=1} \lambda_i$, if the determinant is negative but $n$ is positive, there must be an odd number of negative eigenvalues.
@@ -128,7 +138,8 @@ $\lambda = (1, 5)$.
 
 ## 28. 
 
-The eigenvalues are all just $k$, multiplicity $n$. They all have $e_1$ as the eigenvector.
+The eigenvalues are all just $k$, multiplicity $n$.
+They share an eigenspace of every standard vector but the last.
 
 ## 29. 
 Algebraic and geometric multiplicity are both $n-r$, since by rank-nullity $\ker(A)$ has dimension $n-r$.
@@ -142,7 +153,7 @@ If an eigenbasis exist, both multiplicities sum to $n$, though geometric and alg
 
 ## 32.
 
-The algebraic nultiplicities are the same, since the eigenvalues are shared. The dimension of $\ker(A - I \lambda)$ is $n - rank(A^T - \lambda I)$. So the dimension of the transposes eigenspace is the orthogonal complement of $A$'s image, and vice versa. So if $n =3$, then a two-dimensional eigenspace in $A$ corresponds to a one-dimensional eigenspace in $A^T$ and vice versa. 
+The algebraic multiplicities are the same, since the eigenvalues are shared. The dimension of $\ker(A - I \lambda)$ is $n - rank(A^T - \lambda I)$. So the dimension of the transpose's eigenspace is the orthogonal complement of $A$'s image, and vice versa. So if $n =3$, then a two-dimensional eigenspace in $A$ corresponds to a one-dimensional eigenspace in $A^T$ and vice versa. 
 
 #33.
 
@@ -183,6 +194,10 @@ Since $S$ has full rank, $Sx$ has the rank of $\ker B$, since $x$ is some linear
 
 No, the traces are different.
 
+## 36. 
+
+No, for the same reasoning. 
+
 ## 37.
 
 a. 
@@ -208,16 +223,10 @@ Since $\lambda_w \neq \lambda_v$, this holds only if $v \cdot w =0$.
 
 ## 38.
 
-Since $\det A = 1$ and $A$ is orthogonal, 1 or 3 eigenvalues are 1. Thus $Av = 1v = v$ for those eigenvectors. 
-```{r}
-x <- c(1, 0, 0, 1, 0)
-y <- c(0,0, 1, 0, 1,0, 0)
-z <- c(0, 0, 0, 0, 0)
-sum(cumsum(x==0) == seq_along(x))
-
-sum(cumsum(y==0) == seq_along(y))
-sum(cumsum(z == 0) == seq_along(z))
-```
+Since a rotation matrix rotates all vectors by $\theta$, no real vector satisfies this criterion. But eigenvectors still exist because the characteristic polynomial must have roots, 
+but they lie on $C^3$ and are complex.
+If the matrix is $\pm I_3$, the eigenvalues and 
+eigenvectors are of course real.
 
 ## 39.
 
@@ -257,3 +266,53 @@ At least one of the constants is 0.
 ## 47.
 
 $a=b=c=0$.
+
+## 49. 
+
+Actually diagonalizable, because I failed to take into account complex roots.
+
+## 51. 
+
+Simple enough. 
+
+\[
+    \begin{aligned}
+    & \det A =  -\lambda(- \lambda(c - \lambda) - b(1)) + a(1(1) - \lambda (0))\\
+    & = -\lambda(- \lambda c + \lambda^2 - b) + a(1) \\ 
+    & = - \lambda^2 + \lambda^2 c - \lambda b + a
+    \end{aligned}
+\]
+
+## 52. 
+
+From that pattern:
+
+\[
+    \lambda^n - \lambda^{n -1}a_{n-1} + \lambda^{n-2}a_{n-2} + \dots a_0
+\]
+assuming $n$ is even; otherwise the first term is negative, the second positive, and so on.
+
+
+## 55.
+
+```{r}
+set.seed(1)
+A <- matrix(c(0, 1, 0, 0, 0, 1, -7, 1, 7), nrow = 3)
+S <- matrix(c(1, 0, 5, 2, 1, 6, 3, 4, 0), nrow = 3)
+B <- S %*% A %*% solve(S)
+eigen(B)
+```
+
+## 56. 
+
+Just find the characteristic polynomial, write 
+the Frobenius companion matrix, and diagonalize with
+a matrix copied from some website that has an integer inverse.
+
+```{r}
+set.seed(1)
+A <- matrix(c(0, 1, 0, 0, 0, 1, 6, -11, 6), nrow = 3)
+S <- matrix(c(1, 0, 5, 2, 1, 6, 3, 4, 0), nrow = 3)
+B <- S %*% A %*% solve(S)
+eigen(B)
+```
