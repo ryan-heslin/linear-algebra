@@ -6,16 +6,16 @@ header-includes:
   - \setlength{\parindent}{2em}
   - \setlength{\parskip}{2em}
 params:
-    title: "Notes"
+    title: "Section 7.2 Problems"
 output:
   pdf_document:
     highlight: "kate"
     df_print: "kable"
     includes:
-      in_header: "notes_text_preamble.tex"
+        "notes_text_preamble.tex"
 ---
 
-```{r setup, include=FALSE}
+```{r include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   comment = "",
@@ -254,14 +254,57 @@ is 400.
 
 # 29.
 
-It always has eigenvalue 1 because $A1$ (if 1 designates a vector of 1s) is 1 (since the columns sum to 1). Therefore $A1 = \lambda 1 = 1$, so $\lambda = 1$.   
+It always has eigenvalue 1 because $A1$ (if 1 designates a vector of 1s) is 1 (since the rows sum to 1). Therefore $A1 = \lambda 1 = 1$, so $\lambda = 1$.   
 
 # 30.
+
+### a. 
+
+
+Let $v$ be some eigenvector with a non-1 eigenvalue, $k$ a constant vector 
+of $v$'s largest element, and $u := k -v$. Then $Av = A(k-u) = k- Au = k - \lambda_u A$. 
+But if $\lambda_v > 1$, then $v$'s largest element will become greater than $k$ by 
+a factor of $\lambda_v$ , but 
+this is impossible. $k\sum_{i=1}^{n}{a_i} = k$ because $\sum_{i=1}^{n}{a_i} = 1$ 
+for all rows of $a$, yet every element of $v$ is less than or equal to $k$. It 
+cannot be 1 either because that eigenvalue already belongs to $k$, nor can it be 
+negative because all elements of both $A$ and $v$ are positive or zero, so 
+$0 \le \lambda_v < 1$ 
+
+If $k$ is the largest element of $v$, then $a_{iv}$ (where $a_i$ is a row of $a$ )
+is less than or equal to $\sum_{i=1}^{n}{a_{ij}k_i}$ (the dot product of a vector whose elements 
+are all $k$, since for at least one $v_i$ $v_i < k$). ($Av_{i} > k$ only if $k$ is not the largest element of $v$, and remember $A$ is all positive ). The other 
+elements are less than or equal to it for the same reasoning. So at least one element 
+of $Av$ is less than the corresponding element of $Ak$, which means the eigenvalue 
+of $v$ must be less than that of $k$.
+For any vector of constants $c$, $a_ic= c \sum_{i=1;j=1}^{n}{a_{ij}}=c$, meaning the constant 
+vector is an eigenvector with eigenvalue 1. Therefore, for any non-constant positive 
+eigenvector, the eigenvalue is less than 1, but must be positive or 0 because 
+all elements of $A$ are positive or 0, so $Av$ can have no negative elements. 
+
+### b. 
+
+If some elements of $v$ are negative, then $a_ i v  \le  a_i u $ for an 
+eigenvector $u$ with the absolute values of $v$ , because all elements of $A$ are positive. 
+For the reasons outlined above, the eigenvalue of $u$ is positive but less than 
+or equal to 1, so the eigenvalue of $v$ must lie in $(-1, 1)$, as shown below.  
+
+### c. 
+
+The only vector that could have an eigenvalue that great in absolute 
+value is a vector of negative 1, because $Ak = k$ since $A$ is all positive, but its eigenvalue is 1 because it is a 
+multiple of the eigenvector described above, satisfying $Ak = k$ because all elements are 
+negative. For the reasons outlined above, 
+any all-negative eigenvector, if all its elements were replaced the negative sign of its largest in absolute value, 
+would have eigenvalue 1. Constant vectors have eigenvalue 1 
+because $a_iv = \sum_{i=1;j=1}^{n}{a_{ij}c_i} = c \sum_{i=1}^{n}{a_i} = c(1) = c$ 
 
 # 31.
 
 1 must be an eigenvalue because if $A$ is a 
-transition matrix, $A^T$ must have rows that sum to $1$. As shown above, 1 is an eigenvalue, so 1 must be an eigenvalue of $A$ as well. But the eigenvector is not necessarily the same, since the eigenvectors of $A$ are not generally those of $A^T$.   
+transition matrix, $A^T$ must have rows that sum to $1$, which implies the existence of such 
+an eigenvector. Other eigenvalues are less than or equal to 1 in absolute value for the reasons shown above. But the eigenvector is not necessarily the same, since the eigenvectors of $A$ are not generally those of $A^T$. It is guaranteed 
+to be an eigenvector if $A$ is symmetric, of course.
 
 # 32.
 
@@ -281,13 +324,71 @@ optimize(polynomial, maximum = TRUE, interval = c(-5, 5))
 
 # 33.
 
+### a. 
+
+\[
+    \begin{aligned}
+    & -\lambda(-\lambda(c - \lambda) - b) -1(-a) + 0\\
+    & -\lambda(-\lambdac + \lambda^2 -b) + a
+    & -\lambda^3 + \lambda^2 c + \lambda b + a
+    \end{aligned}
+\]
+
+### b. 
+
+Just take the hint: 
+
+
+\[
+\begin{bmatrix}
+0 & 1 & 0\\
+0 & 0 & 1\\
+\pi & -5 & 17 
+\end{bmatrix}
+\]
+
+
+
 # 34.
+
+They may both have algebraic multiplicity 2. Either may have algebraic multiplicity 2 and the other 3. Or both may have algebraic multiplicity 1, with the remaining two eigenvalues a complex conjugate pair.
+
 
 # 35.
 
+Here is one. 
+```{r}
+theta <- pi / 3
+
+A <- matrix(c(
+  cos(theta), sin(theta), 0, 0,
+  -sin(theta), cos(theta), 0, 0,
+  0, 0, cos(theta), sin(theta),
+  0, 0, -sin(theta), cos(theta)
+),
+nrow = 4
+)
+
+eigen(A)
+```
+
 # 36.
 
+Put $n$ $2 \times 2$  block rotation matrices of an angle like $\pi/3$ on the diagonal. 
 # 37.
+
+If all eigenvalues are distinct, the 
+derivative of the characteristic polynomial evaluated at $\lambda_0$, by the Product Rule, is $f\prime(\lambda_0) = -1(\lambda_1 - \lambda)\dots(\lambda_n - \lambda) + (\lambda_0 - \lambda_1)( \frac {d}{d \lambda}[(\lambda_1 - \lambda)\dots \lambda_n - \lambda])$, which is not generally 0, since the $f\prime(x) g(x)$ part is not necessarily 0 . But if $\lambda_0$ is a 
+repeat eigenvalue, then: 
+\[
+    \begin{aligned}
+    & f\prime(\lambda_0) = -n(\lambda_0 -\lambda)^{n+1}(\lambda_1 - \lambda) \dots (\lambda_n - \lambda) + (\lambda_0 - \lambda)^n(\lambda_1 -\lambda) \dots (\lambda_n - \lambda)\\
+    & = 0 + 0 \\ 
+    & = 0
+    \end{aligned}
+\]
+
+
 
 # 38.
 
@@ -325,6 +426,16 @@ If $BA = 0$, then $tr(BA) =0$, and we just showed that $tr(AB) = tr(BA)$. Theref
 No, because since $tr(AB) = tr(BA)$, tr(AB - BA) = tr(BA - AB) = 0$.
 
 # 44.
+
+The condition implies
+\[
+    \begin{aligned}
+    & AB -BA = I\\
+    & AB = BA + I
+    & B = A^{-1}BA + A^{-1}
+    \end{aligned}
+\]
+
 
 # 45.
 
@@ -364,9 +475,41 @@ Diagonal matrices, for which $b = c = 0$
 
 # 47.
 
+Those for which nonzero columns of $M$ satisfy $Am = \lambda m$ in other words, 
+those matrices $A$ for which nonzero columns of $M$ correspond to the eigenvalues 
+of $D$. The requirement that $M$ be nonzero means this can work for matrices that 
+have at least one of the eigenvalues of $D$, for example: 
+
+\[
+\begin{bmatrix}
+2 & 0\\
+0 & 4
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0\\
+0 & 0
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 0\\
+0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+2 & 0\\
+0 & 3
+\end{bmatrix}
+
+\]
+
+
+
 # 48.
 
+Those similar to $D$, because given $S$ is invertible $A = S D S^{-1}$, which 
+is the standard diagonalization of $A$ .
+
 # 49.
+
+The same as for the $2 \times 2$ case.
 
 # 50.
 
