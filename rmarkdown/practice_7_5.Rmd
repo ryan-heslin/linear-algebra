@@ -1,0 +1,471 @@
+---
+title: "Section 7.6 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+## 1.
+
+\[ z = 3(\cos (7\pi/4) +i \sin(7\pi/4))\]
+
+## 2.
+
+$\pm i$ and $\pm 1$.
+
+## 4.
+\[
+\begin{aligned}
+& w^2 = z\\
+&(ac +di)^2 = a + bi\\
+&c^2 + 2idc - d^2 = a+bi
+\end{aligned}
+\]
+
+implying $c^2 - d^2 = a$ and $2dc=b$ Depending on the number,
+the correct $c^2$ and $d^2$ will have either the same or
+opposite signs, giving two roots.
+
+## 3.
+
+\[\begin{aligned}
+& 1^n(\cos(n \theta) + i \sin(n \theta)) = 1\\
+& \cos(n \theta) = 1 \\
+& n \theta = \arccos(1) = 0 \\
+\end{aligned}
+\]
+meaning $n$ rotations about itself brings the angle of the complex number to 0.
+So a root of unity is any angle for which $n \theta =0$ mod $2 \pi$. This implies
+$n$ distinct $n$th roots of unity (e.g., 0, $2 \pi/3$, and $4 \pi / 3$ for $n = 3$).
+
+## 5.
+
+Let $z = r(cos(\alpha) + i \sin(\alpha))$
+Then a root of $z$ is $r(1/n)(cos( \theta) + i \sin( \theta))$
+Because angles are unique up to a modulus
+of $2  \pi$, we can write
+\[\alpha = n \theta \mod 2  \pi\]
+implying $\alpha = \theta \mod \frac{2 \pi}{n}$. So there is a unique root
+for each of the $n$ divisions of the complex circle.
+
+## 6.
+
+It has the inverse of $z$'s radius and
+the opposite sign of its angle. The conjugate is the reflection of
+the original angle over the real axis,
+and has the same relationship to its
+inverse.
+
+The inverse can be shown to be
+\[\begin{aligned}
+& z^{-1} = \frac{\bar z}{|z|^2}\\
+& = \frac{a-bi}{a^2 + b^2}\\
+& z^{-1}z = \frac{(a-bi)(a + bi)}{a^2 + b^2}\\
+& = \frac{a^2 + b^2}{a^2 + b^2}
+& = 1
+\end{aligned}
+\]
+
+## 7.
+
+The imaginary part is added to the real, and the imaginary part is replaced with
+the negative sum of both parts.
+
+## 8.
+
+$\cos ^3(\theta)$ and $\sin ^3(\theta)$.
+
+## 9.
+
+
+Because $\arctan (0.7/0.8) \approx `r atan(0.7/0.8)`$,
+and $r = \sqrt{(-0.7)^2 + 0.8^2} = `r sqrt(.7^2 + .8^2)`$,
+the number can be written $1.06(\cos(.719) + i \sin (.718))$. Since
+$r > 1$, the number will spiral outward as it is raised to higher powers, each time rotating $\theta/n$.
+
+
+## 11.
+
+```{r}
+polynomial <- function(lambda) lambda^3 - 3 * lambda^2 + 7 * lambda - 5
+A <- cbind(c(0, 0), diag(nrow = 2)) |>
+    rbind(c(5, -7, 3))
+result <- polynomial(eigen(A)$values)
+max(abs(result)) < 1e-8
+```
+
+## 10.
+If the polynomial has all real coefficients, then it can be mapped to
+a family of similar real matrices with
+it as their characteristic polynomial.
+The Frobenius companion matrix exists for any polynomial, since it is uniquely
+determined by their coefficients. So the polynomial must have $n$ real or
+complex roots, counting multiplicities, because all $n \times n$ matrices
+have $n$ eigenvalues that are the roots of their characteristic polynomials.
+
+## 12.
+Any complex eigenvalue satisfies $Ax = (a+bi)x$ for some eigenvector $x$,
+and some real $n \times n$ matrix $A$,
+where $\lambda = a + bi$. Since $A(\Re x) + A(\Im x) = ax + bix$, it follows that
+$A(\Re x) - A(\Im x) = ax - bix$ for the conjugate, so it is an eigenvalue as well.
+Since any polynomial with
+real coefficients can be mapped to a Frobenius matrix, all such polynomials
+must have complex roots in conjugate pairs.
+
+## 17.
+
+We solve for the eigenvectors, then create $S$ by splitting into real and imaginary parts.
+```{r}
+A <- matrix(c(5, -5, 4, 1), nrow = 2)
+S <- matrix(complex(
+    real = c(-2, 5, -2, 5),
+    imaginary = c(4, 0, -4, 0)
+), nrow = 2)
+S <- cbind(Im(S[, 2]), Re(S[, 2]))
+print(S)
+solve(S) %*% A %*% S
+```
+
+## 18.
+
+For any real matrix it is the area of the parallelepiped traced out by the
+columns of the matrix.
+
+## 19.
+
+### a.
+
+The eigenvectors span only the subspace of projection, so the determinant is
+0 because $m < v$, and the trace is $m$
+because the eigenvalues are only 0 and 1. (if diagonalized, some eigenvectors are zeroed out instantly, since $P^n= P$ for projection matrices, and
+diagonalization is possible because the
+formula yields a symmetric matrix).
+
+### b.
+Since the matrix is involutory, $\lambda^2 = 1$ for all eigenvalues, leaving $\pm 1$, since this is a real vector space.
+The determinant is thus -1.
+
+## 27.
+
+The implied equations $\lambda_1 + 2 \lambda_2 = 1$ and $\lambda_1 \lambda_2^2 = 3$ have real solution
+$\lambda_1 = 3$ and $\lambda_2 = -1$.
+
+## 28.
+
+The first equation $2a + 2ib -2ib = 8$
+implies $a = 2$. That means the second
+equation can be solved:
+
+
+\[
+\begin{aligned}
+2(a^2 - b^2) = 50
+4 - b^2 = 25
+b = \pm 6
+\end{aligned}
+\]
+
+so the complex eigenvalue is $2 \pm 6i$.
+
+
+## 29.
+
+Since $\det A = bcd$ and all these
+values are positive, the product of
+the eigenvalues is positive.
+That means zero or two negative eigenvalues.
+Since the eigenvalues also sum to 0,
+the sign of the greatest eigenvalue in
+either case must be positive, since
+in the latter case $\lambda_1 = -(|\lambda_2| + |\lambda_3|)$.
+
+
+## 31.
+
+### a.
+
+Each column approaches an even distribution
+```{r}
+`%^%` <- function(X, n) {
+    orig <- X
+    for (i in seq(1, n)) {
+        X <- X %*% orig
+    }
+    X
+}
+A <- 1 / 15 * matrix(c(4, 1, 3, 2, 5, 2, 3, 5, 1, 4, 5, 4, 1, 3, 2, 1, 5, 2, 4, 3, 3, 2, 4, 5, 1), ncol = 5)
+A %^% 20
+```
+
+### b.
+
+There is a spanning set of eigenvectors,
+so yes.
+```{r}
+eigen(A)
+```
+
+### c.
+
+The first eigenvector, all with entry 1/5.
+
+
+### d.
+
+
+All the eigenvalues other than 1 have a modulus less than 1.
+If we write in polar form, then
+$\lim_{n \rightarrow \infty} r^n(cos(\theta) + i \sin(\theta)) = 0$
+if $r <0$. So if we write $A = S \Lambda S^{-1}$, then only the first eigenvalue
+remains significant, leaving only the first eigenvector.
+```{r}
+Mod(eigen(A)$values)
+```
+
+
+## 33.
+
+```{r}
+set.seed(1)
+A <- sample(1:9, size = 25, replace = TRUE) |>
+    matrix(ncol = 5)
+B <- A %^% 20
+
+D <- diag(B[1, ])
+C <- B %*% solve(D)
+```
+
+### a.
+Each column of $C$ is that column of $B$
+divided by its first entry.
+
+It is obtained
+\[C = \sum_{i=1}^n B(0 + e_i)]\]
+
+where 0 is the zero matrix.
+
+### b.
+
+It shows that the ratios of the entries
+in each column to the first entry are
+identical.
+
+### c.
+High powers of $A$ are converging on
+the eigenvector of the dominant eigenvalue,
+which occurs for a diagonalizable matrix
+as discussed in the previous problem.
+
+Normalizing $C$ makes this clear
+```{r}
+first <- eigen(B)$vectors[, 1]
+C[, 1]
+Re(first / first[[1]])
+```
+
+### d.
+
+The first row is the first eigenvalue of $A$. Normalizing each column by
+this value again yields the first eigenvector.
+```{r}
+result <- A %*% C
+result
+result / result[1, 1]
+```
+
+
+## 34.
+
+### a.
+
+Each is $\lambda_i - \lambda$, with the old first eigenvalue the smallest.
+$(A - \lambda I_n)^{-1}$ has their scalar inverses as eigenvalues. It
+has the same eigenvectors, since $(S \lambda  S^{-1})^{-1} = (S \lambda ^{-1}  S^{-1})$.
+Now the first eigenvalue, the one that was originally estimated, has the
+smallest modulus. If this matrix is multiplied repeatedly, its columns
+will approach some multiple of $\lambda_1$'s eigenvector.
+
+### b.
+
+If we repeat the procedure, we get a good estimate of the first eigenvector.
+```{r}
+A <- matrix(c(1, 4, 7, 2, 5, 8, 3, 6, 10), nrow = 3)
+estimate <- eigen(A, only.values = TRUE) |>
+    unlist() |>
+    min() |>
+    round()
+estimate
+
+B <- A %^% 20
+
+D <- diag(B[1, ])
+C <- B %*% solve(D)
+C[, 1] / C[1, 1]
+```
+
+## 35.
+
+I looked up the actual proof, which
+exploits the fact that $\text{tr}(AB) = \text{tr}(BA)$ and the
+universality of the Jordan form
+to show that a matrix with
+the eigenvalues on the diagonal has
+$\sum_{i=1}^n \lambda_i$ for the trace.
+
+
+## 36.
+
+
+### a.
+
+The entries below the diagonals represent
+proportions of bracket $n$ surviving
+to be counted in bracket $n+1$. The
+first row represents members of the younger brackets contributing to
+the very youngest by having children.
+
+### b.
+
+```{r}
+top <- c(1.1, 1.6, 0.6, 0, 0, 0)
+bottom <- cbind(diag(x = c(.82, .89, .81, .53, .29)), 0)
+A <- rbind(top, bottom)
+dimnames(A) <- NULL
+eigenspace <- eigen(A)
+greatest <- Mod(eigenspace$values) |>
+    which.max()
+eigenspace$vectors[, greatest]
+```
+
+This eigenvector indicates the equilibrium
+distribution of the population.
+While the values will grow without bound, the proportions will stabilize,
+because only one eigenvalue has a modulus
+greater than 1.
+
+## 37.
+
+For addition:
+
+
+\[\begin{bmatrix}
+z + x & - \bar z - \bar y\\
+z + y & \bar w + \bar x
+\end{bmatrix} =
+\begin{bmatrix}
+w \prime & -\bar z \prime \\
+z \prime &  \bar w \prime
+\end{bmatrix}
+\]
+
+For multiplication, the same holds for the product of the matrices:
+
+\[
+\begin{bmatrix}
+wx - y \bar z & -w \bar y - \bar x \bar z \\
+xz + w \bar y & -\bar y z + \bar x \bar w
+\end{bmatrix} =
+\begin{bmatrix}
+w \prime & -\bar z \prime \\
+z \prime &  \bar w \prime
+\end{bmatrix}
+\]
+
+
+
+```{r}
+w <- complex(real = 2, imaginary = 5)
+z <- complex(real = -1, imaginary = 2)
+A <- matrix(c(w, z, -Conj(z), Conj(w)), nrow = 2)
+```
+
+The determinant works out to $a^2 -b^2 +c ^2  +2i cd +d^2$, which is invertible
+unless $c=d=0$ and $a =b$. If
+invertible, we have the matrix:
+
+\[
+A^{-1} = \frac{1}{\det A}
+\begin{bmatrix}
+a -bi &c + di \\
+-c -di & a +bi
+\end{bmatrix}
+\]
+
+which satisfies the requirements of the field if we set $w = a-bi$ and $z= - c -di$.
+
+Generating such a matrix:
+```{r}
+find_dissimilar <- function() {
+    space <- seq(-10, 10)
+    repeat({
+        w <- complex(real = sample(space, 1), imaginary = sample(space, 1))
+        z <- complex(real = sample(space, 1), imaginary = sample(space, 1))
+        x <- complex(real = sample(space, 1), imaginary = sample(space, 1))
+        y <- complex(real = sample(space, 1), imaginary = sample(space, 1))
+        A <- matrix(c(w, z, -Conj(z), Conj(w)), nrow = 2)
+        B <- matrix(c(x, y, -Conj(y), Conj(x)), nrow = 2)
+        if (!all(A %*% B == B %*% A)) {
+            return(list(A, B))
+        }
+    })
+}
+set.seed(1)
+result <- find_dissimilar()
+result
+```
+
+## 42.
+
+For $\overline{AB}$, an element can be written
+\[
+\begin{aligned}
+&\overline{AB}_{ij} = \sum_{i=1}^n \overline{(a+bi)(c+di)} \\
+& = \sum_{i=1}^n \overline{ac -bd + i(ad + bc)}\\
+&= \sum_{i=1}^n ac -bd - i(ad + bc)
+\end{aligned}
+\]
+
+For $\overline A \overline B$, the expression is $\sum_{i=1}^n (a-bi)(c-di) = \sum_{i=1}^n ac -bd -i(ad + bc)$,
+which is equivalent.
+
+### b.
+
+We already showed that complex eigenvalues
+of real matrices occur in conjugate pairs. From the given information, $A(v+iw) = (p+iq)(v+iw) = pv -qw + i(qv + pw)$.
+If we try the same for the conjugate,
+$A(v-iw) = (p-iq)(v-iw) = pv -qw - i(qv + pw)$
+Both equations imply $Av = pv -qw$ and
+$Aiw = i(qv+pw)$, so one implies the other.
+
+
+## 52.
+
+No, because, as described, it lacks
+commutative multiplication.
+
+
+## 72.
+
+Using the formula outlined yields
+
+\[\begin{bmatrix}
+0 & 1 & b \\
+0 & 0 & ac \\
+0 & 0 & 0
+\end{bmatrix}
+\]
+
+so the whole upper triangle must be 0.
+
+
+## 73. (from section 4)
+
+If we substitute $\lambda$ for $A$ in
+the expression, we get the factored
+form of the characteristic polynomial
+by the definition of eigenvalues. Since
+the expression must equal 0 for
+any diagonalizable matrix, and since
+$A$ is used in place of $\lambda$
+in the polynomial, the theorem's
+claim is satisfied.

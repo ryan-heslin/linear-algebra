@@ -34,8 +34,10 @@ c&d\end{bmatrix}}
 \newcommand{\dotsn}[5]{#1_{1}#3_{1}#5{#1}_{2}#3_{2}{#5}\dots{#5}#1_{#2}#3_{#4}}
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
-                      tidy = TRUE, fig.align = "center")
+knitr::opts_chunk$set(
+    echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+    tidy = TRUE, fig.align = "center"
+)
 
 library(tidyverse)
 library(rlang)
@@ -269,9 +271,9 @@ The matrix should be:
 
 ```{r, results='asis'}
 cbind(matrix(rep(rep(c(
-  1, 0, 0
-), times = 2), times = 3), ncol = 3), sapply(list(c(2, 0, 0), c(5, 0 , 0), c(13, 0, 0)), rep, 2)) %>% 
-  mat2latex()
+    1, 0, 0
+), times = 2), times = 3), ncol = 3), sapply(list(c(2, 0, 0), c(5, 0, 0), c(13, 0, 0)), rep, 2)) %>%
+    mat2latex()
 ```
 
 ## 32.
@@ -481,3 +483,72 @@ and
     & = kT^{-1}f
   \end{aligned}
 \]
+
+## 81. 
+
+### a. 
+
+$\ker(T)$ must be finite dimensional because it is a subspace of a finite-dimensional 
+space. $\text{im}(T)$ must be finite-dimensional because $r$ elements form a basis 
+for it, and infinite-dimensional spaces cannot be spanned by finitely many elements.
+
+### b.
+
+\[ 
+\begin{aligned}
+& c_1u_1 + \dots + c_r u_r + d_1 v_1 + \dots + d_n v_n = 0\\ 
+& T(c_1u_1 + \dots + c_r u_r + d_1 v_1 + \dots + d_n v_n) = T(0)\\ 
+& c_1 w_1 + \dots + c_r w_r = 0
+\end{aligned}
+\]
+This holds for any linear combination of $\ker(T)$ and 
+any linear combination of the domain equal to 0, which means 
+it is linearly independent of $T$'s domain.
+
+
+### c. 
+
+
+Since $T(v - d_1 u_1 - \dots - d_ru_r) = T(v) - d_1 u_1 - \dots - d_r u_r$, 
+the left term must be 0, because we have subtracted a linear 
+combination of the domain of $T$. That means the 
+result is in $\ker(T)$, so the $v_i$ that 
+form a basis for the kernel span it. 
+Suppose $v$ is not linearly independent of $\ker(T)$. That means 
+both the $u_i$ and $v_i$ are required to form a basis for this expression $V$, 
+and likewise for $V$ itself, since $v \in V$.
+So $\dim(V) = \text{rank}(T) + \text{nullity}(T)$.
+
+
+## 82. 
+
+Let $A$ be the matrix of the transformation. The rank of $A$ 
+is the dimension of its image, and its nullity is 
+the dimension of the space in $V$ it maps to 0.
+If $A$ has $m$ columns, then $m$ is the dimension of $V$. 
+Then $\text{nullity}(A) = m - \text{rank}(A)$, because 
+the rank is the dimension of the space not mapped to 0.
+So $m = \dim(V) = \text{rank}(A) + \text{nullity}(A)$.
+
+Alternately, use the above exercise to demonstrate a 
+finite basis for $V$ exists and consists of the 
+domain and kernel.
+
+## 83.
+
+By the rank-nullity theorem $\dim(W) = \text{rank}(L) + \text{nullity}(L)$.
+The combined kernel consists of any elements of $\text{im}(T) \in \ker(L)$, 
+which get mapped to 0, as well as all of $\ker(T)$, since $L(0) =0$. 
+Form a basis for $\ker(L)$ in $W$ consisting 
+of $w_1, \dots, w_n$. If $T(v) = w_i$ for 
+some $v \in V$, then a mapping 
+exists from $T$'s domain to $L$'s kernel. 
+(Any $v$ is linearly independent of $T$'s 
+kernel by definition). Since a basis for $L$'s kernel requires $\text{nullity}(L)$ elements, 
+the size of the combined kernel is at most $\text{nullity}(T) + \text{nullity}(L)$
+
+## 84. 
+
+Since $\text{im}(T) = W$, all elements of $\ker L$ are possible outputs of 
+$T$. So the composition maps all elements of $\ker L$, plus all elements of 
+$\ker T$, to 0, proving the claim.

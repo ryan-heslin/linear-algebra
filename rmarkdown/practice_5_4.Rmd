@@ -35,8 +35,8 @@ c&d\end{bmatrix}}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
-  tidy = TRUE, fig.align = "center"
+    echo = TRUE, comment = "", fig.pos = "", warning = FALSE,
+    tidy = TRUE, fig.align = "center"
 )
 
 library(tidyverse)
@@ -256,7 +256,7 @@ I fit a model predicting day length by time of year. The error vector is surpris
 ```{r, results = 'asis'}
 
 fit <- function(A) {
-  solve(t(A) %*% A) %*% t(A)
+    solve(t(A) %*% A) %*% t(A)
 }
 days <- c(32, 77, 121, 152)
 b <- c(10, 12, 14, 15)
@@ -276,11 +276,11 @@ a.
 
 ```{r, results="asis"}
 A <- cbind(rep(1, 5), log(c(
-  600000,
-  200000,
-  60000,
-  10000,
-  2500
+    600000,
+    200000,
+    60000,
+    10000,
+    2500
 )))
 z <- c(5, 12, 25, 60, 250)
 
@@ -316,14 +316,19 @@ cbind(A[, 2], exp(b)) %*% betas
 
 For 2015, the model predicts a debt of more than \$24 trillion.
 
-## 42.
 
-Since $(A^T)^T=A$:
+## 70. 
 
-\[
-  \begin{aligned}
-    & L(x) = Ax\\
-    & L(A^Tx) = Ax\\
-    & L^{-1}(Ax) = A^Tx
-  \end{aligned}
-\]
+Let $A_1 = A - \lambda_1 I_n$ and $A_2 = A - \lambda_2 I_n$. 
+By the rank-nullity theorem, $\text{nullity}(A_1A_2) = \text{nullity} A_1 + \text{nullity} A_2$ 
+if and only if $\text{ker} A_1 \in \text{im} A_2$; otherwise, only vectors mapped by 
+$A_2$ to 0 are in the kernel. Since both domain and codomain are $\mathbb{R}^n$, 
+this requires the kernels to be linearly independent subspaces.
+If we set $A_1 \prime  = A_1A_2$ and repeat this process for each eigenvalue, 
+the same logic still holds.
+The matrix is only diagonalizable if $\ker A_1 \dots A_n = \mathbb{R}^n$, which 
+means the combined eigenspaces span all of $\mathbb{R}^n$. But if 
+an eigenvalue of multiplicity $m$ is mapped to an eigenspace of dimension $n <m$,
+then the dimension of the eigenspaces fails to sum to $n$ and (non-Jordan) diagonalization 
+is impossible.
+
