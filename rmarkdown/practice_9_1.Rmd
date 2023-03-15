@@ -1,0 +1,203 @@
+---
+title: "Section 9.1 Problems"
+author: "Ryan Heslin"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    highlight: "kate"
+    df_print: "kable"
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+    echo = TRUE,
+    comment = "",
+    fig.pos = "",
+    warning = FALSE,
+    tidy = TRUE,
+    fig.align = "center",
+    highlight = TRUE
+)
+```
+
+## 1.
+
+$x = 7 3^{5t}$
+
+## 3.
+
+$P=7e^{0.03t}$
+
+## 7.
+
+$x = \frac{-1}{t+1}$, so it approaches 0.
+
+## 9.
+
+$x^{-k}dx = dt$, so $\frac{x^{-k+1}}{-k+1} = t + 1$, implying $x = \frac{1}{((-k+1)(t+1))^{\frac{1}{1-k}}}$.
+
+## 13.
+
+$1990-1778=212$ years elapsed.
+Hence the sum is either $P = 450000e^{(1.06)212} = `r 450000 * exp(.06 * 212)`$ or $450000(1.06)^{212} = `r 450000 * (1.06^212)`$.
+
+## 15.
+
+If $k$ is a percentage, the growth rate is $k/100$. So we have
+
+\[
+\begin{aligned}
+& 2 = e^t(k/100) \\
+& \ln 2 = t(k/100) \\
+& t = \frac{ln 2}{ k/100}\\
+& t = \frac{100 \ln 2}{k}
+& t \approx \frac{69}{k}
+\end{aligned}
+\]
+
+
+## 22.
+
+By the sum rule of derivatives, $\frac{d(x_1 + x_2)}{dt} = \frac{dx_1}{dt} + \frac{dx_2}{dt}$.
+(where $x_1$ and $x_2$ are initial states).
+This means the expression equals $Ax_1 + Ax_2 =A(x_1 + x_2)$
+
+## 23.
+
+By linearity, $kx(t) = kSe^{\Lambda t}S^{-1}x_0$
+
+## 24.
+
+The second matrix is diagonal, with one distinct eigenvalue. Adding
+a diagonal matrix shifts eigenvalues elementwise but does not change
+eigenvectors. Therefore:
+
+
+\[\begin{aligned}
+& c(t) = Se^{(\Lambda + k) t} S^{-1}c_0 \\
+& = e^{kt}Se^{\Lambda  t} S^{-1}c_0\\
+& e^{kt}x(t) = e^{kt}x(t)
+\end{aligned}
+\]
+
+## 25.
+
+Again by linearity, $x(kt) = kAx \implies kx(t) = A(kx) \implies x(t) = Ax$.
+
+```{r}
+# https://stackoverflow.com/questions/43223579/solve-homogenous-system-ax-0-for-any-m-n-matrix-a-in-r-find-null-space-basi/43225005#43225005
+kernel <- function(A) {
+    m <- dim(A)[[1]]
+    n <- dim(A)[[2]]
+
+    ## QR factorization and rank detection
+    QR <- base::qr.default(A)
+    r <- QR$rank
+    ## cases 2 to 4
+    if (r == 0) {
+        return(diag(x = 1, nrow = m))
+    }
+    if (r < min(m, n) || (m < n)) {
+        R <- QR$qr[1:r, , drop = FALSE]
+        P <- QR$pivot
+        F <- R[, (r + 1):n, drop = FALSE]
+        I <- diag(1, n - r)
+        B <- -base::backsolve(R, F, r)
+        Y <- rbind(B, I)
+        X <- Y[order(P), , drop = FALSE]
+        return(X)
+    }
+    ## case 1
+    matrix(0, nrow = n, ncol = 1)
+}
+# Solve dx/dt = Ax for a matrix A,
+# using standard factorization
+solve_differential <- function(A) {
+    lambda <- eigen(A, only.values = TRUE)[[1]]
+    n <- nrow(A)
+    S <- lapply(lambda, \(x) kernel(A - diag(x = x, n))) |>
+        do.call(what = cbind)
+
+    if (ncol(S) < n) stop("A cannot be diagonalized without using its Jordan form, everybody panic")
+    Lambda <- diag(exp(lambda), nrow = n)
+    S_inv <- solve(S)
+    list(S = S, Lambda = Lambda, S_inv = S_inv)
+}
+
+compute_differential <- function(diff, x0, t) {
+    diff$S %*% (diff$Lambda * exp(t)) %*% diff$S_inv %*% x0
+}
+```
+
+
+## 42.
+
+
+The relationship seems to be predator-prey. Only the eigenvectors stabilize in the long run, as is expected. The populations don't make much difference.
+```{r}
+A <- matrix(c(1.4, 0.8, -1.2, -1.4), nrow = 2)
+result <- solve_differential(A)
+compute_differential(result, c(3, 1), 10)
+```
+
+
+## 45.
+
+
+$y$ kill 4 $x$ for every member they lose,
+a 4:1 kill ratio.
+```{r}
+A <- matrix(c(0, -1, -4, 0), nrow = 2)
+result <- solve_differential(A)
+combos <- expand.grid(x = 1:10, y = 1:10)
+results <- combos |>
+    as.matrix() |>
+    asplit(MARGIN = 1) |>
+    sapply(\(x) compute_differential(result, x, 30)) |>
+    t()
+results <- cbind(combos, results)
+```
+
+$x$ seems to require about a 2:1 advantage to prevail.
+
+## 46.
+
+The $x$:$y$ kill ratio is $q/p$. The general solution is:
+
+\[
+\frac{1}{2\sqrt{p/q}}\begin{bmatrix} 1 & 1 \\
+\sqrt{p/q} & - \sqrt{p/q}
+\end{bmatrix}
+\begin{bmatrix}
+e^{\sqrt{pq}t} & 0 \\
+0 & e^{-\sqrt{pq}t}
+\end{bmatrix}
+\begin{bmatrix}
+- \sqrt{p/q} & -1 \\
+- \sqrt{p/q} & 1
+  \end{bmatrix} x_0
+  \]
+
+## 51.
+
+The derivative is a linear transformation, since $\frac{d}{dt}(x(t) + y(t))= \frac{d}{dt}x(t) + \frac{d}{dt}y(t)$
+and $\frac{d}{dt}kx(t) = k \frac{d}{dt}x(t)$.
+
+This means $S$ can be brought out of the derivative, since it is invariant with
+respect to the derivative, so $\frac{d}{dt}(Sx(t)) = S\frac{d}{dt}x(t)$.
+
+
+## 52.
+
+All are of the form $e^{\lambda t}x_0$.
+
+## 53.
+
+The solution works out to
+\[x(t) = \frac{1}{2i} \begin{bmatrix}
+i(e^{(p + qi)t} + e^{(p-qi)t}) \\
+e^{(p + qi)t} - e^{(p-qi)t}
+\end{bmatrix}\]
+
+which is on the complex plane.
